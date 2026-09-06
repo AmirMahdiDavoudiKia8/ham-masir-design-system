@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
-import { forwardToSheet, type LeadType } from "@/lib/sheetForward";
+import type { LeadType } from "@/lib/leadTypes";
 
 export interface Lead {
   type: LeadType;
@@ -29,24 +29,21 @@ async function recordLead(type: LeadType, data: Record<string, string>): Promise
 }
 
 /**
- * The primary record of every lead (quiz answer, registration, booking,
+ * The record of every lead (quiz answer, registration, booking,
  * cancellation, mentor signup/request) — written to this app's own
  * persistent storage, same reliability model as bookings/payments, which
- * has never had a silent outage. Forwarding to the Google Sheet (see
- * lib/sheetForward.ts) is kept as a best-effort *secondary* copy for
- * convenient phone/spreadsheet access — see /mentor/admin/leads for the
- * authoritative one that doesn't depend on an external Google deployment
- * staying correctly configured.
+ * has never had a silent outage. Read back at /mentor/admin/leads, which
+ * also exports the whole history as CSV.
  *
- * Awaits the local write (fast local disk I/O — negligible latency) but
- * still fire-and-forgets the Sheet forward, since that's a network call to
- * an external service that has been observed taking 15-20s and shouldn't
- * ever stall a caller's actual flow (quiz submit, registration, booking).
+ * Leads used to be forwarded to an external Google Sheet as well. That is
+ * gone: the dashboard covers the same need without depending on an Apps
+ * Script deployment staying correctly configured (it silently broke once,
+ * for an unknown stretch of time), and it removes a second copy of every
+ * lead — which mattered, because the mentor signup used to include the
+ * chosen password in that payload.
  */
 export async function logLead(type: LeadType, data: Record<string, string>): Promise<void> {
-  const safe = withoutSecrets(data);
-  await recordLead(type, safe);
-  forwardToSheet(type, safe).catch(() => {});
+  await recordLead(type, withoutSecrets(data));
 }
 
 /**

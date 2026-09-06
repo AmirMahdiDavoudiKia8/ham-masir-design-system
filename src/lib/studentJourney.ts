@@ -1,7 +1,7 @@
 import { getLeads } from "./leads";
 import { getAllPaymentRequests } from "./paymentRequests";
 import { getAllStudentBookings } from "./studentBookings";
-import { LEAD_TYPE_LABEL, type LeadType } from "./sheetForward";
+import { LEAD_TYPE_LABEL, type LeadType } from "./leadTypes";
 
 const BOOKING_STATUS_LABEL: Record<string, string> = {
   upcoming: "در انتظار جلسه",

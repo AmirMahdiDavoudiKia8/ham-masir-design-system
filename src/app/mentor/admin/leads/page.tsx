@@ -4,7 +4,7 @@ import { isAdminSession } from "@/lib/adminAuth";
 import { CsvDownloadButton } from "@/features/adminLeads/CsvDownloadButton";
 import { toPersianDigits } from "@/lib/format";
 import { getLeads } from "@/lib/leads";
-import { LEAD_TYPE_LABEL, type LeadType } from "@/lib/sheetForward";
+import { LEAD_TYPE_LABEL, type LeadType } from "@/lib/leadTypes";
 
 // Reads live off-disk data on every request — must never be statically
 // prerendered, same reasoning as every other /mentor/admin/* page.

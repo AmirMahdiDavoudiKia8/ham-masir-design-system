@@ -17,7 +17,7 @@ const GENDER_OPTIONS = [
 /**
  * Sits at the end of the mentor grid (see MentorList) — for a student whose
  * ideal هم‌مسیر isn't in the catalogue yet. Forwards straight to the same
- * Google Sheet every other lead type goes to (see lib/sheetForward); no
+ * lead log every other lead type goes to (see lib/leads.ts); no
  * dedicated backend, this is a manually-followed-up request, not a live
  * search.
  */

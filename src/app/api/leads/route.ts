@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { logLead } from "@/lib/leads";
-import type { LeadType } from "@/lib/sheetForward";
+import type { LeadType } from "@/lib/leadTypes";
 
 interface LeadPayload {
   type?: LeadType;

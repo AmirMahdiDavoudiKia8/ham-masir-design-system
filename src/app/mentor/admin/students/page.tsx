@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { isAdminSession } from "@/lib/adminAuth";
 import { Input } from "@/components/ui/Input";
 import { toPersianDigits } from "@/lib/format";
-import { LEAD_TYPE_LABEL } from "@/lib/sheetForward";
+import { LEAD_TYPE_LABEL } from "@/lib/leadTypes";
 import { getConversionBySource, getMultiTouchPhones, getStudentJourney } from "@/lib/studentJourney";
 
 // Reads live off-disk data on every request — same reasoning as every other
