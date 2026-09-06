@@ -1,0 +1,37 @@
+# ---------- وابستگی و خروجی بیلد ----------
+node_modules
+.next
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# ---------- محرمانه ----------
+# نسخه‌های .example عمداً نگه داشته می‌شوند تا مقادیر لازم مستند بمانند.
+# پوشه‌های bots/ و telegram-ad-bot/ فایل ignore خودشان را هم دارند؛
+# این‌ها تکرارشان است تا حذف تصادفی آن فایل‌ها باعث نشت رمز نشود.
+.env
+.env.local
+.env*.local
+.env.production
+*.pem
+*.key
+# نشست تلگرام = دسترسی کامل به آن حساب، هرگز نباید کامیت شود
+*.session
+*.session-journal
+
+# ---------- داده‌ی زمان اجرا ----------
+# اینها روی سرور در persistent/ زندگی می‌کنند (deploy/persistent-manifest.txt).
+# فایل‌های JSON زیر عمداً به صورت placeholder خالی در مخزن می‌مانند: اگر
+# روزی symlink یک نسخه جا بیفتد، برنامه روی چیزی خالی می‌نویسد نه روی یک
+# snapshot کهنه که به نظر درست بیاید. لاگ analytics ولی داده‌ی واقعی است.
+src/data/analytics/*.jsonl
+public/mentors/portal/*
+!public/mentors/portal/.gitkeep
+src/data/mentorPortal/students/*
+!src/data/mentorPortal/students/.gitkeep
+
+# ---------- سیستم و ابزار ----------
+.DS_Store
+Thumbs.db
+*.log

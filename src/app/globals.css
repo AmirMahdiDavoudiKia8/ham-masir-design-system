@@ -1,0 +1,119 @@
+@import "../styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  direction: rtl;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise-in {
+  animation: rise-in var(--duration-entrance) var(--ease-gentle) both;
+}
+
+/* Hides the scrollbar on horizontally-scrollable chip rows without disabling scroll. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dual-thumb range slider (two overlapping <input type="range">).
+   The track is transparent + pointer-events:none so clicks reach whichever
+   input's thumb is closer; the thumb itself opts back into pointer-events. */
+.range-thumb::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: transparent;
+}
+.range-thumb::-moz-range-track {
+  background: transparent;
+}
+.range-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 3px solid var(--color-primary);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  margin-top: 0;
+}
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 3px solid var(--color-primary);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+/* Planner loading transition: two lines (echoing the logo's "Accompanied
+   Line" motif) easing toward each other and back, instead of a spinner. */
+.planner-loading-line {
+  position: absolute;
+  width: 3px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  animation-duration: 1.4s;
+  animation-timing-function: var(--ease-gentle);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.planner-loading-line--primary {
+  background: var(--color-primary);
+  animation-name: planner-line-approach-a;
+}
+.planner-loading-line--secondary {
+  background: var(--color-secondary);
+  animation-name: planner-line-approach-b;
+}
+@keyframes planner-line-approach-a {
+  from {
+    transform: translateX(-18px);
+  }
+  to {
+    transform: translateX(-4px);
+  }
+}
+@keyframes planner-line-approach-b {
+  from {
+    transform: translateX(18px);
+  }
+  to {
+    transform: translateX(4px);
+  }
+}
