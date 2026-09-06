@@ -1,0 +1,23 @@
+# پایان خط همه‌جا LF نگه داشته می‌شود تا فایل‌ها بین ویندوز (توسعه) و
+# لینوکس (سرور) دیف کاذب نسازند — یک بار همین باعث شد کل deploy/README.md
+# به شکل «۲۱۹ خط تغییر» ظاهر شود در حالی که یک نویسه هم عوض نشده بود.
+* text=auto eol=lf
+
+# فایل‌های دودویی نباید دست بخورند
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.avif binary
+*.mp4 binary
+*.m4a binary
+*.ogg binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.pdf binary
+*.xlsx binary
+*.session binary

@@ -44,8 +44,32 @@ async function recordLead(type: LeadType, data: Record<string, string>): Promise
  * ever stall a caller's actual flow (quiz submit, registration, booking).
  */
 export async function logLead(type: LeadType, data: Record<string, string>): Promise<void> {
-  await recordLead(type, data);
-  forwardToSheet(type, data).catch(() => {});
+  const safe = withoutSecrets(data);
+  await recordLead(type, safe);
+  forwardToSheet(type, safe).catch(() => {});
+}
+
+/**
+ * Strips credential-ish fields before a lead is persisted or forwarded.
+ *
+ * The mentor signup used to pass the chosen password straight through, which
+ * put it in clear text in three places at once: leads.json on the VPS, the
+ * external Google Sheet, and the /mentor/admin/leads dashboard. That call
+ * site no longer sends it, but /api/leads accepts an arbitrary `data` object
+ * from the client, so the guard belongs here too — a caller shouldn't be
+ * able to leak a secret into permanent storage by accident.
+ */
+// Deliberately narrow: only credential names. An earlier draft also matched
+// keys ending in "code", which would have silently dropped the payment
+// tracking code PaymentForm sends — a field the leads dashboard needs.
+const SECRET_KEY = /pass|رمز|token|secret/i;
+
+function withoutSecrets(data: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (!SECRET_KEY.test(key)) out[key] = value;
+  }
+  return out;
 }
 
 /** All recorded leads, newest first — read by the internal admin dashboard (see /mentor/admin/leads). */

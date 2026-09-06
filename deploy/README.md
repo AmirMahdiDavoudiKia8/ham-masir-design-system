@@ -191,6 +191,24 @@ require("fs").writeFileSync(f, JSON.stringify(m,null,2)+"
 '
 ```
 
+## Other sites on this box
+
+`portfolio.hammasirsite.ir` also lives on this server — the static portfolio
+export from `~/Desktop/portfolio`, served straight off disk from
+`/var/www/portfolio` by its own nginx vhost
+(`/etc/nginx/sites-available/portfolio.hammasirsite.ir`). It has no Node
+process and no PM2 app, so it costs this 1 vCPU / 2GB box nothing that
+HamMasir would notice, and nothing in the deploy steps above touches it.
+Its own deploy script and config live in that project's `deploy/` folder.
+
+Worth knowing when adding more: `*.hammasirsite.ir` resolves to this server
+via a wildcard A record on ParsPack's nameservers, so a new subdomain needs
+no registrar step — just an nginx vhost and `certbot --nginx`.
+
+`/var/www/portfolio` is deliberately **not** in the nightly backup
+(`backup-persistent.sh`): it's build output, reproducible from the portfolio
+repo in one command. Only genuinely unreproducible state belongs in there.
+
 ## Sanity checks after each deploy
 
 ```bash

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
 import { digitsOnly, normalizePersianText } from "@/lib/format";
+import { hashPassword, isHashed, verifyPassword } from "@/lib/password";
 import type { PlanDay } from "@/lib/progress";
 
 export const MENTOR_SESSION_COOKIE = "hammasir_mentor_id";
@@ -147,11 +148,15 @@ const STUDENTS_DIR = path.join(process.cwd(), "src/data/mentorPortal/students");
 
 /**
  * Mentor accounts (id = phone number) + one JSON file per student — the
- * whole mentor portal's data layer. No real database: passwords are stored
- * and compared in plain text and the session cookie is just the mentor's id
- * (unsigned), which is fine for an internal tool the operator controls, but
- * isn't real security. Accounts are created either by self-registration
- * (see /mentor/portal/register) or by editing mentors.json directly.
+ * whole mentor portal's data layer. No real database, but passwords are no
+ * longer stored in the clear: registerMentorAccount hashes on the way in and
+ * findMentorByCredentials upgrades any account still holding a legacy
+ * plain-text password the next time its owner logs in (see lib/password.ts).
+ * The session cookie is still just the mentor's id (unsigned), which is fine
+ * for an internal tool the operator controls but isn't real security.
+ * Accounts are created either by self-registration (see
+ * /mentor/portal/register) or by editing mentors.json directly — a
+ * hand-written plain-text password there still works and self-upgrades.
  */
 export async function getMentorAccounts(): Promise<MentorAccount[]> {
   try {
@@ -182,8 +187,28 @@ export async function getMentorAccounts(): Promise<MentorAccount[]> {
 export async function findMentorByCredentials(phone: string, password: string): Promise<MentorAccount | null> {
   const mentors = await getMentorAccounts();
   const normalizedPhone = digitsOnly(phone);
-  const normalized = normalizePersianText(password);
-  return mentors.find((m) => m.id === normalizedPhone && normalizePersianText(m.password) === normalized) ?? null;
+
+  // Looking the account up by id first and then checking the password is
+  // equivalent to the old single-pass match (registerMentorAccount already
+  // rejects a duplicate id), and it's what lets the check be async.
+  const account = mentors.find((m) => m.id === normalizedPhone);
+  if (!account || !(await verifyPassword(password, account.password))) return null;
+
+  // Right password, still stored as plain text: this is the one moment the
+  // real password is in hand, so upgrade it now. Best-effort — a failed
+  // write must not turn a successful login into a failed one; the account
+  // just stays legacy and gets another chance at the next login.
+  if (!isHashed(account.password)) {
+    try {
+      const hashed = await hashPassword(password);
+      await updateMentorAccount(account.id, { password: hashed });
+      account.password = hashed;
+    } catch {
+      // keep the login working
+    }
+  }
+
+  return account;
 }
 
 export async function getMentorById(id: string): Promise<MentorAccount | null> {
@@ -260,10 +285,13 @@ export async function addMentorAccount(mentor: MentorAccount): Promise<void> {
  * false, without writing anything, if the phone was already taken.
  */
 export async function registerMentorAccount(mentor: MentorAccount): Promise<boolean> {
+  // Hashed here rather than at the call site so every caller — including any
+  // future one — is covered without having to remember.
+  const stored: MentorAccount = { ...mentor, password: await hashPassword(mentor.password) };
   return withFileLock(MENTORS_FILE, async () => {
     const mentors = await getMentorAccounts();
-    if (mentors.some((m) => m.id === mentor.id)) return false;
-    mentors.push(mentor);
+    if (mentors.some((m) => m.id === stored.id)) return false;
+    mentors.push(stored);
     await saveMentorAccounts(mentors);
     return true;
   });

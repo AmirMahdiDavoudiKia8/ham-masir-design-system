@@ -28,7 +28,9 @@ export async function registerMentor(input: {
   // the Google Sheets call takes (observed up to ~15-20s from this VPS)
   // before the mentor ever saw a redirect. The account write above already
   // succeeded by this point; the lead log is a side record, not a gate.
-  logLead("mentor_signup", { name, phone, password }).catch(() => {});
+  // Never the password: this record lands in leads.json and is forwarded to
+  // an external Google Sheet, and the lead log has no use for it.
+  logLead("mentor_signup", { name, phone }).catch(() => {});
   const jar = await cookies();
   jar.set(MENTOR_SESSION_COOKIE, phone, {
     httpOnly: true,
