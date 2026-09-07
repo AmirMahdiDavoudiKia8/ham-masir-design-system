@@ -2,7 +2,7 @@ import { CompactHeader } from "@/components/layout/CompactHeader";
 import { ChatIcon, PhoneIcon, SendIcon } from "@/components/ui/icons";
 
 export const metadata = {
-  title: "درباره ما | هم‌مسیر",
+  title: "درباره ما",
 };
 
 const CONTACTS = [

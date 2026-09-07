@@ -1,7 +1,7 @@
 import { CompactHeader } from "@/components/layout/CompactHeader";
 
 export const metadata = {
-  title: "قوانین و مقررات | هم‌مسیر",
+  title: "قوانین و مقررات",
 };
 
 export default function TermsPage() {

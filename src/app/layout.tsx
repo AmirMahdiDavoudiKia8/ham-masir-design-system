@@ -3,26 +3,104 @@ import { SupportFab } from "@/components/support/SupportFab";
 import { Toast } from "@/components/ui/Toast";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import { pinar } from "@/lib/fonts";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/siteConfig";
+import {
+  SITE_BALE,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_PHONE,
+  SITE_TAGLINE,
+  SITE_TELEGRAM,
+  SITE_URL,
+} from "@/lib/siteConfig";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: SITE_NAME,
+  // Without metadataBase, every relative canonical/OG URL below resolves
+  // against localhost in the build output and silently ships broken.
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — مشاوره و برنامه‌ریزی کنکور با کسی که راهت رو رفته`,
+    // Every page that sets its own title gets the brand appended for free,
+    // so no page has to hand-write "| هم‌مسیر" again (several used to).
+    template: `%s | ${SITE_NAME}`,
+  },
   description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "fa_IR",
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    images: [SITE_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    images: [SITE_OG_IMAGE.url],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      // Lets Google show a full-length snippet and a large image thumbnail
+      // instead of the conservative defaults it picks on its own.
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: { telephone: false },
 };
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
+  "@id": `${SITE_URL}/#organization`,
+  name: SITE_NAME,
+  alternateName: "Ham Masir",
+  url: SITE_URL,
+  logo: `${SITE_URL}/brand/logo.png`,
+  image: SITE_OG_IMAGE.url,
+  description: SITE_DESCRIPTION,
+  slogan: "مسیرت رو تنها نرو",
+  sameAs: [SITE_TELEGRAM, SITE_BALE],
+  areaServed: { "@type": "Country", name: "Iran" },
+  knowsLanguage: "fa",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: SITE_PHONE,
+    contactType: "customer service",
+    areaServed: "IR",
+    availableLanguage: "Persian",
+  },
+};
+
+/**
+ * Names the site itself, separate from the organization that runs it, and
+ * gives every other page's JSON-LD a stable `isPartOf` target to point at
+ * (see the mentor profile and home page graphs).
+ */
+const webSiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
   name: SITE_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
-  sameAs: ["https://t.me/hammasirsite", "https://ble.ir/hammasirsite"],
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+989920209010",
-    contactType: "customer service",
-  },
+  inLanguage: "fa-IR",
+  publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
 export default function RootLayout({
@@ -50,6 +128,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
       </head>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">

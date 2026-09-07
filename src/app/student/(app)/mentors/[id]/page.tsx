@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { buttonClasses } from "@/components/ui/Button";
@@ -8,8 +9,81 @@ import { MentorNarrative } from "@/features/mentors/components/MentorNarrative";
 import { MentorPlans } from "@/features/mentors/components/MentorPlans";
 import { MentorProfileHeader } from "@/features/mentors/components/MentorProfileHeader";
 import { getMentors } from "@/lib/mentors";
+import type { Mentor } from "@/lib/mentors";
 import { firstParam } from "@/lib/searchParams";
+import { SITE_NAME, SITE_OG_IMAGE, SITE_URL, pageOpenGraph } from "@/lib/siteConfig";
 import { getUniversityLogo } from "@/lib/universityLogos";
+
+/**
+ * "دندان‌پزشکی اصفهان" — the short credential that goes in the title. Field and
+ * university only: `rank` is already a full phrase in the data
+ * ("کنکور ۱۴۰۴ — رتبه ۱۷۶ منطقه دو"), so folding it in here blew the title past the
+ * ~60 characters Google actually renders and pushed the mentor's own name
+ * toward the truncated end. It goes in the description instead.
+ */
+function shortCredential(mentor: Mentor): string {
+  return [mentor.field, mentor.university].filter(Boolean).join(" ");
+}
+
+/** Search snippets are cut around 160 chars — trim on a word boundary so the description ends as a phrase, not mid-word. */
+function clamp(text: string, max = 158): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).trim()}…`;
+}
+
+/**
+ * These 19 profiles are the site's long-tail: someone searching a mentor's
+ * name, or "مشاور کنکور دانشجوی پزشکی تهران", should land here. They shipped with no
+ * title, description or canonical at all, so every one of them competed with
+ * the others under the identical brand-only title.
+ *
+ * The description prefers the mentor's own `bio` over a generated sentence —
+ * real prose written by a real person outranks a template, and it's what a
+ * searcher actually wants to read in the snippet.
+ */
+export async function generateMetadata({ params }: MentorProfilePageProps): Promise<Metadata> {
+  const { id } = await params;
+  const mentors = await getMentors();
+  const mentor = mentors.find((m) => m.id === id);
+
+  // A profile that no longer exists renders the "پیدا نکردیم" state below;
+  // tell crawlers not to index that rather than letting a soft-404 in.
+  if (!mentor) {
+    return { title: "هم‌مسیر پیدا نشد", robots: { index: false, follow: true } };
+  }
+
+  const name = mentor.name ?? SITE_NAME;
+  const creds = shortCredential(mentor);
+  const title = creds ? `${name} — ${creds}` : name;
+  // Lead the snippet with the credentials a searcher scans for (field,
+  // university, rank), then hand the rest of the line to the mentor's own
+  // words — real prose reads better in a result than a template ever does.
+  const facts = [creds, mentor.rank].filter(Boolean).join("، ");
+  const description = clamp(
+    mentor.bio?.trim()
+      ? `${facts ? `${facts}. ` : ""}${mentor.bio.trim()}`
+      : `${name}${facts ? `، ${facts}` : ""}. یک جلسه‌ی ۴۵ دقیقه‌ای مشاوره‌ی کنکور بذار و بعد از جلسه پرداخت کن — فقط اگه راضی بودی.`,
+  );
+  const path = `/student/mentors/${mentor.id}`;
+  const image = mentor.photo ? { url: `${SITE_URL}${mentor.photo}`, alt: name } : SITE_OG_IMAGE;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: pageOpenGraph({
+      path,
+      type: "profile",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      images: [image],
+    }),
+    twitter: { card: "summary_large_image", title: `${title} | ${SITE_NAME}`, description, images: [image.url] },
+  };
+}
 
 interface MentorProfilePageProps {
   params: Promise<{ id: string }>;
@@ -57,9 +131,52 @@ export default async function MentorProfilePage({ params, searchParams }: Mentor
   }
 
   const universityLogo = getUniversityLogo(mentor.university);
+  const name = mentor.name ?? SITE_NAME;
+
+  // Person, not Product: what's on offer is a named human being's experience.
+  // `aggregateRating` is emitted only when this mentor genuinely has both a
+  // rating and a review count — inventing either would be fabricating a
+  // review signal about a real person.
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${SITE_URL}/student/mentors/${mentor.id}#person`,
+    name,
+    url: `${SITE_URL}/student/mentors/${mentor.id}`,
+    ...(mentor.photo ? { image: `${SITE_URL}${mentor.photo}` } : {}),
+    ...(mentor.bio ? { description: mentor.bio } : {}),
+    jobTitle: "هم‌مسیر (مشاور کنکور)",
+    ...(mentor.university ? { alumniOf: { "@type": "CollegeOrUniversity", name: mentor.university } } : {}),
+    ...(mentor.field ? { knowsAbout: [mentor.field, "کنکور", "برنامه‌ریزی درسی"] } : {}),
+    worksFor: { "@id": `${SITE_URL}/#organization` },
+    ...(mentor.rating !== undefined && mentor.reviewsCount
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: mentor.rating,
+            reviewCount: mentor.reviewsCount,
+            bestRating: 5,
+          },
+        }
+      : {}),
+  };
+
+  // Gives Google the "خانه › هم‌مسیرها › نام" trail it shows instead of a
+  // raw URL under the result title.
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "خانه", item: `${SITE_URL}/student/home` },
+      { "@type": "ListItem", position: 2, name: "هم‌مسیرها", item: `${SITE_URL}/student/discover` },
+      { "@type": "ListItem", position: 3, name, item: `${SITE_URL}/student/mentors/${mentor.id}` },
+    ],
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <div className="relative">
         <div className="relative h-28 overflow-hidden rounded-b-[28px] bg-gradient-to-br from-primary-hover to-primary">
           {universityLogo && (

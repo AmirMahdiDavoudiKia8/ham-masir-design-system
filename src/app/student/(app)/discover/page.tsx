@@ -1,7 +1,21 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { DiscoveryForm } from "@/features/discovery/components/DiscoveryForm";
 import { getMentors } from "@/lib/mentors";
+import { pageOpenGraph } from "@/lib/siteConfig";
+
+const TITLE = "لیست مشاوران و منتورهای کنکور";
+const DESCRIPTION =
+  "بین دانشجوهای دانشگاه‌های برتر کشور بگرد و هم‌مسیرت رو انتخاب کن. قیمت همه یکسانه و پرداخت بعد از جلسه‌ست — فقط اگه راضی بودی.";
+
+/** The real, server-rendered mentor list (/student/mentors is only a redirect here) — so this is the page that carries the internal links into all 19 profiles. */
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/student/discover" },
+  openGraph: pageOpenGraph({ path: "/student/discover", title: TITLE, description: DESCRIPTION }),
+};
 
 // Without this, Next treats the whole page as statically prerendered
 // because of the unstable_cache call inside getMentors (see lib/mentors.ts)

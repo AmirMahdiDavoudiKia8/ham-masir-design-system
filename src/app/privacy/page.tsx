@@ -1,7 +1,7 @@
 import { CompactHeader } from "@/components/layout/CompactHeader";
 
 export const metadata = {
-  title: "حریم خصوصی | هم‌مسیر",
+  title: "حریم خصوصی",
 };
 
 export default function PrivacyPage() {
