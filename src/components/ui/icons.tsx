@@ -291,6 +291,15 @@ export function AccompaniedLineIcon(props: IconProps) {
   );
 }
 
+export function ShieldCheckIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 3.2 5 6v5.6c0 4.2 2.8 7.4 7 9.2 4.2-1.8 7-5 7-9.2V6l-7-2.8Z" />
+      <path d="m9 12 2.2 2.2L15.4 10" />
+    </svg>
+  );
+}
+
 export function CheckIcon(props: IconProps) {
   return (
     <svg {...base(props)}>

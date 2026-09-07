@@ -9,10 +9,13 @@ const BOOKING_STATUS_LABEL: Record<string, string> = {
   cancelled: "لغوشده",
 };
 
+// A paymentRequests record is created at reservation time and nothing is
+// charged then («اول جلسه، بعد پرداخت») — so "pending" means the
+// session hasn't been settled yet, not that a receipt is awaiting review.
 const PAYMENT_STATUS_LABEL: Record<string, string> = {
-  pending: "در انتظار تایید",
-  approved: "تاییدشده",
-  rejected: "ردشده",
+  pending: "تسویه‌نشده",
+  approved: "تسویه‌شده",
+  rejected: "بدون پرداخت",
 };
 
 export interface JourneyEvent {
@@ -73,7 +76,7 @@ export async function getStudentJourney(phone: string): Promise<StudentJourney> 
     events.push({
       at: payment.createdAt,
       kind: "payment",
-      label: `درخواست پرداخت: ${payment.planTitle}`,
+      label: `رزرو جلسه: ${payment.planTitle}`,
       detail: `${payment.mentorName} — ${PAYMENT_STATUS_LABEL[payment.status] ?? payment.status}`,
     });
   }

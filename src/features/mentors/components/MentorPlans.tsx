@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
 import type { Mentor } from "@/lib/mentors";
 import { PLAN_META, getPlanPrice, type PlanKey } from "@/lib/plans";
 import { PlanOption } from "./PlanOption";
@@ -52,12 +53,15 @@ export function MentorPlans({ mentor, back }: MentorPlansProps) {
     <div ref={sectionRef} className="flex flex-col gap-4">
       <h2 className="text-h2 font-bold text-foreground">پلن‌ها</h2>
 
+      <PayAfterPromise />
+
       <div className="flex flex-col gap-3">
         <PlanOption
           title={PLAN_META.session.title}
           subtitle={PLAN_META.session.subtitle}
           price={mentor.sessionPrice}
-          note="نگران نباش، اگه از جلسه‌ت راضی نبودی، یه جلسه‌ی رایگان دیگه بهت تعلق می‌گیره."
+          priceNote="— بعد از جلسه"
+          note="اگه از جلسه‌ت راضی نبودی، هیچی پرداخت نمی‌کنی."
           selected={selectedPlan === "session"}
           onClick={() => setSelectedPlan("session")}
         />
@@ -65,6 +69,8 @@ export function MentorPlans({ mentor, back }: MentorPlansProps) {
           title={PLAN_META.subscription.title}
           subtitle={PLAN_META.subscription.subtitle}
           price={mentor.subscriptionPrice}
+          priceNote="— بعد از جلسه‌ی اول"
+          note="جلسه‌ی اول رو می‌ری، بعد تصمیم می‌گیری ادامه بدی یا نه. راضی نبودی، پرداختی هم در کار نیست."
           selected={selectedPlan === "subscription"}
           onClick={() => setSelectedPlan("subscription")}
         />
@@ -79,7 +85,11 @@ export function MentorPlans({ mentor, back }: MentorPlansProps) {
           <div className="mx-auto flex max-w-md items-center gap-3 rounded-lg border border-border bg-surface/95 p-3 shadow-lifted backdrop-blur-md">
             <div className="min-w-0 flex-1">
               <p className="truncate text-caption text-muted-foreground">{PLAN_META[selectedPlan].title}</p>
-              {price && <p className="truncate text-caption font-bold text-primary">{price}</p>}
+              {price && (
+                <p className="truncate text-caption font-bold text-primary">
+                  {price} <span className="font-semibold text-muted-foreground">— بعد از جلسه</span>
+                </p>
+              )}
             </div>
             <Button onClick={goToBooking} className="shrink-0">
               ادامه به انتخاب زمان

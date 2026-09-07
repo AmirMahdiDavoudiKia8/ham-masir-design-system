@@ -7,7 +7,7 @@ export default async function ProfilePaymentsPage() {
 
   return (
     <>
-      <CompactHeader title="تاریخچه پرداخت‌ها" backHref="/student/profile" />
+      <CompactHeader title="جلسه‌ها و تسویه" backHref="/student/profile" />
       <PaymentHistory mentors={mentors} />
     </>
   );

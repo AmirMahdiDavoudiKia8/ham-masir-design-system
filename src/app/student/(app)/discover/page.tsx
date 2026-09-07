@@ -25,7 +25,7 @@ export default async function DiscoverPage() {
           <ol className="flex flex-col gap-2.5">
             <li className="flex items-start gap-2.5 text-caption text-muted-foreground">
               <span className="mt-0.5 shrink-0 font-bold text-primary">۱.</span>
-              همه‌ی هم‌مسیرها قیمت یکسانی دارن — پس به‌جای رتبه، بر اساس هدف و ساعتی که برای مطالعه داری، انتخاب کن.
+              همه‌ی هم‌مسیرها قیمت یکسانی دارن و همه هم بعد از جلسه حساب می‌شن — پس به‌جای رتبه، بر اساس هدف و ساعتی که برای مطالعه داری، انتخاب کن.
             </li>
             <li className="flex items-start gap-2.5 text-caption text-muted-foreground">
               <span className="mt-0.5 shrink-0 font-bold text-primary">۲.</span>

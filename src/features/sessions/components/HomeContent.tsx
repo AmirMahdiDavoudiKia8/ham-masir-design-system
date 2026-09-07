@@ -5,6 +5,7 @@ import { buttonClasses } from "@/components/ui/Button";
 import { ArrowLeftIcon, UsersIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
 import { MentorStripCard } from "@/features/mentors/components/MentorStripCard";
 import type { CancellationInfo } from "@/lib/mentorPortal";
 import type { Mentor } from "@/lib/mentors";
@@ -29,12 +30,16 @@ const howItWorks = [
     ),
   },
   {
+    title: "جلسه رو رزرو کن — بدون هیچ پرداختی",
+    text: "زمانی که برات مناسبه رو انتخاب می‌کنی و رزروت ثبت می‌شه. همین. نه درگاهی، نه کارت به کارتی — ما برای هماهنگی تایم دقیق باهات تماس می‌گیریم.",
+  },
+  {
     title: "برنامه‌ات رو دنبال کن",
     text: 'با انتخاب طرح بادیگارد، بخش "پیشرفت" برات باز می‌شه و می‌تونی طبق برنامه‌ای که هم‌مسیرت برات نوشته، مستقیم داخل سایت هم‌مسیر پیش بری.',
   },
   {
-    title: "اگه راضی نبودی، تنها نمی‌مونی",
-    text: "اگه از جلسه‌ی هم‌مسیرت راضی نبودی، تیم هم‌مسیر بررسیش می‌کنه و یه جلسه‌ی رایگان دیگه بهت تعلق می‌گیره.",
+    title: "اول جلسه، بعد پرداخت",
+    text: "تهش خودت تصمیم می‌گیری. اگه جلسه به کارت اومد، حساب می‌کنی؛ اگه راضی نبودی، هیچی بدهکار نیستی و کسی هم ازت دلیل نمی‌خواد.",
   },
 ];
 
@@ -86,6 +91,8 @@ export function HomeContent({ mentors, meetLink, cancelled, serverSession }: Hom
           <ArrowLeftIcon className="h-4 w-4" />
         </Link>
       </div>
+
+      <PayAfterPromise className="animate-rise-in" />
 
       <div
         className="flex flex-col gap-3 rounded-lg border border-primary/30 bg-gradient-to-b from-primary-soft to-surface p-5 text-center shadow-card animate-rise-in"

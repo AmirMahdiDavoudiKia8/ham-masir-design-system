@@ -20,6 +20,13 @@ const STATUS_LABEL: Record<string, string> = {
   cancelled: "لغو شده",
 };
 
+/** Reservations are free; a still-upcoming session owes nothing yet, so its amount can't be shown as if it were already paid. */
+const AMOUNT_NOTE: Record<string, string> = {
+  upcoming: "پرداخت بعد از جلسه",
+  active: "اگه راضی بودی",
+  cancelled: "دریافت نشد",
+};
+
 function formatDate(iso: string): string {
   const formatted = new Intl.DateTimeFormat("fa-IR", { year: "numeric", month: "long", day: "numeric" }).format(
     new Date(iso),
@@ -27,7 +34,13 @@ function formatDate(iso: string): string {
   return toPersianDigits(formatted);
 }
 
-/** Every "payment" is the booking created the moment mock payment succeeds (see PaymentForm) — so the student's payment history is just their bookings, read here for price and date. */
+/**
+ * Every row is a booking, created the moment the reservation is placed (see
+ * PaymentForm) — so this is a record of sessions and what each one will cost,
+ * not of money already taken. Nothing is charged at reservation time
+ * («اول جلسه، بعد پرداخت»), so the amounts here are settled after the
+ * session and the copy must not imply a completed payment.
+ */
 export function PaymentHistory({ mentors }: PaymentHistoryProps) {
   const bookings = useBookingsStore((s) => s.bookings);
 
@@ -36,8 +49,8 @@ export function PaymentHistory({ mentors }: PaymentHistoryProps) {
       <div className="px-4 pt-6">
         <EmptyState
           icon={<CoinIcon className="h-6 w-6" />}
-          title="هنوز پرداختی ثبت نشده"
-          description="وقتی برای یک هم‌مسیر پرداخت کنی، اینجا نشونش می‌دیم."
+          title="هنوز جلسه‌ای رزرو نکردی"
+          description="وقتی با یک هم‌مسیر جلسه بذاری، جلسه و هزینه‌ش رو اینجا می‌بینی — پرداختش بعد از جلسه‌ست."
         />
       </div>
     );
@@ -60,7 +73,14 @@ export function PaymentHistory({ mentors }: PaymentHistoryProps) {
             {row.planTitle && <p className="truncate text-caption text-muted-foreground">{row.planTitle}</p>}
             <p className="mt-1 text-caption text-muted-foreground">{formatDate(row.createdAt)}</p>
           </div>
-          {row.price && <p className="shrink-0 text-caption font-bold text-primary">{row.price}</p>}
+          {row.price && (
+            <div className="shrink-0 text-left">
+              <p className="text-caption font-bold text-primary">{row.price}</p>
+              {row.status && (
+                <p className="text-label font-semibold text-muted-foreground">{AMOUNT_NOTE[row.status]}</p>
+              )}
+            </div>
+          )}
         </div>
       ))}
     </div>

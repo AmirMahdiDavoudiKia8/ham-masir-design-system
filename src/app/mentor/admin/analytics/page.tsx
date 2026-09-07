@@ -11,7 +11,8 @@ export const dynamic = "force-dynamic";
 
 const LABEL_NAMES: Record<string, string> = {
   mentor_card: "کلیک روی کارت منتور",
-  payment_submit: "کلیک روی «پرداخت»",
+  // Label key kept as payment_submit so the funnel keeps its pre-«پرداخت بعد از جلسه» history.
+  payment_submit: "کلیک روی «رزرو جلسه»",
   mentor_request_open: "باز کردن فرم «هم‌مسیر دلخواه»",
   mentor_request_submit: "ارسال فرم «هم‌مسیر دلخواه»",
 };
@@ -64,7 +65,7 @@ export default async function AnalyticsAdminPage() {
             whole={summary30.funnels.mentorListViews}
           />
           <FunnelRow
-            label="از صفحه‌ی پرداخت زدن «پرداخت»"
+            label="از صفحه‌ی ثبت رزرو زدن «رزرو جلسه»"
             part={summary30.funnels.paymentSubmitClicks}
             whole={summary30.funnels.paymentPageViews}
           />

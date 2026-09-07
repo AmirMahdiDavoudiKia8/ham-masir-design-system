@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
 import { Button } from "@/components/ui/Button";
-import { CheckIcon, ClockIcon, LockIcon } from "@/components/ui/icons";
+import { CheckIcon, PhoneIcon } from "@/components/ui/icons";
 import { PhoneAuthGate } from "@/features/auth/components/PhoneAuthGate";
 import { trackClick } from "@/lib/analyticsClient";
 import type { Mentor } from "@/lib/mentors";
-import { PAYMENT_CARD_NUMBER, PAYMENT_CARD_OWNER } from "@/lib/payment";
 import { PLAN_META, getPlanPrice, type PlanKey } from "@/lib/plans";
 import { useBookingsStore } from "@/store/bookingsStore";
 import { useProfileStore } from "@/store/profileStore";
@@ -21,15 +21,15 @@ interface PaymentFormProps {
   slot: string;
 }
 
-type Phase = "identity" | "pay";
+type Phase = "identity" | "reserve";
 
 /**
- * Screen B0: before a student's very first payment, we don't actually know
- * who they are yet — so this gates the real payment UI behind
+ * Screen B0: before a student's very first reservation, we don't actually
+ * know who they are yet — so this gates the reservation UI behind
  * PhoneAuthGate (features/auth), the phone+password stand-in for real OTP (see
  * that component's doc comment for why). Always starts at "identity" on the
  * very first render (server and client agree, so no hydration mismatch),
- * but a mount effect immediately advances past it to "pay" if profileStore
+ * but a mount effect immediately advances past it to "reserve" if profileStore
  * already has a verified name+phone from a previous booking — a returning
  * student never gets re-asked, and a phone number can't end up saved under
  * two different names since there's only ever one profile per device to
@@ -38,16 +38,14 @@ type Phase = "identity" | "pay";
  * Once verified, name+phone are written to the shared profileStore so the
  * rest of the app (profile screen, completion gauge) picks them up too.
  *
- * Payment itself is card-to-card, entirely manual: this screen creates a
- * pending payment-request record (src/lib/paymentRequests, currently just a
- * log — nothing reads it back yet) for a reference code, shows the card
- * number, and asks the student to send the receipt to Telegram/Bale
- * directly. There's no live channel back to this browser tab, so the
- * booking is still recorded here optimistically; the admin manually
- * following up on the receipt is the real gate on whether the session
- * actually happens (see the Telegram/Bale bot in bots/ for the automated
- * version of this — currently unused because Telegram is filtered in Iran
- * and can't be reached reliably from Iran-hosted infrastructure).
+ * Nothing is charged here, by design: the site's promise is «اول جلسه، بعد
+ * پرداخت» (see components/brand/PayAfterPromise), so this screen takes no
+ * money, shows no card number and has no "پرداخت کردم" button. It creates
+ * the same pending record it always did (src/lib/paymentRequests) for its
+ * short reference code — now read as "session reserved, not yet settled" —
+ * and settlement is arranged by phone after the session actually happens.
+ * The route is still .../payment so the analytics funnel (lib/analytics's
+ * paymentPageViews, which matches on the path) keeps its history.
  */
 export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
   const router = useRouter();
@@ -61,8 +59,7 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [payCode, setPayCode] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [reserveCode, setReserveCode] = useState<string | null>(null);
 
   // Zustand's persist middleware hydrates profileStore/bookingsStore from
   // localStorage asynchronously, after this component's first render — a
@@ -70,7 +67,7 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
   // "خانه" mid-flow) could mount with both still at their empty defaults.
   // The original single mount-only effect reacted to that emptiness as "a
   // brand-new visitor", re-showing PhoneAuthGate to an already-verified
-  // returning student and failing to restore an in-progress payment. Two
+  // returning student and failing to restore an in-progress reservation. Two
   // separate ref-guarded effects, each keyed on its own store's data
   // actually showing up, fix both independently instead of relying on one
   // mount-time snapshot of both at once.
@@ -80,18 +77,18 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
     hasSyncedProfileRef.current = true;
     setName(profile.name);
     setPhone(profile.phone);
-    setPhase("pay");
+    setPhase("reserve");
     fetchAndRestoreBookings(profile.phone.trim());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile.name, profile.phone]);
 
-  const hasSyncedPayCodeRef = useRef(false);
+  const hasSyncedCodeRef = useRef(false);
   useEffect(() => {
-    if (hasSyncedPayCodeRef.current) return;
+    if (hasSyncedCodeRef.current) return;
     const existing = bookings.find((b) => b.mentorId === mentor.id && b.plan === plan && b.slot === slot);
     if (!existing?.payCode) return;
-    hasSyncedPayCodeRef.current = true;
-    setPayCode(existing.payCode);
+    hasSyncedCodeRef.current = true;
+    setReserveCode(existing.payCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookings]);
 
@@ -104,25 +101,17 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
       .catch(() => {});
   }
 
-  function handleCopyCard() {
-    navigator.clipboard
-      .writeText(PAYMENT_CARD_NUMBER)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch(() => {});
-  }
-
   function handleVerified(verifiedName: string, verifiedPhone: string) {
     setName(verifiedName);
     setPhone(verifiedPhone);
     updateProfile({ name: verifiedName, phone: verifiedPhone });
     fetchAndRestoreBookings(verifiedPhone);
-    setPhase("pay");
+    setPhase("reserve");
   }
 
-  async function handlePay() {
+  async function handleReserve() {
+    // Stable label kept from the pre-«پرداخت بعد از جلسه» flow on purpose —
+    // it's the same funnel step, so renaming it would split the history.
     trackClick(`/student/booking/${mentor.id}/payment`, "payment_submit");
     setSubmitting(true);
     try {
@@ -170,10 +159,9 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
         updateProfile({ name: resolvedName });
       }
 
-      // The moment the payment request is created is the one place a
+      // The moment the reservation record is created is the one place a
       // booking gets created — this is what makes it show up correctly in
-      // "جلسه‌های من", even though the payment itself is confirmed later in
-      // the bot.
+      // "جلسه‌های من", even though settlement happens after the session.
       addBooking({
         mentorId: mentor.id,
         plan,
@@ -205,7 +193,7 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
       if (plan === "subscription") {
         linkSubscriptionToPortal(resolvedName, phone.trim(), mentor.id).catch(() => {});
       }
-      setPayCode(data.code);
+      setReserveCode(data.code);
     } finally {
       setSubmitting(false);
     }
@@ -216,91 +204,59 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
     router.push(`/student/booking/${mentor.id}/confirmation?${params.toString()}`);
   }
 
-  if (payCode) {
+  if (reserveCode) {
     return (
       <div className="flex flex-col gap-6">
         <BookingSummaryCard mentor={mentor} plan={plan} slot={slot} />
 
-        <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-4 shadow-card">
-          <p className="text-body font-bold text-foreground">یه قدم مونده: پرداخت</p>
-          <p className="text-caption text-muted-foreground">
-            شماره کارت و مبلغ رو زیر می‌بینی — بعد از واریز، رسیدتو بفرست تا تایید بشه.
-          </p>
-          <p className="text-caption text-muted-foreground">
-            کد رزروت: <span dir="ltr" className="font-bold text-foreground">{payCode}</span>
+        <div className="flex flex-col gap-3 rounded-lg border-2 border-primary-light/60 bg-surface p-4 shadow-card">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-success-soft text-success">
+              <CheckIcon className="h-5 w-5" strokeWidth={2.5} />
+            </span>
+            <p className="text-body font-bold text-foreground">رزروت ثبت شد — بدون هیچ پرداختی</p>
+          </div>
+          <p className="text-caption leading-[1.9] text-muted-foreground">
+            کد رزروت: <span dir="ltr" className="font-bold text-foreground">{reserveCode}</span> — همینو نگه دار،
+            هر وقت درباره‌ی این جلسه حرف زدیم باهاش پیدات می‌کنیم.
           </p>
 
-          <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface-alt p-3">
-            <div className="flex items-center justify-between gap-2 rounded-md border border-border bg-surface px-3 py-2.5">
-              <span dir="ltr" className="text-body font-bold tracking-wide text-foreground">
-                {PAYMENT_CARD_NUMBER}
-              </span>
-              <button
-                type="button"
-                onClick={handleCopyCard}
-                className="flex shrink-0 items-center gap-1 rounded-md bg-primary-soft px-2.5 py-1.5 text-label font-bold text-primary"
-              >
-                {copied ? (
-                  <>
-                    <CheckIcon className="h-3.5 w-3.5" />
-                    کپی شد
-                  </>
-                ) : (
-                  "کپی شماره کارت"
-                )}
-              </button>
-            </div>
-            <p className="text-caption text-muted-foreground">
-              به نام: <span className="font-bold text-foreground">{PAYMENT_CARD_OWNER}</span>
+          <div className="flex items-start gap-2.5 rounded-md bg-surface-alt px-3 py-2.5">
+            <PhoneIcon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+            <p className="text-caption leading-[1.9] text-muted-foreground">
+              قدم بعدی با ماست: به‌زودی باهات تماس می‌گیریم تا تایم دقیق جلسه رو با هم‌مسیرت هماهنگ کنیم. تا اون
+              موقع لازم نیست هیچ کاری بکنی.
             </p>
-            <p className="text-caption text-muted-foreground">
-              بعد از واریز، عکس رسید رو همراه با کد رزروت (<span dir="ltr" className="font-bold">{payCode}</span>)
-              برام بفرست:{" "}
-              <a
-                href="https://t.me/hammasirsite"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-primary underline underline-offset-4"
-              >
-                تلگرام
-              </a>{" "}
-              یا{" "}
-              <a
-                href="https://ble.ir/hammasirsite"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-primary underline underline-offset-4"
-              >
-                بله
-              </a>
-            </p>
+          </div>
 
-            <div className="flex items-start gap-2.5 rounded-md bg-surface-alt px-3 py-2.5">
-              <ClockIcon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-              <p className="text-caption text-muted-foreground">
-                لطفاً تا قبل از تایید شدن رسید پرداخت، روی «پرداخت کردم» نزن. معمولاً تایید کمتر از نیم ساعت طول
-                می‌کشه.
-              </p>
-            </div>
-            <div className="flex items-start gap-3 border-t border-border pt-3">
-              <Image
-                src="/brand/founder.jpg"
-                alt="امیرمهدی داودی‌کیا"
-                width={44}
-                height={44}
-                className="h-11 w-11 shrink-0 rounded-full object-cover"
-              />
-              <p className="text-caption leading-6 text-muted-foreground">
-                سلام. من امیرمهدیم، کسی که هم‌مسیر رو ساخته. همشو. دست تنها و با پول تو جیبیام اوردم بالا و هنوز
-                پولی واسه خرید درگاه پرداخت ندارم :) چند دقیقه بعد از پرداخت باهات تماس میگیرم تا تایم دقیق جلسه
-                رو مشخص کنیم. مرسی که درک میکنی
-              </p>
-            </div>
+          <div className="flex items-start gap-3 rounded-md border border-secondary/50 bg-secondary-soft px-3 py-2.5">
+            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-surface text-primary">
+              <CheckIcon className="h-3 w-3" strokeWidth={3} />
+            </span>
+            <p className="text-caption leading-[1.9] text-secondary-foreground">
+              درباره‌ی پول: الان چیزی ازت نمی‌گیریم و لازم هم نیست کارت‌به‌کارت کنی. بعد از اینکه جلسه برگزار شد،
+              اگه به کارت اومد، برای تسویه باهات هماهنگ می‌کنیم. اگه راضی نبودی، همون‌جا تموم می‌شه و هیچی بدهکار
+              نیستی.
+            </p>
+          </div>
+
+          <div className="flex items-start gap-3 border-t border-border pt-3">
+            <Image
+              src="/brand/founder.jpg"
+              alt="امیرمهدی داودی‌کیا"
+              width={44}
+              height={44}
+              className="h-11 w-11 shrink-0 rounded-full object-cover"
+            />
+            <p className="text-caption leading-6 text-muted-foreground">
+              سلام. من امیرمهدیم، کسی که هم‌مسیر رو ساخته. همشو. دست تنها و با پول تو جیبیام اوردم بالا. برای همین
+              ترجیح می‌دم اول کارمو بهت نشون بدم، بعد ازت پول بگیرم. اگه جلسه به دردت نخورد، منم پولی نمی‌خوام.
+            </p>
           </div>
         </div>
 
         <Button size="lg" fullWidth onClick={handleDone}>
-          پرداخت کردم
+          ادامه
         </Button>
       </div>
     );
@@ -314,17 +270,15 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
     <div className="flex flex-col gap-6">
       <BookingSummaryCard mentor={mentor} plan={plan} slot={slot} />
 
-      <div className="flex items-start gap-2.5 rounded-md bg-surface-alt px-4 py-3.5">
-        <LockIcon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-muted-foreground" />
-        {/* TODO: once escrow is implemented, make the hold explicit here —
-            e.g. "تا پایان جلسه نزد هم‌مسیر می‌مونه و بعدش برای user آزاد می‌شه." */}
-        <p className="text-caption text-muted-foreground">
-          پرداختت امن انجام می‌شه و تا برگزاری جلسه نزد هم‌مسیر می‌مونه.
-        </p>
-      </div>
+      <PayAfterPromise />
 
-      <Button size="lg" fullWidth disabled={submitting} onClick={handlePay}>
-        {submitting ? "در حال ثبت پرداخت…" : "پرداخت"}
+      <p className="text-caption leading-[1.9] text-muted-foreground">
+        با زدن دکمه‌ی پایین فقط جلسه‌ات رزرو می‌شه. هیچ مبلغی الان از تو گرفته نمی‌شه و برای رزرو به شماره کارت و
+        درگاه پرداخت نیازی نیست.
+      </p>
+
+      <Button size="lg" fullWidth disabled={submitting} onClick={handleReserve}>
+        {submitting ? "در حال ثبت رزرو…" : "رزرو جلسه — بدون پرداخت"}
       </Button>
     </div>
   );

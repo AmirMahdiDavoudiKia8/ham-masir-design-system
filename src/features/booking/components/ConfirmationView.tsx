@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PayAfterBanner } from "@/components/brand/PayAfterPromise";
 import { buttonClasses } from "@/components/ui/Button";
 import { CheckIcon, SparkleIcon } from "@/components/ui/icons";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
@@ -31,7 +32,9 @@ export function ConfirmationView({ mentor, plan, slot }: ConfirmationViewProps) 
         <h1 className="text-h1 font-bold text-foreground">
           مسیرت شروع شد، {name} کنارته.
         </h1>
-        <p className="text-body text-muted-foreground">از همین‌جا شروع می‌کنیم؛ بقیه‌ش رو با هم جلو می‌ریم.</p>
+        <p className="text-body text-muted-foreground">
+          رزروت ثبت شد و هیچ پرداختی ازت گرفته نشد. از همین‌جا شروع می‌کنیم؛ بقیه‌ش رو با هم جلو می‌ریم.
+        </p>
       </div>
 
       <div className="w-full rounded-lg border border-border bg-surface p-4 text-right shadow-card">
@@ -54,6 +57,8 @@ export function ConfirmationView({ mentor, plan, slot }: ConfirmationViewProps) 
           </div>
         </dl>
       </div>
+
+      <PayAfterBanner className="text-right" />
 
       <p className="text-caption text-muted-foreground">
         به‌زودی برای هماهنگ کردن تایم دقیق باهات تماس می‌گیریم. هر سوالی داشتی به{" "}

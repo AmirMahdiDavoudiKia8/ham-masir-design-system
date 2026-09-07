@@ -41,7 +41,7 @@ export function ProfileActions() {
 
   const items: ActionItem[] = [
     { key: "edit", label: "ویرایش پروفایل", Icon: EditIcon, href: "/student/profile/edit" },
-    { key: "payments", label: "تاریخچه پرداخت‌ها", Icon: CoinIcon, href: "/student/profile/payments" },
+    { key: "payments", label: "جلسه‌ها و تسویه", Icon: CoinIcon, href: "/student/profile/payments" },
     { key: "support", label: "پشتیبانی", Icon: ChatIcon, href: "/student/profile/support" },
     {
       key: "logout",

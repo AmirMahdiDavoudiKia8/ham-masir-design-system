@@ -10,7 +10,7 @@ import { getConversionBySource, getMultiTouchPhones, getStudentJourney } from "@
 // /mentor/admin/* page.
 export const dynamic = "force-dynamic";
 
-const KIND_LABEL: Record<string, string> = { lead: "لید", booking: "رزرو", payment: "پرداخت" };
+const KIND_LABEL: Record<string, string> = { lead: "لید", booking: "رزرو", payment: "تسویه" };
 const KIND_CLASS: Record<string, string> = {
   lead: "bg-primary-soft text-primary",
   booking: "bg-secondary-soft text-secondary-dark",

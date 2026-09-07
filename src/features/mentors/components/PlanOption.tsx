@@ -5,6 +5,8 @@ interface PlanOptionProps {
   title: string;
   subtitle: string;
   price?: string;
+  /** Rendered next to the price — the site charges nothing up front, so the price alone would read as "due now" without it. */
+  priceNote?: string;
   note?: string;
   selected: boolean;
   onClick: () => void;
@@ -14,7 +16,7 @@ interface PlanOptionProps {
  * Single-select plan card. Both plans render with identical visual weight —
  * this is meant to read as a calm choice, not a nudge toward one option.
  */
-export function PlanOption({ title, subtitle, price, note, selected, onClick }: PlanOptionProps) {
+export function PlanOption({ title, subtitle, price, priceNote, note, selected, onClick }: PlanOptionProps) {
   return (
     <button
       type="button"
@@ -40,7 +42,10 @@ export function PlanOption({ title, subtitle, price, note, selected, onClick }: 
         <span className="block text-caption font-bold text-foreground">{title}</span>
         <span className="mt-1 block text-label leading-relaxed text-muted-foreground">{subtitle}</span>
         {price ? (
-          <span className="mt-2 block text-caption font-bold text-primary">{price}</span>
+          <span className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+            <span className="text-caption font-bold text-primary">{price}</span>
+            {priceNote && <span className="text-label font-semibold text-muted-foreground">{priceNote}</span>}
+          </span>
         ) : (
           <span className="mt-2 block text-label font-semibold text-muted-foreground">
             به‌زودی قیمت‌گذاری می‌شود

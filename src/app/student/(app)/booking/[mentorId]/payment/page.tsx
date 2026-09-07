@@ -26,7 +26,7 @@ export default async function PaymentPage({ params, searchParams }: PaymentPageP
   return (
     <>
       <CompactHeader
-        title="پرداخت"
+        title="ثبت رزرو"
         backHref={`/student/booking/${mentorId}?plan=${plan}&slot=${encodeURIComponent(slot)}`}
       />
       <div className="flex flex-col px-4 pb-2 pt-5">

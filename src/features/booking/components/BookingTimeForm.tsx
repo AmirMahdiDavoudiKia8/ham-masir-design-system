@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { PayAfterBanner } from "@/components/brand/PayAfterPromise";
 import { RepeatIcon } from "@/components/ui/icons";
 import type { Mentor } from "@/lib/mentors";
 import type { PlanKey } from "@/lib/plans";
@@ -19,8 +20,12 @@ interface BookingTimeFormProps {
  * Screen A: the student proposes a time — this is request-based scheduling,
  * not a live calendar, so slots are plain labels the mentor later confirms
  * (or counters) elsewhere. Selection is local state; submitting hands off to
- * the payment screen via the URL, the same way DiscoveryForm hands off to
- * the mentors list.
+ * the reservation screen via the URL, the same way DiscoveryForm hands off
+ * to the mentors list.
+ *
+ * Nothing is charged anywhere in this flow (see PayAfterPromise) — the
+ * banner here is what keeps a student from bailing at the time picker
+ * because they assume a payment wall is waiting on the next screen.
  */
 export function BookingTimeForm({ mentor, plan }: BookingTimeFormProps) {
   const router = useRouter();
@@ -58,14 +63,17 @@ export function BookingTimeForm({ mentor, plan }: BookingTimeFormProps) {
         <div className="flex items-start gap-2.5 rounded-md bg-surface-alt px-4 py-3.5">
           <RepeatIcon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-muted-foreground" />
           <p className="text-caption text-muted-foreground">
-            این اولین جلسه‌ی هفتگیته. برنامه هرماه تمدید می‌شه و هر وقت بخوای، قبل از شروع دوره‌ی بعد می‌تونی لغوش
-            کنی.
+            این اولین جلسه‌ی هفتگیته. هزینه‌ی طرح بعد از همین جلسه‌ی اول حساب می‌شه — اونم فقط اگه خودت
+            خواستی ادامه بدی. بعدش برنامه هرماه تمدید می‌شه و هر وقت بخوای، قبل از شروع دوره‌ی بعد
+            می‌تونی لغوش کنی.
           </p>
         </div>
       )}
 
+      <PayAfterBanner />
+
       <Button size="lg" fullWidth disabled={!selectedSlot} onClick={handleSubmit}>
-        ادامه به پرداخت
+        ادامه و ثبت رزرو
       </Button>
     </div>
   );

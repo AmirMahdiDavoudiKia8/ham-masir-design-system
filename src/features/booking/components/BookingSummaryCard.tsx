@@ -31,7 +31,13 @@ export function BookingSummaryCard({ mentor, plan, slot }: BookingSummaryCardPro
           <p className="truncate text-caption text-muted-foreground">پلن انتخابی</p>
           <p className="truncate text-caption font-bold text-foreground">{title}</p>
         </div>
-        {price && <p className="shrink-0 text-caption font-bold text-primary">{price}</p>}
+        {price && (
+          <div className="shrink-0 text-left">
+            <p className="text-caption font-bold text-primary">{price}</p>
+            {/* Without this the price reads as "due now" — nothing in this flow is charged up front (see PayAfterPromise). */}
+            <p className="text-label font-semibold text-muted-foreground">بعد از جلسه</p>
+          </div>
+        )}
       </div>
 
       {slot && (
