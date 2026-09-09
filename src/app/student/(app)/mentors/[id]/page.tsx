@@ -106,6 +106,28 @@ export default async function MentorProfilePage({ params, searchParams }: Mentor
   const mentors = await getMentors();
   const mentor = mentors.find((m) => m.id === id);
 
+  /*
+   * Rendered inline at HTTP 200 rather than via notFound(), deliberately.
+   *
+   * notFound() cannot produce a real 404 here: loading.tsx puts this segment
+   * behind a Suspense boundary, so response headers are flushed before the
+   * throw and the status is already committed. Measured all three ways on a
+   * production build:
+   *   - inline (this)            -> 200, full HTML in the initial response
+   *   - notFound(), no loading   -> 404, full HTML, but every mentor profile
+   *                                 loses its skeleton on client navigation
+   *   - notFound(), with loading -> 200 AND an empty initial body (worst)
+   * Valid profiles server-render identically (1554 chars) in all three, so
+   * loading.tsx costs nothing at SSR — it only breaks the status code.
+   *
+   * Keeping the skeleton wins: TTFB on the 1 vCPU box swings from ~90ms warm
+   * to several seconds cold, and a blank screen for that long on the main
+   * conversion path is a real cost to every student. The page it buys is a
+   * soft 404 on dead slugs — cosmetic here, because generateMetadata already
+   * returns noindex for them so they are never indexed, and crawl budget on a
+   * 25-URL site is not a constraint. Revisit if the catalogue ever grows large
+   * enough for crawl budget to matter.
+   */
   if (!mentor) {
     return (
       <>
@@ -149,16 +171,16 @@ export default async function MentorProfilePage({ params, searchParams }: Mentor
     ...(mentor.university ? { alumniOf: { "@type": "CollegeOrUniversity", name: mentor.university } } : {}),
     ...(mentor.field ? { knowsAbout: [mentor.field, "کنکور", "برنامه‌ریزی درسی"] } : {}),
     worksFor: { "@id": `${SITE_URL}/#organization` },
-    ...(mentor.rating !== undefined && mentor.reviewsCount
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: mentor.rating,
-            reviewCount: mentor.reviewsCount,
-            bestRating: 5,
-          },
-        }
-      : {}),
+    // Deliberately NO aggregateRating. `mentor.rating`/`reviewsCount` exist in
+    // mentors.json but nothing renders them — MentorReviews and RatingBadge are
+    // written but never imported by any page — and the data itself is launch
+    // placeholder (every rated mentor has exactly 2 reviews, only 5 or 4.5
+    // stars, generic author labels like "دانش‌آموز تجربی، پشت‌کنکوری").
+    // Emitting it would be review markup that no visitor can see, about real
+    // named people, from numbers nobody gave us. That breaks Google's
+    // structured-data policy and is exactly the kind of claim we must not make
+    // about a real person. Re-add only when reviews are genuinely collected
+    // AND rendered on this page.
   };
 
   // Gives Google the "خانه › هم‌مسیرها › نام" trail it shows instead of a

@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { ProgressHome } from "@/features/progress/components/ProgressHome";
 import { getMentors } from "@/lib/mentors";
 import { getProgressData } from "@/lib/progress";
 import { getSessionStudent } from "@/lib/mentorPortal";
+
+/**
+ * A signed-in student's own weekly plan — never a search result. It was
+ * reachable at 200 with the layout's default index,follow and is not covered
+ * by robots.txt, so it was genuinely indexable. Left crawlable on purpose so
+ * Google can actually see this noindex and drop it (a robots.txt Disallow
+ * would hide the directive it needs to read).
+ */
+export const metadata: Metadata = { robots: { index: false, follow: true } };
 
 export default async function ProgressPage() {
   const [{ studyPlan, monthCalendar }, mentors, sessionStudent] = await Promise.all([

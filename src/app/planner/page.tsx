@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { StudentShell } from "@/components/layout/StudentShell";
 import { PlannerFlow } from "@/features/planner/PlannerFlow";
-import { SITE_NAME, SITE_URL, pageOpenGraph } from "@/lib/siteConfig";
+import { SITE_URL, pageOpenGraph } from "@/lib/siteConfig";
 
 const TITLE = "برنامه‌ساز رایگان کنکور — برنامه‌ی مطالعه‌ی شخصی‌سازی‌شده";
 const DESCRIPTION = "چند سؤال کوتاه، یه برنامه‌ی مطالعه‌ی دیتامحور و رایگان تا روز کنکور.";
@@ -18,7 +18,7 @@ const plannerJsonLd = {
   "@type": "Service",
   name: "برنامه‌ساز کنکور",
   description: DESCRIPTION,
-  provider: { "@type": "EducationalOrganization", name: SITE_NAME, url: SITE_URL },
+  provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: "IR",
   isAccessibleForFree: true,
   url: `${SITE_URL}/planner`,

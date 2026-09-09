@@ -32,7 +32,11 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
-  alternates: { canonical: "/" },
+  // No site-wide `alternates.canonical`. Next inherits it into every page that
+  // doesn't set its own, which had /student/progress, /student/onboarding,
+  // /student/mentors/quiz, /student/profile/* and the mentor-portal pages all
+  // declaring themselves duplicates of "/" — a URL that 308-redirects away.
+  // Each indexable page states its own canonical instead.
   openGraph: {
     type: "website",
     locale: "fa_IR",

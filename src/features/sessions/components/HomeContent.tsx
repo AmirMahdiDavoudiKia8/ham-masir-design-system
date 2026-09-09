@@ -9,6 +9,7 @@ import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
 import { MentorStripCard } from "@/features/mentors/components/MentorStripCard";
 import type { CancellationInfo } from "@/lib/mentorPortal";
 import type { Mentor } from "@/lib/mentors";
+import { HOME_FAQ, buildFaqJsonLd } from "@/lib/faq";
 import { toPersianDigits } from "@/lib/format";
 import { useBookingsStore } from "@/store/bookingsStore";
 import type { ResolvedBooking } from "../resolveBooking";
@@ -178,6 +179,31 @@ export function HomeContent({ mentors, meetLink, cancelled, serverSession }: Hom
           <p className="text-center text-body font-bold text-secondary-dark">چون کنکور دو نفری آسون‌تره.</p>
         </div>
       </div>
+
+      {/*
+        Rendered from the same HOME_FAQ the JSON-LD below is built from. The
+        schema shipped once with answers that appeared nowhere on the page;
+        reading both off one array is what stops that recurring. The script
+        lives here, beside the markup it describes, rather than in the page's
+        server component — that way it can't be emitted on the returning-student
+        view where this section isn't rendered.
+      */}
+      <div className="flex flex-col gap-4 animate-rise-in" style={{ animationDelay: "140ms" }}>
+        <h2 className="text-center text-h2 font-bold text-foreground">سوال‌هایی که زیاد پرسیده می‌شه</h2>
+        <div className="flex flex-col gap-3">
+          {HOME_FAQ.map(({ question, answer }) => (
+            <div key={question} className="flex flex-col gap-1.5 rounded-lg border border-border bg-surface p-4 shadow-card">
+              <h3 className="text-body font-bold text-foreground">{question}</h3>
+              <p className="text-caption leading-[1.9] text-muted-foreground">{answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqJsonLd()) }}
+      />
 
       <SiteFooter />
 

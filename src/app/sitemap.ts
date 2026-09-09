@@ -1,3 +1,5 @@
+import { stat } from "node:fs/promises";
+import path from "node:path";
 import type { MetadataRoute } from "next";
 import { getMentors } from "@/lib/mentors";
 import { SITE_URL } from "@/lib/siteConfig";
@@ -14,44 +16,60 @@ import { SITE_URL } from "@/lib/siteConfig";
  * internal links. `/student/mentors` is deliberately absent — it is a bare
  * redirect to /student/discover, and listing a redirect just spends crawl
  * budget to be told to go somewhere else.
+ *
+ * No `priority` or `changeFrequency` on any entry: Google has stated plainly
+ * that it ignores both, so they were pure noise.
  */
-const STATIC_ROUTES: {
-  path: string;
-  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
-  priority: number;
-}[] = [
-  { path: "/student/home", changeFrequency: "weekly", priority: 1 },
-  { path: "/student/discover", changeFrequency: "weekly", priority: 0.9 },
-  { path: "/planner", changeFrequency: "weekly", priority: 0.9 },
-  { path: "/about", changeFrequency: "monthly", priority: 0.5 },
-  { path: "/terms", changeFrequency: "yearly", priority: 0.2 },
-  { path: "/privacy", changeFrequency: "yearly", priority: 0.2 },
+const STATIC_ROUTES = [
+  "/student/home",
+  "/student/discover",
+  "/planner",
+  "/about",
+  "/terms",
+  "/privacy",
 ];
 
+/** Rebuild hourly so a mentor edit reaches the sitemap without waiting for a deploy. */
+export const revalidate = 3600;
+
+const CATALOGUE_FILE = path.join(process.cwd(), "src/data/mentors/mentors.json");
+
 /**
- * Mentor profiles are the site's long-tail — one indexable page per real
- * person, each with a name, university, rank and their own written story.
- * They were missing from the sitemap entirely, so nothing pointed a crawler
- * at them except the client-rendered list. Generated from the same
- * getMentors() the pages themselves read, so a mentor added or unpublished
- * in the portal shows up (or drops out) here with no second list to update.
+ * A real modification time for the mentor catalogue, or undefined.
+ *
+ * This replaces `lastModified: new Date()`, which stamped every URL with the
+ * time the sitemap was generated. That is worse than useless: Google's docs
+ * are explicit that it ignores `lastmod` entirely once it finds the value
+ * unreliable, so an always-now timestamp doesn't just fail to help — it
+ * discards the crawl-scheduling signal for the whole file. The catalogue
+ * file's mtime is a genuine signal (on the VPS it's symlinked to persistent
+ * storage, so it moves only when a mentor is actually added or edited).
+ *
+ * Static pages get no `lastModified` at all, because nothing here knows when
+ * their copy last changed and an invented date is what caused this problem in
+ * the first place.
  */
+async function catalogueModified(): Promise<Date | undefined> {
+  try {
+    return (await stat(CATALOGUE_FILE)).mtime;
+  } catch {
+    return undefined;
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const lastModified = new Date();
-  const mentors = await getMentors();
+  const [mentors, lastModified] = await Promise.all([getMentors(), catalogueModified()]);
 
   return [
-    ...STATIC_ROUTES.map((route) => ({
-      url: `${SITE_URL}${route.path}`,
-      lastModified,
-      changeFrequency: route.changeFrequency,
-      priority: route.priority,
-    })),
+    ...STATIC_ROUTES.map((path) => ({ url: `${SITE_URL}${path}` })),
+    // Mentor profiles are the site's long-tail — one indexable page per real
+    // person, each with a name, university, rank and their own written story.
+    // Generated from the same getMentors() the pages themselves read, so a
+    // mentor added or unpublished in the portal shows up (or drops out) here
+    // with no second list to update.
     ...mentors.map((mentor) => ({
       url: `${SITE_URL}/student/mentors/${mentor.id}`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
+      ...(lastModified ? { lastModified } : {}),
     })),
   ];
 }
