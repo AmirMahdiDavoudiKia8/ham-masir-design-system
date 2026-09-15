@@ -39,6 +39,31 @@ body {
   animation: rise-in var(--duration-entrance) var(--ease-gentle) both;
 }
 
+/*
+ * Above-the-fold variant: the same gentle upward settle, WITHOUT the fade.
+ *
+ * Chrome does not count an element as painted for Largest Contentful Paint
+ * while it is at opacity 0, so fading in the hero text — which IS the LCP
+ * element on /student/home — pushed LCP back by the length of the fade on
+ * every visit. Moving only `transform` keeps the text visible from its very
+ * first frame (LCP lands on first paint) while keeping the brand's
+ * "motion accompanies, nothing pops" feel. Use this on anything visible
+ * without scrolling; keep .animate-rise-in (with the fade) for content below
+ * the fold, where it has no effect on LCP.
+ */
+@keyframes rise-in-visible {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-rise-in-visible {
+  animation: rise-in-visible var(--duration-entrance) var(--ease-gentle) both;
+}
+
 /* Hides the scrollbar on horizontally-scrollable chip rows without disabling scroll. */
 .no-scrollbar {
   scrollbar-width: none;

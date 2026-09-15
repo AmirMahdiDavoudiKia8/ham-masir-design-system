@@ -33,5 +33,17 @@ export const pinar = localFont({
     },
   ],
   variable: "--font-pinar",
-  display: "swap",
+  // "optional", not "swap": with swap, a font that arrived after first render
+  // re-flowed the hero text and shoved the «اول جلسه، بعد پرداخت» card down
+  // (CLS 0.100 on /student/home — exactly the live audit figure). The files
+  // are preloaded via a Link header (see scripts/patch-next-font-windows.mjs,
+  // which is what makes that preload exist at all on Windows builds), so they
+  // normally arrive before first render and are used; "optional" only stops a
+  // LATE font from swapping in mid-read. Cost: on a slow first visit a weight
+  // that misses the window shows the system Persian font for that page view.
+  //
+  // Not fixable with next/font's adjustFontFallback: it tunes an Arial-based
+  // fallback, and Arial has no Persian glyphs, so Persian text falls through
+  // to Tahoma/Noto with unrelated metrics regardless.
+  display: "optional",
 });

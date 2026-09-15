@@ -76,7 +76,7 @@ export function HomeContent({ mentors, meetLink, cancelled, serverSession }: Hom
 
   return (
     <div className="flex flex-col gap-8 px-4 pb-10 pt-6">
-      <div className="flex flex-col items-start gap-3 animate-rise-in">
+      <div className="flex flex-col items-start gap-3 animate-rise-in-visible">
         <h1 className="text-display font-bold text-foreground">اینجا چه خبره؟</h1>
         <p className="text-body leading-[1.7] text-right text-muted-foreground">
           اینجا می‌تونی از بین دانشجوهایی که یک روز دقیقاً جای تو بودن و
@@ -86,14 +86,14 @@ export function HomeContent({ mentors, meetLink, cancelled, serverSession }: Hom
         </p>
       </div>
 
-      <div className="flex animate-rise-in justify-center">
+      <div className="flex animate-rise-in-visible justify-center">
         <Link href="/student/discover" className={buttonClasses("primary", "md", false, undefined, true)}>
           بیا هم‌مسیرتو پیدا کن
           <ArrowLeftIcon className="h-4 w-4" />
         </Link>
       </div>
 
-      <PayAfterPromise className="animate-rise-in" />
+      <PayAfterPromise className="animate-rise-in-visible" />
 
       <div
         className="flex flex-col gap-3 rounded-lg border border-primary/30 bg-gradient-to-b from-primary-soft to-surface p-5 text-center shadow-card animate-rise-in"
