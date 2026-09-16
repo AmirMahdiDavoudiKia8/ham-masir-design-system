@@ -4,6 +4,67 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Brand typeface — Vazirmatn RD, self-hosted from /public/fonts.
+ *
+ * Declared by hand rather than through `next/font/local`, for one reason:
+ * next/font preloads either ALL weights of a family or none, and preloading
+ * all four costs 208KB on the critical path of every first visit when only
+ * Regular and Bold are used above the fold. Splitting a family across two
+ * next/font calls does not work — CSS matches weights *within* one family and
+ * only falls through family-to-family for missing glyphs, so 500/600 would
+ * silently render at 400/700. Declaring the family here lets app/layout.tsx
+ * preload exactly the two weights first paint needs (~102KB) while Medium and
+ * SemiBold load on demand.
+ *
+ * Side benefit: no dependency on next/font's build-time manifest, which was
+ * silently emitting no preloads at all on Windows builds (see git history for
+ * scripts/patch-next-font-windows.mjs).
+ *
+ * font-display: optional everywhere — a font that arrives after first paint
+ * must NOT swap in, because re-flowing Persian text shifts the whole page
+ * (this was the live CLS of 0.100 on /student/home). The two preloaded
+ * weights normally arrive in time and are used; the other two fall back to
+ * the system Persian face for that page view if they miss the window.
+ */
+@font-face {
+  font-family: "Vazirmatn RD";
+  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Vazirmatn RD";
+  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Vazirmatn RD";
+  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Vazirmatn RD";
+  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: optional;
+}
+
+:root {
+  /* Kept under its old name so Tailwind's `font-sans` wiring in
+     tailwind.config.ts and every component using it need no changes. */
+  --font-pinar: "Vazirmatn RD";
+}
+
 html {
   direction: rtl;
 }

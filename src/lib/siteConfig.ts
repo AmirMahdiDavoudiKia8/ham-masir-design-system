@@ -15,17 +15,19 @@ export const SITE_DESCRIPTION =
 export const SITE_TAGLINE = "کنکور دو نفری آسون‌تره — پرداخت بعد از جلسه، فقط اگه راضی بودی.";
 
 /**
- * Square brand mark, 2400×2400. Not the 1.91:1 card most previewers prefer,
- * but a real branded image beats the blank placeholder they show otherwise,
- * and every major previewer (Telegram, Bale, WhatsApp, X) renders a square
- * fine. Replace with a purpose-made 1200×630 card when one exists — only
- * this constant and the dimensions in app/layout.tsx need to change.
+ * The 1200×630 share card — the 1.91:1 ratio Telegram, Bale, WhatsApp and X
+ * all crop to, so nothing important gets cut. Built from the brand palette
+ * and the real Vazirmatn face; it leads with «اول جلسه، بعد پرداخت» because
+ * that promise is the reason someone forwards the link at all.
+ *
+ * Source is a rendered HTML layout, not a hand-drawn asset: to change the
+ * wording or colours, re-render at 1200×630 and overwrite this file.
  */
 export const SITE_OG_IMAGE = {
-  url: `${SITE_URL}/brand/logo.png`,
-  width: 2400,
-  height: 2400,
-  alt: "هم‌مسیر — مشاوره‌ی کنکور با دانشجوهایی که این مسیر رو رفتن",
+  url: `${SITE_URL}/brand/og.png`,
+  width: 1200,
+  height: 630,
+  alt: "هم‌مسیر — اول جلسه، بعد پرداخت. و فقط اگه راضی بودی.",
 };
 
 /**

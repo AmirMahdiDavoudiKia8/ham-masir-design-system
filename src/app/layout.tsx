@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { SupportFab } from "@/components/support/SupportFab";
 import { Toast } from "@/components/ui/Toast";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
-import { pinar } from "@/lib/fonts";
 import {
   SITE_BALE,
   SITE_DESCRIPTION,
@@ -113,8 +112,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={pinar.variable}>
+    <html lang="fa" dir="rtl">
       <head>
+        {/*
+          Only the two weights first paint actually uses (Regular for body
+          text, Bold for headings and the primary CTA) — ~102KB instead of the
+          208KB all four cost. Medium and SemiBold are declared in globals.css
+          and fetched on demand.
+
+          `crossOrigin="anonymous"` is required even though the files are
+          same-origin: CSS fetches fonts in CORS mode, so a preload without it
+          is a separate, non-matching request and the font downloads twice.
+        */}
+        <link
+          rel="preload"
+          href="/fonts/vazirmatn-rd/Vazirmatn-RD-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/vazirmatn-rd/Vazirmatn-RD-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         {/*
           Kavenegar's activation checker fetches the raw HTML and greps for a
           literal <script> tag — next/script's beforeInteractive strategy
