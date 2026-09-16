@@ -10,6 +10,7 @@ import { MentorPlans } from "@/features/mentors/components/MentorPlans";
 import { MentorProfileHeader } from "@/features/mentors/components/MentorProfileHeader";
 import { getMentors } from "@/lib/mentors";
 import type { Mentor } from "@/lib/mentors";
+import { PLAN_META, getPlanPriceIrr, type PlanKey } from "@/lib/plans";
 import { firstParam } from "@/lib/searchParams";
 import { SITE_NAME, SITE_OG_IMAGE, SITE_URL, pageOpenGraph } from "@/lib/siteConfig";
 import { getUniversityLogo } from "@/lib/universityLogos";
@@ -155,6 +156,48 @@ export default async function MentorProfilePage({ params, searchParams }: Mentor
   const universityLogo = getUniversityLogo(mentor.university);
   const name = mentor.name ?? SITE_NAME;
 
+  const personId = `${SITE_URL}/student/mentors/${mentor.id}#person`;
+
+  /*
+   * The two plans as real Offers, so the thing this page is actually selling
+   * is machine-readable instead of living only in the rendered cards.
+   *
+   * Every field here is on the page in front of the visitor: MentorPlans
+   * renders both titles, both subtitles and both prices. That is the whole
+   * bar for offer markup — describe what's visible, nothing more.
+   *
+   * An Offer whose price can't be trusted is omitted rather than guessed
+   * (see getPlanPriceIrr), so this can legitimately come back empty; the
+   * spread below then leaves `makesOffer` off the Person entirely.
+   */
+  const offers = (["session", "subscription"] as PlanKey[]).flatMap((plan) => {
+    const priceIrr = getPlanPriceIrr(mentor, plan);
+    if (priceIrr === undefined) return [];
+    return [
+      {
+        "@type": "Offer",
+        name: PLAN_META[plan].title,
+        description: PLAN_META[plan].subtitle,
+        price: priceIrr,
+        priceCurrency: "IRR",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/student/mentors/${mentor.id}`,
+        itemOffered: {
+          "@type": "Service",
+          name: PLAN_META[plan].title,
+          serviceType: "مشاوره و برنامه‌ریزی کنکور",
+          provider: { "@id": personId },
+          areaServed: { "@type": "Country", name: "Iran" },
+          availableChannel: {
+            "@type": "ServiceChannel",
+            name: "گوگل‌میت",
+            serviceUrl: `${SITE_URL}/student/booking/${mentor.id}?plan=${plan}`,
+          },
+        },
+      },
+    ];
+  });
+
   // Person, not Product: what's on offer is a named human being's experience.
   // `aggregateRating` is emitted only when this mentor genuinely has both a
   // rating and a review count — inventing either would be fabricating a
@@ -162,7 +205,7 @@ export default async function MentorProfilePage({ params, searchParams }: Mentor
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "@id": `${SITE_URL}/student/mentors/${mentor.id}#person`,
+    "@id": personId,
     name,
     url: `${SITE_URL}/student/mentors/${mentor.id}`,
     ...(mentor.photo ? { image: `${SITE_URL}${mentor.photo}` } : {}),
@@ -171,6 +214,7 @@ export default async function MentorProfilePage({ params, searchParams }: Mentor
     ...(mentor.university ? { alumniOf: { "@type": "CollegeOrUniversity", name: mentor.university } } : {}),
     ...(mentor.field ? { knowsAbout: [mentor.field, "کنکور", "برنامه‌ریزی درسی"] } : {}),
     worksFor: { "@id": `${SITE_URL}/#organization` },
+    ...(offers.length ? { makesOffer: offers } : {}),
     // Deliberately NO aggregateRating. `mentor.rating`/`reviewsCount` exist in
     // mentors.json but nothing renders them — MentorReviews and RatingBadge are
     // written but never imported by any page — and the data itself is launch

@@ -33,3 +33,34 @@ export function getPlanPrice(mentor: Mentor, plan: PlanKey): string | undefined 
  */
 export const SITE_SESSION_PRICE = "۴۰۰ هزار تومان";
 export const SITE_SUBSCRIPTION_PRICE = "۱ میلیون و ۸۰۰ هزار تومان";
+
+const PLAN_PRICE_TEXT: Record<PlanKey, string> = {
+  session: SITE_SESSION_PRICE,
+  subscription: SITE_SUBSCRIPTION_PRICE,
+};
+
+/**
+ * The same two prices as machine-readable numbers, for schema.org Offers.
+ *
+ * In **rials**, deliberately: `priceCurrency` takes an ISO 4217 code, and
+ * there is no code for the toman — IRR is the rial. So each value is the
+ * toman figure above ×10. Don't "fix" these to match the visible strings.
+ */
+export const PLAN_PRICE_IRR: Record<PlanKey, number> = {
+  session: 4_000_000,
+  subscription: 18_000_000,
+};
+
+/**
+ * The numeric price for structured data — but only when this mentor still
+ * shows the site-wide price the number above was derived from.
+ *
+ * Prices are free-text Persian repeated by hand in all 19 mentors.json
+ * entries, so they can drift from PLAN_PRICE_IRR without anything failing.
+ * When they do, returning undefined drops the Offer from the markup and the
+ * page simply has no price in its schema — which is far better than
+ * publishing a confidently wrong one under a named person's profile.
+ */
+export function getPlanPriceIrr(mentor: Mentor, plan: PlanKey): number | undefined {
+  return getPlanPrice(mentor, plan) === PLAN_PRICE_TEXT[plan] ? PLAN_PRICE_IRR[plan] : undefined;
+}
