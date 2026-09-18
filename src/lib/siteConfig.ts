@@ -52,7 +52,11 @@ export const SITE_KEYWORDS = [
 /** Contact + social identities, shared by the Organization JSON-LD and the /about page's own links. */
 export const SITE_TELEGRAM = "https://t.me/hammasirsite";
 export const SITE_BALE = "https://ble.ir/hammasirsite";
+/** Username really does contain a dot — it is `hammasirsite.ir`, not a domain that slipped in. */
+export const SITE_INSTAGRAM = "https://www.instagram.com/hammasirsite.ir";
 export const SITE_PHONE = "+989920209010";
+/** Display form of SITE_PHONE — Persian digits, local 0-prefix, as it's read aloud. */
+export const SITE_PHONE_DISPLAY = "۰۹۹۲۰۲۰۹۰۱۰";
 
 /**
  * Next merges metadata **shallowly**: a page that declares its own

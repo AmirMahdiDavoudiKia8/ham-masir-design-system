@@ -23,7 +23,7 @@ export const PAY_AFTER_SHORT = "پرداخت بعد از جلسه — فقط ا�
 const points = [
   { Icon: CoinIcon, label: "برای رزرو، صفر تومان" },
   { Icon: ClockIcon, label: "بعد از جلسه تصمیم می‌گیری" },
-  { Icon: ShieldCheckIcon, label: "راضی نبودی، چیزی نمی‌دی" },
+  { Icon: ShieldCheckIcon, label: "راضی نبودی، پولی نمیدی" },
 ];
 
 interface PayAfterPromiseProps {
@@ -57,8 +57,9 @@ export function PayAfterPromise({ className }: PayAfterPromiseProps) {
         </div>
 
         <p className="text-caption leading-[1.9] text-secondary-foreground/85">
-          برای رزرو جلسه هیچ پولی ازت نمی‌گیریم. اول با هم‌مسیرت می‌شینی و حرف می‌زنی؛ بعدش، اگه واقعاً به کارت
-          اومد حساب می‌کنی. اگه نیومد، هیچی بدهکار نیستی — نه سؤالی، نه شرطی.
+          برای رزرو جلسه هیچ پولی ازت نمی‌گیریم. اول می‌شینی با هم‌مسیرت حرف می‌زنی؛ بعد اگه واقعاً به کارت اومد
+          هزینه جلسه رو پرداخت می‌کنی. اگه نیومد، هیچی بدهکار نیستی. تو یه جلسه رایگان گیرت اومده و ما یه شکست
+          که مقدمه پیروزیه!
         </p>
 
         <ul className="flex flex-col gap-2 border-t border-secondary/50 pt-3">

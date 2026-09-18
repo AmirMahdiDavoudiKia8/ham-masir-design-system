@@ -9,6 +9,7 @@ import { planDayNumber, resolveSessionDay } from "@/lib/sessionDay";
 import { toggleStudentTask } from "@/app/student/(app)/progress/actions";
 import { useBookingsStore } from "@/store/bookingsStore";
 import { useProgressStore } from "@/store/progressStore";
+import { useLivePlan } from "../useLivePlan";
 import { MissedDaysNudge } from "./MissedDaysNudge";
 import { MonthCalendar } from "./MonthCalendar";
 import { ProgressCancelledState } from "./ProgressCancelledState";
@@ -37,6 +38,10 @@ export function ProgressHome({ studyPlan, monthCalendar, mentors, studentId, can
   const bookings = useBookingsStore((s) => s.bookings);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [pendingTaskId, setPendingTaskId] = useState<string | null>(null);
+
+  // A plan the mentor edits mid-call should land here without the student
+  // being told to refresh. Only for a server-linked student — see useLivePlan.
+  useLivePlan(Boolean(studentId), pendingTaskId !== null);
 
   const defaultDoneById = useMemo(() => {
     const map = new Map<string, boolean>();

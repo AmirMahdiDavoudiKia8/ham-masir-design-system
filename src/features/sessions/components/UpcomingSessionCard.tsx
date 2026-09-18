@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ClockIcon, ProgressIcon } from "@/components/ui/icons";
+import { ProgressIcon } from "@/components/ui/icons";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import type { CancellationInfo } from "@/lib/mentorPortal";
 import type { ResolvedBooking } from "../resolveBooking";
@@ -50,16 +50,20 @@ export function UpcomingSessionCard({ booking, cancelled }: UpcomingSessionCardP
         </div>
       ) : (
         <>
-          {nextSessionAt && (
-            <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1.5 text-sm font-bold text-primary">
-              <ClockIcon className="h-4 w-4" />
-              {nextSessionAt}
-            </span>
-          )}
+          {/* The slot a student picked is a rough window ("پس‌فردا صبح"), not a
+              real appointment — showing it as a time tag read as a confirmed
+              time nobody had agreed to yet. The actual time is settled on the
+              phone call this line promises, so that promise is all this says
+              until the mentor sets a Meet link. */}
+          <p className="mt-3 text-caption leading-[1.9] text-muted-foreground">
+            به‌زودی باهات تماس می‌گیریم تا تایم دقیق جلسه رو باهم مشخص کنیم.
+          </p>
 
-          <div className="mt-4 flex flex-col gap-2.5">
-            <SessionEntryButton meetLink={meetLink} label={nextSessionAt} />
-          </div>
+          {meetLink && (
+            <div className="mt-4 flex flex-col gap-2.5">
+              <SessionEntryButton meetLink={meetLink} />
+            </div>
+          )}
 
           {plan === "subscription" && (
             <div className="mt-4 flex items-center justify-between gap-3 rounded-md bg-surface-alt px-4 py-3">

@@ -5,6 +5,7 @@ import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import {
   SITE_BALE,
   SITE_DESCRIPTION,
+  SITE_INSTAGRAM,
   SITE_KEYWORDS,
   SITE_NAME,
   SITE_OG_IMAGE,
@@ -78,7 +79,10 @@ const organizationJsonLd = {
   image: SITE_OG_IMAGE.url,
   description: SITE_DESCRIPTION,
   slogan: "مسیرت رو تنها نرو",
-  sameAs: [SITE_TELEGRAM, SITE_BALE],
+  // Every profile here is also a visible, clickable link in the site footer
+  // and the support menu — sameAs is meant to confirm identities a visitor can
+  // already reach, not to assert ones only the markup knows about.
+  sameAs: [SITE_TELEGRAM, SITE_BALE, SITE_INSTAGRAM],
   areaServed: { "@type": "Country", name: "Iran" },
   knowsLanguage: "fa",
   contactPoint: {

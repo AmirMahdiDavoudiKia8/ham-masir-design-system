@@ -6,7 +6,7 @@ import { BottomSheet } from "@/components/ui/BottomSheet";
 import { showToast } from "@/lib/toast";
 import { cancelSession } from "../actions";
 
-/** Opens a bottom sheet with the refund policy + an optional reason before actually cancelling — placed under the featured session card, only for a subscription (see UpcomingSessionCard). */
+/** Opens a bottom sheet asking to confirm, with an optional reason, before actually cancelling — placed under the featured session card, only for a subscription (see UpcomingSessionCard). */
 export function CancelSessionButton() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -38,10 +38,9 @@ export function CancelSessionButton() {
 
       <BottomSheet open={open} onClose={() => setOpen(false)} ariaLabel="لغو جلسه">
         <div className="flex flex-col gap-4 pt-2">
+          {/* Same as CancelBookingButton: nothing is charged up front, so there
+              is no refund to describe. */}
           <h2 className="text-h3 font-bold text-foreground">مطمئنی می‌خوای لغو کنی؟</h2>
-          <p className="rounded-md bg-surface-alt px-3.5 py-2.5 text-caption font-semibold text-foreground">
-            تا یک ساعت قبل جلسه، هزینه‌ی کامل بهت برمی‌گرده؛ در غیر این‌صورت ۷۰٪ مبلغ برگشت داده می‌شه.
-          </p>
           <div className="flex flex-col gap-1.5">
             <label className="text-label font-semibold text-muted-foreground">چرا می‌خوای لغو کنی؟</label>
             <textarea

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
 import { Button } from "@/components/ui/Button";
@@ -228,31 +227,6 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
               موقع لازم نیست هیچ کاری بکنی.
             </p>
           </div>
-
-          <div className="flex items-start gap-3 rounded-md border border-secondary/50 bg-secondary-soft px-3 py-2.5">
-            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-surface text-primary">
-              <CheckIcon className="h-3 w-3" strokeWidth={3} />
-            </span>
-            <p className="text-caption leading-[1.9] text-secondary-foreground">
-              درباره‌ی پول: الان چیزی ازت نمی‌گیریم و لازم هم نیست کارت‌به‌کارت کنی. بعد از اینکه جلسه برگزار شد،
-              اگه به کارت اومد، برای تسویه باهات هماهنگ می‌کنیم. اگه راضی نبودی، همون‌جا تموم می‌شه و هیچی بدهکار
-              نیستی.
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3 border-t border-border pt-3">
-            <Image
-              src="/brand/founder.jpg"
-              alt="امیرمهدی داودی‌کیا"
-              width={44}
-              height={44}
-              className="h-11 w-11 shrink-0 rounded-full object-cover"
-            />
-            <p className="text-caption leading-6 text-muted-foreground">
-              سلام. من امیرمهدیم، کسی که هم‌مسیر رو ساخته. همشو. دست تنها و با پول تو جیبیام اوردم بالا. برای همین
-              ترجیح می‌دم اول کارمو بهت نشون بدم، بعد ازت پول بگیرم. اگه جلسه به دردت نخورد، منم پولی نمی‌خوام.
-            </p>
-          </div>
         </div>
 
         <Button size="lg" fullWidth onClick={handleDone}>
@@ -278,7 +252,7 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
       </p>
 
       <Button size="lg" fullWidth disabled={submitting} onClick={handleReserve}>
-        {submitting ? "در حال ثبت رزرو…" : "رزرو جلسه — بدون پرداخت"}
+        {submitting ? "در حال ثبت رزرو…" : "رزرو جلسه"}
       </Button>
     </div>
   );

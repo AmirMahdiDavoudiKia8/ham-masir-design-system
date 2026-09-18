@@ -1,7 +1,16 @@
 import { CompactHeader } from "@/components/layout/CompactHeader";
 import { ChatIcon, PhoneIcon, SendIcon } from "@/components/ui/icons";
+import { SITE_BALE, SITE_TELEGRAM } from "@/lib/siteConfig";
 
-/** TODO: no real support channel is wired up yet — swap these for a live chat widget / ticketing integration once one exists. */
+/**
+ * Deliberately NOT built from SITE_CONTACTS: this list is support-framed
+ * ("پشتیبانی در تلگرام", not "تلگرام") and carries an SMS option the general
+ * contact list doesn't. Only the URLs are shared, so changing a handle in
+ * siteConfig can't leave this page pointing at the old one.
+ *
+ * TODO: no real support channel is wired up yet — swap these for a live chat
+ * widget / ticketing integration once one exists.
+ */
 export default function ProfileSupportPage() {
   return (
     <>
@@ -33,7 +42,7 @@ export default function ProfileSupportPage() {
         </a>
 
         <a
-          href="https://t.me/hammasirsite"
+          href={SITE_TELEGRAM}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 rounded-lg border border-border bg-surface p-4 shadow-card transition-all duration-standard ease-gentle active:scale-[0.98] hover:border-primary-light"
@@ -45,7 +54,7 @@ export default function ProfileSupportPage() {
         </a>
 
         <a
-          href="https://ble.ir/hammasirsite"
+          href={SITE_BALE}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 rounded-lg border border-border bg-surface p-4 shadow-card transition-all duration-standard ease-gentle active:scale-[0.98] hover:border-primary-light"

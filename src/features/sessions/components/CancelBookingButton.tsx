@@ -59,10 +59,11 @@ export function CancelBookingButton({ bookingId, mentorId, plan, slot, compact }
 
       <BottomSheet open={open} onClose={() => setOpen(false)} ariaLabel="لغو جلسه">
         <div className="flex flex-col gap-4 pt-2">
+          {/* No refund line: nothing is paid before a session happens (see
+              components/brand/PayAfterPromise), so there is no money to return
+              and a refund policy here only invented a payment the student
+              never made. */}
           <h2 className="text-h3 font-bold text-foreground">مطمئنی می‌خوای این جلسه رو لغو کنی؟</h2>
-          <p className="rounded-md bg-surface-alt px-3.5 py-2.5 text-caption font-semibold text-foreground">
-            تا یک ساعت قبل جلسه، هزینه‌ی کامل بهت برمی‌گرده؛ در غیر این‌صورت ۷۰٪ مبلغ برگشت داده می‌شه.
-          </p>
           <button
             type="button"
             onClick={handleConfirm}

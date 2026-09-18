@@ -11,6 +11,7 @@ import type { CancellationInfo } from "@/lib/mentorPortal";
 import type { Mentor } from "@/lib/mentors";
 import { HOME_FAQ, buildFaqJsonLd } from "@/lib/faq";
 import { toPersianDigits } from "@/lib/format";
+import { SITE_TELEGRAM } from "@/lib/siteConfig";
 import { useBookingsStore } from "@/store/bookingsStore";
 import type { ResolvedBooking } from "../resolveBooking";
 import { SessionsHome } from "./SessionsHome";
@@ -209,7 +210,7 @@ export function HomeContent({ mentors, meetLink, cancelled, serverSession }: Hom
 
       <div className="fixed inset-x-0 bottom-24 z-30 flex justify-center px-4">
         <a
-          href="https://t.me/hammasirsite"
+          href={SITE_TELEGRAM}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary-soft/95 px-5 py-3 text-caption font-bold text-secondary-foreground shadow-lifted backdrop-blur-md transition-all duration-standard ease-gentle active:scale-[0.98]"

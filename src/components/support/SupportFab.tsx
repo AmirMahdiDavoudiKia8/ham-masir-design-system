@@ -25,7 +25,12 @@ export function SupportFab() {
         />
       )}
 
-      <div className="fixed bottom-40 right-4 z-50 flex flex-col items-end gap-3">
+      {/* items-start, not items-end: the document is RTL, so flex "end" is the
+          LEFT edge — the button was aligning to the left of the contact panel
+          and visibly jumping ~128px sideways the moment it opened. "start" is
+          the right edge here, which is where the button already sits while
+          closed, so opening now only grows the panel upward. */}
+      <div className="fixed bottom-40 right-4 z-50 flex flex-col items-start gap-3">
         {open && (
           <div className="flex flex-col gap-1 rounded-lg border border-border bg-surface p-2 shadow-lifted animate-rise-in">
             {SITE_CONTACTS.map(({ key, label, detail, href, Icon }) => (

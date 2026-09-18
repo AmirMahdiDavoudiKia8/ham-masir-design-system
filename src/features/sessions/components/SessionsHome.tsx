@@ -58,7 +58,9 @@ export function SessionsHome({ mentors, meetLink, cancelled, serverSession }: Se
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-h1 font-bold text-foreground">مسیرت شروع شده، تنها نیستی.</h1>
+      <h1 className="text-h1 font-bold text-foreground">
+        با یه هم‌مسیر راه بلد مسیر کنکورت رو ده برابر آسون‌تر کن! بزودی باهات تماس می‌گیریم.
+      </h1>
 
       <UpcomingSessionCard booking={featured} cancelled={featured.plan === "subscription" ? cancelled : undefined} />
 

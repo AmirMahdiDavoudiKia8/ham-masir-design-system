@@ -1,4 +1,3 @@
-import { ClockIcon } from "@/components/ui/icons";
 import { Tag } from "@/components/ui/Tag";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import type { ResolvedBooking } from "../resolveBooking";
@@ -28,12 +27,8 @@ export function SessionListItem({ booking }: SessionListItemProps) {
           {status && <Tag className="shrink-0">{STATUS_LABEL[status]}</Tag>}
         </div>
         {line && <p className="truncate text-caption text-muted-foreground">{line}</p>}
-        {nextSessionAt && (
-          <p className="mt-1 flex items-center gap-1 text-caption text-muted-foreground">
-            <ClockIcon className="h-3.5 w-3.5" />
-            {nextSessionAt}
-          </p>
-        )}
+        {/* No time line here, same reasoning as UpcomingSessionCard: the slot is
+            a rough window the student proposed, not a time anyone confirmed. */}
       </div>
       {plan === "session" && status !== "cancelled" && (
         <CancelBookingButton

@@ -1,15 +1,9 @@
 import { CompactHeader } from "@/components/layout/CompactHeader";
-import { ChatIcon, PhoneIcon, SendIcon } from "@/components/ui/icons";
+import { SITE_CONTACTS } from "@/lib/siteLinks";
 
 export const metadata = {
   title: "درباره ما",
 };
-
-const CONTACTS = [
-  { key: "telegram", label: "تلگرام", detail: "@hammasirsite", href: "https://t.me/hammasirsite", Icon: SendIcon },
-  { key: "bale", label: "بله", detail: "@hammasirsite", href: "https://ble.ir/hammasirsite", Icon: ChatIcon },
-  { key: "phone", label: "تماس تلفنی", detail: "۰۹۹۲۰۲۰۹۰۱۰", href: "tel:09920209010", Icon: PhoneIcon },
-] as const;
 
 export default function AboutPage() {
   return (
@@ -46,7 +40,7 @@ export default function AboutPage() {
 
         <section className="flex flex-col gap-3">
           <h2 className="text-h3 font-bold text-foreground">راه‌های تماس</h2>
-          {CONTACTS.map(({ key, label, detail, href, Icon }) => (
+          {SITE_CONTACTS.map(({ key, label, detail, href, Icon }) => (
             <a
               key={key}
               href={href}

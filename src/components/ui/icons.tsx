@@ -387,6 +387,17 @@ export function CameraIcon(props: IconProps) {
   );
 }
 
+/** Drawn in the shared stroke family rather than imported as Instagram's own glyph, so it sits beside SendIcon and ChatIcon without one badge shouting louder than the rest. */
+export function InstagramIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x={3.5} y={3.5} width={17} height={17} rx={5} />
+      <circle cx={12} cy={12} r={4} />
+      <path d="M16.8 7.2h.01" />
+    </svg>
+  );
+}
+
 export function SendIcon(props: IconProps) {
   return (
     <svg {...base(props)}>

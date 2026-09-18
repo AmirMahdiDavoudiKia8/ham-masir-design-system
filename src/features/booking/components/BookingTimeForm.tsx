@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { PayAfterBanner } from "@/components/brand/PayAfterPromise";
 import { RepeatIcon } from "@/components/ui/icons";
 import type { Mentor } from "@/lib/mentors";
 import type { PlanKey } from "@/lib/plans";
@@ -22,10 +21,6 @@ interface BookingTimeFormProps {
  * (or counters) elsewhere. Selection is local state; submitting hands off to
  * the reservation screen via the URL, the same way DiscoveryForm hands off
  * to the mentors list.
- *
- * Nothing is charged anywhere in this flow (see PayAfterPromise) — the
- * banner here is what keeps a student from bailing at the time picker
- * because they assume a payment wall is waiting on the next screen.
  */
 export function BookingTimeForm({ mentor, plan }: BookingTimeFormProps) {
   const router = useRouter();
@@ -69,8 +64,6 @@ export function BookingTimeForm({ mentor, plan }: BookingTimeFormProps) {
           </p>
         </div>
       )}
-
-      <PayAfterBanner />
 
       <Button size="lg" fullWidth disabled={!selectedSlot} onClick={handleSubmit}>
         ادامه و ثبت رزرو

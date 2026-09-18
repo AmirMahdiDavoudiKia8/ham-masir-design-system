@@ -40,6 +40,29 @@ export function SideMenu() {
   // to an effect since document.body doesn't exist during SSR.
   useEffect(() => setMounted(true), []);
 
+  // The drawer is a modal surface, so the page behind it must not scroll —
+  // otherwise a swipe anywhere outside the panel scrolls the page underneath
+  // and the student comes back to a screen that moved on its own. Same
+  // mechanism (and same restore-the-previous-value care) as BottomSheet.
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  // Esc closes it, like any other modal surface on the site.
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   function close() {
     setOpen(false);
   }

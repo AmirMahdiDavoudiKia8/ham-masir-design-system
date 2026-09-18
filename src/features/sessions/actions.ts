@@ -6,7 +6,7 @@ import { getSessionPhone, updateStudent } from "@/lib/mentorPortal";
 import type { PlanKey } from "@/lib/plans";
 import { cancelStudentBooking } from "@/lib/studentBookings";
 
-/** Cancels the logged-in student's subscription relationship with their mentor — the refund-policy text shown next to the button in the UI is enforced manually by the founder, not by this action. */
+/** Cancels the logged-in student's subscription relationship with their mentor. No money is involved: nothing is charged before a session happens (see components/brand/PayAfterPromise), which is why the confirm sheet no longer states a refund policy. */
 export async function cancelSession(reason: string): Promise<{ error?: string }> {
   const phone = await getSessionPhone();
   if (!phone) return { error: "برای لغو باید دوباره وارد حسابت بشی." };
