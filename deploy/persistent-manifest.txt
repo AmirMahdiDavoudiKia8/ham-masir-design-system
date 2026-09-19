@@ -23,6 +23,7 @@ file | src/data/studentProfiles.json  | studentProfiles.json
 file | src/data/leads.json            | leads.json
 file | src/data/mentors/mentors.json  | mentors-catalogue.json
 file | src/data/progress/progress.json| progress.json
+file | src/data/pushSubscriptions.json| pushSubscriptions.json
 file | .env.local                     | .env.local
 
 read | src/data/mentors               | directory is only enumerated for catalogue JSON; the one writable file in it (mentors.json) is linked above

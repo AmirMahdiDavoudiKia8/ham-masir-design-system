@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdminSession } from "@/lib/adminAuth";
 import { CsvDownloadButton } from "@/features/adminLeads/CsvDownloadButton";
+import { EnablePushButton } from "@/features/adminLeads/EnablePushButton";
 import { toPersianDigits } from "@/lib/format";
 import { getLeads } from "@/lib/leads";
 import { LEAD_TYPE_LABEL, type LeadType } from "@/lib/leadTypes";
@@ -9,6 +11,14 @@ import { LEAD_TYPE_LABEL, type LeadType } from "@/lib/leadTypes";
 // Reads live off-disk data on every request — must never be statically
 // prerendered, same reasoning as every other /mentor/admin/* page.
 export const dynamic = "force-dynamic";
+
+// Its own manifest (scope /mentor/admin/) so the leads page can be added to an
+// iPhone's Home Screen as an app — the only way iOS allows web push. Scoped
+// here rather than site-wide so students' "add to home screen" is unaffected.
+export const metadata: Metadata = {
+  manifest: "/mentor/admin/manifest.webmanifest",
+  robots: { index: false, follow: false },
+};
 
 const TYPE_LABELS = LEAD_TYPE_LABEL;
 
@@ -59,6 +69,8 @@ export default async function AdminLeadsPage({ searchParams }: LeadsPageProps) {
         </div>
         <CsvDownloadButton leads={filtered} />
       </div>
+
+      <EnablePushButton vapidPublicKey={process.env.VAPID_PUBLIC_KEY} />
 
       <div className="flex flex-wrap gap-2">
         <Link

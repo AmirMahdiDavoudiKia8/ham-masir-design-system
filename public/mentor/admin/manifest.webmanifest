@@ -1,0 +1,13 @@
+{
+  "name": "پنل هم‌مسیر",
+  "short_name": "پنل هم‌مسیر",
+  "description": "لیدها و نوتیف ثبت‌نام‌های هم‌مسیر",
+  "start_url": "/mentor/admin/leads",
+  "scope": "/mentor/admin/",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "fa",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [{ "src": "/brand/logo.png", "sizes": "2400x2400", "type": "image/png", "purpose": "any" }]
+}

@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { notifyAdmin } from "@/lib/adminNotify";
 import { withFileLock } from "@/lib/fileLock";
 import type { LeadType } from "@/lib/leadTypes";
 
@@ -43,7 +44,12 @@ async function recordLead(type: LeadType, data: Record<string, string>): Promise
  * chosen password in that payload.
  */
 export async function logLead(type: LeadType, data: Record<string, string>): Promise<void> {
-  await recordLead(type, withoutSecrets(data));
+  const clean = withoutSecrets(data);
+  await recordLead(type, clean);
+  // After the write, and not awaited: the phone ping is a convenience on top
+  // of the real record above, so a slow or unreachable Bale API must never
+  // hold up (or fail) the request that produced the lead. See adminNotify.
+  void notifyAdmin(type, clean);
 }
 
 /**
