@@ -97,9 +97,20 @@ export async function sendAdminPush(title: string, body: string, url = "/mentor/
   await Promise.all(
     subscriptions.map(async ({ subscription }) => {
       try {
+        // urgency "high": without it the push service sends at normal
+        // priority, which Android holds while the phone is idle (Doze) and
+        // only delivers once the browser is opened — exactly the "it only
+        // arrives when I open the site" symptom. High priority wakes the
+        // device. Fine to use here: it's a handful of pushes a day.
+        //
         // TTL: a phone that's off for a few hours should still get it when it
         // comes back; after a day the lead is on the dashboard anyway.
-        await webpush.sendNotification(subscription, payload, { vapidDetails, TTL: 60 * 60 * 24, timeout: 8000 });
+        await webpush.sendNotification(subscription, payload, {
+          vapidDetails,
+          TTL: 60 * 60 * 24,
+          urgency: "high",
+          timeout: 8000,
+        });
         delivered++;
       } catch (err) {
         const status = (err as { statusCode?: number }).statusCode;
