@@ -44,7 +44,8 @@ export function MentorPlans({ mentor, back }: MentorPlansProps) {
   function goToBooking() {
     const params = new URLSearchParams({ plan: selectedPlan });
     if (back) params.set("back", back);
-    router.push(`/student/booking/${mentor.id}?${params.toString()}`);
+    // Straight to the reserve screen — there is no time picker any more (see lib/slots).
+    router.push(`/student/booking/${mentor.id}/payment?${params.toString()}`);
   }
 
   const price = getPlanPrice(mentor, selectedPlan);
@@ -77,7 +78,7 @@ export function MentorPlans({ mentor, back }: MentorPlansProps) {
       </div>
 
       <Button size="lg" fullWidth onClick={goToBooking}>
-        ادامه به انتخاب زمان
+        ادامه و رزرو
       </Button>
 
       {pastSection && (
@@ -92,7 +93,7 @@ export function MentorPlans({ mentor, back }: MentorPlansProps) {
               )}
             </div>
             <Button onClick={goToBooking} className="shrink-0">
-              ادامه به انتخاب زمان
+              ادامه و رزرو
             </Button>
           </div>
         </div>

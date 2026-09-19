@@ -77,21 +77,6 @@ export async function saveStudentSessions(studentId: string, sessions: string[])
   revalidatePath(`/mentor/portal/students/${studentId}`);
 }
 
-export async function saveStudentMeetLink(studentId: string, meetLink: string): Promise<{ error?: string }> {
-  await assertOwnership(studentId);
-  const trimmed = meetLink.trim();
-  if (trimmed && !/^https:\/\/meet\.google\.com\//.test(trimmed)) {
-    return { error: "باید یه لینک گوگل‌میت معتبر باشه (با https://meet.google.com/ شروع بشه)." };
-  }
-
-  const updated = await updateStudent(studentId, (student) => ({ ...student, meetLink: trimmed || undefined }));
-  if (!updated) return { error: "دانش‌آموز پیدا نشد." };
-
-  revalidatePath(`/mentor/portal/students/${studentId}`);
-  revalidatePath("/student/home");
-  return {};
-}
-
 /** The founder must be coordinated with directly before this is pressed (see the warning text next to the button) — so, unlike the student-side cancellation, no reason is collected here. */
 export async function cancelStudent(studentId: string): Promise<{ error?: string }> {
   await assertOwnership(studentId);

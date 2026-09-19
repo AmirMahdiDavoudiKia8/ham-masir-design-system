@@ -10,7 +10,7 @@ import { WeeklyChecklist } from "@/features/progress/components/WeeklyChecklist"
 import { cn } from "@/lib/cn";
 import type { PlanDay, Task, TaskType } from "@/lib/progress";
 import type { PortalStudent } from "@/lib/mentorPortal";
-import { cancelStudent, saveStudentMeetLink, saveStudentPlan, saveStudentSessions, toggleStudentTaskAsMentor } from "./actions";
+import { cancelStudent, saveStudentPlan, saveStudentSessions, toggleStudentTaskAsMentor } from "./actions";
 
 interface StudentPlanEditorProps {
   student: PortalStudent;
@@ -29,27 +29,10 @@ export function StudentPlanEditor({ student }: StudentPlanEditorProps) {
   const [weekLabel, setWeekLabel] = useState(student.weekLabel ?? "");
   const [days, setDays] = useState<PlanDay[]>(student.days);
   const [sessions, setSessions] = useState<string[]>(student.sessions);
-  const [meetLink, setMeetLink] = useState(student.meetLink ?? "");
-  const [meetLinkError, setMeetLinkError] = useState<string | undefined>();
-  const [meetLinkSaved, setMeetLinkSaved] = useState(false);
   const [planSaved, setPlanSaved] = useState(false);
   const [sessionsSaved, setSessionsSaved] = useState(false);
   const [isPlanPending, startPlanTransition] = useTransition();
   const [isSessionsPending, startSessionsTransition] = useTransition();
-  const [isMeetLinkPending, startMeetLinkTransition] = useTransition();
-
-  function handleSaveMeetLink() {
-    setMeetLinkError(undefined);
-    setMeetLinkSaved(false);
-    startMeetLinkTransition(async () => {
-      const result = await saveStudentMeetLink(student.id, meetLink);
-      if (result.error) {
-        setMeetLinkError(result.error);
-        return;
-      }
-      setMeetLinkSaved(true);
-    });
-  }
 
   function updateDay(dayIndex: number, patch: Partial<PlanDay>) {
     setPlanSaved(false);
@@ -145,29 +128,6 @@ export function StudentPlanEditor({ student }: StudentPlanEditorProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-4">
-        <h2 className="text-h3 font-bold text-foreground">لینک گوگل‌میت</h2>
-        <p className="text-label text-muted-foreground">
-          همون لینک ثابتی که برای جلسه‌هاتون استفاده می‌کنی — دکمه‌ی «ورود به جلسه» برای {student.name} همینو باز می‌کنه.
-        </p>
-        <Input
-          value={meetLink}
-          onChange={(e) => {
-            setMeetLinkSaved(false);
-            setMeetLink(e.target.value);
-          }}
-          dir="ltr"
-          placeholder="https://meet.google.com/xxx-xxxx-xxx"
-        />
-        {meetLinkError && <p className="text-caption font-semibold text-danger">{meetLinkError}</p>}
-        <Button size="md" fullWidth onClick={handleSaveMeetLink} disabled={isMeetLinkPending}>
-          {isMeetLinkPending ? "در حال ذخیره…" : "ذخیره‌ی لینک"}
-        </Button>
-        {meetLinkSaved && !isMeetLinkPending && (
-          <p className="text-center text-caption font-semibold text-success">ذخیره شد ✓</p>
-        )}
-      </div>
-
       <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-4">
         <h2 className="text-h3 font-bold text-foreground">ساعت‌های مشاوره</h2>
         <div className="flex flex-col gap-2">

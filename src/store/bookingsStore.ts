@@ -59,8 +59,16 @@ export const useBookingsStore = create<BookingsState>()(
         // app's own recommended flow) lands on the same mentor+slot from a
         // small fixed slot list (lib/slots.ts), and is a real new booking,
         // not a duplicate of the trial.
+        // Cancelled bookings never count as a match: every new booking now
+        // carries the same fixed slot label (lib/slots — there's no time
+        // picker any more), so matching a cancelled one would make it
+        // impossible to book that mentor again after cancelling.
         const existing = get().bookings.find(
-          (b) => b.mentorId === input.mentorId && b.plan === input.plan && b.slot === input.slot,
+          (b) =>
+            b.status !== "cancelled" &&
+            b.mentorId === input.mentorId &&
+            b.plan === input.plan &&
+            b.slot === input.slot,
         );
         if (existing) return existing;
 
@@ -77,7 +85,12 @@ export const useBookingsStore = create<BookingsState>()(
           const merged = [...state.bookings];
           for (const booking of fetched) {
             const exists = merged.some(
-              (b) => b.id === booking.id || (b.mentorId === booking.mentorId && b.slot === booking.slot),
+              // `plan` is part of the key: with one fixed slot label for every
+              // booking, mentor+slot alone would fold a subscription into an
+              // earlier trial session with the same mentor.
+              (b) =>
+                b.id === booking.id ||
+                (b.mentorId === booking.mentorId && b.plan === booking.plan && b.slot === booking.slot),
             );
             if (!exists) merged.push(booking);
           }

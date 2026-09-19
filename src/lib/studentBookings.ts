@@ -53,8 +53,13 @@ export async function addStudentBooking(
     // (lib/slots.ts), so a genuinely new subscription booking landing on the
     // same mentor+slot as an earlier trial is a real, expected case, not a
     // duplicate — matching on mentorId+slot alone silently discarded it.
+    //
+    // Cancelled bookings never count as a match: every new booking now shares
+    // one fixed slot label (lib/slots), so matching a cancelled one would make
+    // re-booking that mentor after a cancellation impossible.
     const existing = list.find(
-      (b) => b.mentorId === input.mentorId && b.plan === input.plan && b.slot === input.slot,
+      (b) =>
+        b.status !== "cancelled" && b.mentorId === input.mentorId && b.plan === input.plan && b.slot === input.slot,
     );
     if (existing) return existing;
 
@@ -105,7 +110,17 @@ export async function cancelStudentBooking(
   return withFileLock(FILE, async () => {
     const all = await getAll();
     const list = all[phone] ?? [];
-    const index = list.findIndex((b) => b.mentorId === mentorId && b.plan === plan && b.slot === slot);
+    // The newest still-active match: with one shared slot label (lib/slots),
+    // an earlier cancelled booking with the same mentor+plan also matches the
+    // key and must not be the one picked.
+    let index = -1;
+    for (let i = list.length - 1; i >= 0; i--) {
+      const b = list[i];
+      if (b.status !== "cancelled" && b.mentorId === mentorId && b.plan === plan && b.slot === slot) {
+        index = i;
+        break;
+      }
+    }
     if (index === -1) return null;
 
     const updated: StoredBooking = { ...list[index], status: "cancelled" };

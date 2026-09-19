@@ -84,7 +84,11 @@ export function PaymentForm({ mentor, plan, slot }: PaymentFormProps) {
   const hasSyncedCodeRef = useRef(false);
   useEffect(() => {
     if (hasSyncedCodeRef.current) return;
-    const existing = bookings.find((b) => b.mentorId === mentor.id && b.plan === plan && b.slot === slot);
+    // Only a still-active booking: a cancelled one with this mentor+plan (same
+    // fixed slot label — see lib/slots) must not block booking again.
+    const existing = bookings.find(
+      (b) => b.status !== "cancelled" && b.mentorId === mentor.id && b.plan === plan && b.slot === slot,
+    );
     if (!existing?.payCode) return;
     hasSyncedCodeRef.current = true;
     setReserveCode(existing.payCode);

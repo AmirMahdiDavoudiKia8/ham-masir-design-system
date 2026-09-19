@@ -13,7 +13,7 @@ interface TaskRowProps {
   pending?: boolean;
 }
 
-/** A tick-able task row — same selected-circle visual language as PlanOption/TimeSlotOption. Completing a task is quiet, not celebratory: text just settles into muted + line-through. */
+/** A tick-able task row — same selected-circle visual language as PlanOption. Completing a task is quiet, not celebratory: text just settles into muted + line-through. */
 export function TaskRow({ task, onToggle, locked = false, pending = false }: TaskRowProps) {
   const { subject, topic, target, done } = task;
   const line = [subject, topic, target].filter(Boolean).join("، ");
