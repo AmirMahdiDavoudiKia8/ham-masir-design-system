@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 import type { PlanKey } from "@/lib/plans";
 
 export interface StoredBooking {
@@ -15,19 +14,14 @@ export interface StoredBooking {
   createdAt: string;
 }
 
-const FILE = path.join(process.cwd(), "src/data/studentBookings.json");
+const FILE = "src/data/studentBookings.json";
 
 async function getAll(): Promise<Record<string, StoredBooking[]>> {
-  try {
-    const raw = JSON.parse(await readFile(FILE, "utf-8"));
-    return raw && typeof raw === "object" ? raw : {};
-  } catch {
-    return {};
-  }
+  return readJson<Record<string, StoredBooking[]>>(FILE, {});
 }
 
 async function saveAll(data: Record<string, StoredBooking[]>): Promise<void> {
-  await writeFile(FILE, `${JSON.stringify(data, null, 2)}\n`, "utf-8");
+  await writeJson(FILE, data);
 }
 
 /**

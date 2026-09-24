@@ -1,7 +1,6 @@
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { notifyAdmin } from "@/lib/adminNotify";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 import type { LeadType } from "@/lib/leadTypes";
 
 export interface Lead {
@@ -10,22 +9,17 @@ export interface Lead {
   at: string;
 }
 
-const LEADS_FILE = path.join(process.cwd(), "src/data/leads.json");
+const LEADS_FILE = "src/data/leads.json";
 
 async function getAll(): Promise<Lead[]> {
-  try {
-    const raw = JSON.parse(await readFile(LEADS_FILE, "utf-8"));
-    return Array.isArray(raw) ? raw : [];
-  } catch {
-    return [];
-  }
+  return readJson<Lead[]>(LEADS_FILE, []);
 }
 
 async function recordLead(type: LeadType, data: Record<string, string>): Promise<void> {
   await withFileLock(LEADS_FILE, async () => {
     const all = await getAll();
     all.push({ type, data, at: new Date().toISOString() });
-    await writeFile(LEADS_FILE, `${JSON.stringify(all, null, 2)}\n`, "utf-8");
+    await writeJson(LEADS_FILE, all);
   });
 }
 

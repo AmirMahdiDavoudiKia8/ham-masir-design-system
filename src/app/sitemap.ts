@@ -1,8 +1,7 @@
-import { stat } from "node:fs/promises";
-import path from "node:path";
 import type { MetadataRoute } from "next";
 import { getMentors } from "@/lib/mentors";
 import { SITE_URL } from "@/lib/siteConfig";
+import { fileMtime } from "@/lib/storage";
 
 /**
  * Only the pages a cold, logged-out visitor (or Googlebot) can actually land
@@ -32,7 +31,7 @@ const STATIC_ROUTES = [
 /** Rebuild hourly so a mentor edit reaches the sitemap without waiting for a deploy. */
 export const revalidate = 3600;
 
-const CATALOGUE_FILE = path.join(process.cwd(), "src/data/mentors/mentors.json");
+const CATALOGUE_FILE = "src/data/mentors/mentors.json";
 
 /**
  * A real modification time for the mentor catalogue, or undefined.
@@ -43,18 +42,15 @@ const CATALOGUE_FILE = path.join(process.cwd(), "src/data/mentors/mentors.json")
  * unreliable, so an always-now timestamp doesn't just fail to help — it
  * discards the crawl-scheduling signal for the whole file. The catalogue
  * file's mtime is a genuine signal (on the VPS it's symlinked to persistent
- * storage, so it moves only when a mentor is actually added or edited).
+ * storage, so it moves only when a mentor is actually added or edited; on
+ * Cloudflare it's the R2 object's `uploaded` time, which moves the same way).
  *
  * Static pages get no `lastModified` at all, because nothing here knows when
  * their copy last changed and an invented date is what caused this problem in
  * the first place.
  */
 async function catalogueModified(): Promise<Date | undefined> {
-  try {
-    return (await stat(CATALOGUE_FILE)).mtime;
-  } catch {
-    return undefined;
-  }
+  return fileMtime(CATALOGUE_FILE);
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

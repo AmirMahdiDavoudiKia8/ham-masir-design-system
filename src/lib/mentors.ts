@@ -1,7 +1,6 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
 import { revalidateTag, unstable_cache } from "next/cache";
-import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
+import { listFileNames, readJson, writeJson } from "@/lib/storage";
 import type { Mentor, MentorReview } from "@/lib/mentorFilters";
 import { getMentorAccounts, isMentorPubliclyListed } from "@/lib/mentorPortal";
 import { SITE_SESSION_PRICE, SITE_SUBSCRIPTION_PRICE } from "@/lib/plans";
@@ -9,7 +8,7 @@ import { SITE_SESSION_PRICE, SITE_SUBSCRIPTION_PRICE } from "@/lib/plans";
 export type { Mentor, MentorFilters } from "@/lib/mentorFilters";
 export { filterMentors, parseRankValue } from "@/lib/mentorFilters";
 
-const MENTORS_DIR = path.join(process.cwd(), "src/data/mentors");
+const MENTORS_DIR = "src/data/mentors";
 
 function str(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value : undefined;
@@ -161,32 +160,23 @@ async function loadPortalMentors(): Promise<Mentor[]> {
  * lib/mentorFilters instead, so the browser bundle never sees node:fs.
  */
 async function loadCatalogueMentors(): Promise<Mentor[]> {
-  let files: string[];
-  try {
-    files = (await readdir(MENTORS_DIR)).filter((f) => f.toLowerCase().endsWith(".json"));
-  } catch {
-    return [];
-  }
+  const files = (await listFileNames(MENTORS_DIR)).filter((f) => f.toLowerCase().endsWith(".json"));
   if (files.length === 0) return [];
 
   const singleFile = files.find((f) => f.toLowerCase() === "mentors.json");
 
   if (singleFile) {
-    try {
-      const raw = JSON.parse(await readFile(path.join(MENTORS_DIR, singleFile), "utf-8"));
-      if (!Array.isArray(raw)) return [];
-      return raw
-        .map((item, i) => normalizeMentor(item, `mentor-${i}`))
-        .filter((m): m is Mentor => m !== null);
-    } catch {
-      return [];
-    }
+    const raw = await readJson<unknown>(`${MENTORS_DIR}/${singleFile}`, []);
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((item, i) => normalizeMentor(item, `mentor-${i}`))
+      .filter((m): m is Mentor => m !== null);
   }
 
   const mentors = await Promise.all(
     files.map(async (file) => {
       try {
-        const raw = JSON.parse(await readFile(path.join(MENTORS_DIR, file), "utf-8"));
+        const raw = await readJson<unknown>(`${MENTORS_DIR}/${file}`, null);
         return normalizeMentor(raw, file.replace(/\.json$/i, ""));
       } catch {
         return null;
@@ -208,7 +198,7 @@ const getCachedCatalogueMentors = unstable_cache(loadCatalogueMentors, ["mentors
   tags: ["mentors"],
 });
 
-const CATALOGUE_FILE = path.join(MENTORS_DIR, "mentors.json");
+const CATALOGUE_FILE = `${MENTORS_DIR}/mentors.json`;
 
 /**
  * Lets a catalogue mentor (see MentorAccount.catalogueId) edit their own
@@ -228,20 +218,14 @@ const CATALOGUE_FILE = path.join(MENTORS_DIR, "mentors.json");
  */
 export async function updateCatalogueMentor(catalogueId: string, patch: Partial<Mentor>): Promise<boolean> {
   return withFileLock(CATALOGUE_FILE, async () => {
-    let raw: unknown;
-    try {
-      raw = JSON.parse(await readFile(CATALOGUE_FILE, "utf-8"));
-    } catch {
-      return false;
-    }
+    const raw = await readJson<unknown>(CATALOGUE_FILE, []);
     if (!Array.isArray(raw)) return false;
 
     const index = raw.findIndex((m) => m && typeof m === "object" && (m as Record<string, unknown>).id === catalogueId);
     if (index === -1) return false;
 
     raw[index] = { ...(raw[index] as Record<string, unknown>), ...patch };
-    await writeFile(CATALOGUE_FILE, `${JSON.stringify(raw, null, 2)}
-`, "utf-8");
+    await writeJson(CATALOGUE_FILE, raw);
     revalidateTag("mentors");
     return true;
   });

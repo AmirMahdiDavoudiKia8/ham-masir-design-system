@@ -1,5 +1,4 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { readJson } from "@/lib/storage";
 
 export type TaskType = "درسنامه" | "تست";
 
@@ -48,7 +47,7 @@ export interface ProgressData {
   monthCalendar: MonthCalendar;
 }
 
-const PROGRESS_FILE = path.join(process.cwd(), "src/data/progress/progress.json");
+const PROGRESS_FILE = "src/data/progress/progress.json";
 
 function str(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value : undefined;
@@ -123,29 +122,25 @@ export async function getProgressData(): Promise<ProgressData> {
     monthCalendar: { startWeekday: 0, days: [] },
   };
 
-  try {
-    const raw = JSON.parse(await readFile(PROGRESS_FILE, "utf-8"));
-    if (!raw || typeof raw !== "object") return empty;
-    const r = raw as Record<string, unknown>;
+  const raw = await readJson<unknown>(PROGRESS_FILE, null);
+  if (!raw || typeof raw !== "object") return empty;
+  const r = raw as Record<string, unknown>;
 
-    const rawPlan = (r.studyPlan ?? {}) as Record<string, unknown>;
-    const rawDays = Array.isArray(rawPlan.days) ? rawPlan.days : [];
-    const studyPlan: StudyPlan = {
-      weekLabel: str(rawPlan.weekLabel),
-      days: rawDays.map((d, i) => normalizeDay(d, i)).filter((d): d is PlanDay => d !== null),
-    };
+  const rawPlan = (r.studyPlan ?? {}) as Record<string, unknown>;
+  const rawDays = Array.isArray(rawPlan.days) ? rawPlan.days : [];
+  const studyPlan: StudyPlan = {
+    weekLabel: str(rawPlan.weekLabel),
+    days: rawDays.map((d, i) => normalizeDay(d, i)).filter((d): d is PlanDay => d !== null),
+  };
 
-    const rawCal = (r.monthCalendar ?? {}) as Record<string, unknown>;
-    const rawCalDays = Array.isArray(rawCal.days) ? rawCal.days : [];
-    const monthCalendar: MonthCalendar = {
-      monthLabel: str(rawCal.monthLabel),
-      startWeekday: num(rawCal.startWeekday) ?? 0,
-      todayDay: num(rawCal.todayDay),
-      days: rawCalDays.map(normalizeCalendarDay).filter((d): d is CalendarDay => d !== null),
-    };
+  const rawCal = (r.monthCalendar ?? {}) as Record<string, unknown>;
+  const rawCalDays = Array.isArray(rawCal.days) ? rawCal.days : [];
+  const monthCalendar: MonthCalendar = {
+    monthLabel: str(rawCal.monthLabel),
+    startWeekday: num(rawCal.startWeekday) ?? 0,
+    todayDay: num(rawCal.todayDay),
+    days: rawCalDays.map(normalizeCalendarDay).filter((d): d is CalendarDay => d !== null),
+  };
 
-    return { studyPlan, monthCalendar };
-  } catch {
-    return empty;
-  }
+  return { studyPlan, monthCalendar };
 }

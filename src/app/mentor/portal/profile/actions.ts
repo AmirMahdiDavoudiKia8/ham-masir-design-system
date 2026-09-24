@@ -1,16 +1,15 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getSessionMentor, updateMentorAccount } from "@/lib/mentorPortal";
 import { updateCatalogueMentor } from "@/lib/mentors";
 import { PHOTO_MAX_BYTES, VOICE_MAX_BYTES } from "@/lib/mentorPortalLimits";
 import { fastStartMp4 } from "@/lib/mp4FastStart";
+import { writeBinary } from "@/lib/storage";
 
-const PORTAL_MEDIA_DIR = path.join(process.cwd(), "public/mentors/portal");
+const PORTAL_MEDIA_DIR = "public/mentors/portal";
 
 const PHOTO_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -37,14 +36,13 @@ async function saveUpload(
   const ext = extensionsByType[file.type];
   if (!ext) return null;
 
-  await mkdir(PORTAL_MEDIA_DIR, { recursive: true });
   let bytes: Buffer = Buffer.from(await file.arrayBuffer());
   if (transform) bytes = transform(bytes);
 
   // Cache-busting id in the filename — re-uploading a photo/voice should
   // show the new one immediately, not a stale cached copy at the old path.
   const filename = `${mentorId}-${suffix}-${randomUUID().slice(0, 8)}.${ext}`;
-  await writeFile(path.join(PORTAL_MEDIA_DIR, filename), bytes);
+  await writeBinary(`${PORTAL_MEDIA_DIR}/${filename}`, bytes, file.type);
   return `/mentors/portal/${filename}`;
 }
 

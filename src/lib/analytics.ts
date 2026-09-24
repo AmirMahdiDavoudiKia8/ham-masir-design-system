@@ -1,5 +1,4 @@
-import { mkdir, readdir, readFile, appendFile } from "node:fs/promises";
-import path from "node:path";
+import { appendText, listFileNames, readText } from "@/lib/storage";
 
 export type AnalyticsEventType = "pageview" | "click";
 
@@ -11,11 +10,11 @@ export interface AnalyticsEvent {
   ts: string;
 }
 
-const DIR = path.join(process.cwd(), "src/data/analytics");
+const DIR = "src/data/analytics";
 
 function fileForDate(date: Date): string {
   const day = date.toISOString().slice(0, 10);
-  return path.join(DIR, `${day}.jsonl`);
+  return `${DIR}/${day}.jsonl`;
 }
 
 /**
@@ -27,28 +26,23 @@ function fileForDate(date: Date): string {
  * exactly the traffic this site cares about.
  */
 export async function recordEvent(event: Omit<AnalyticsEvent, "ts">): Promise<void> {
-  await mkdir(DIR, { recursive: true });
   const full: AnalyticsEvent = { ...event, ts: new Date().toISOString() };
-  await appendFile(fileForDate(new Date()), `${JSON.stringify(full)}\n`, "utf-8");
+  await appendText(fileForDate(new Date()), `${JSON.stringify(full)}\n`);
 }
 
 async function readDay(date: Date): Promise<AnalyticsEvent[]> {
-  try {
-    const raw = await readFile(fileForDate(date), "utf-8");
-    return raw
-      .split("\n")
-      .filter(Boolean)
-      .map((line) => {
-        try {
-          return JSON.parse(line) as AnalyticsEvent;
-        } catch {
-          return null;
-        }
-      })
-      .filter((e): e is AnalyticsEvent => e !== null);
-  } catch {
-    return [];
-  }
+  const raw = await readText(fileForDate(date), "");
+  return raw
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => {
+      try {
+        return JSON.parse(line) as AnalyticsEvent;
+      } catch {
+        return null;
+      }
+    })
+    .filter((e): e is AnalyticsEvent => e !== null);
 }
 
 export interface DaySummary {
@@ -143,10 +137,5 @@ export async function getAnalyticsSummary(days: number): Promise<AnalyticsSummar
 
 /** Lists which day-files exist, purely so the dashboard can say "no data yet" accurately instead of guessing from an empty summary. */
 export async function hasAnyAnalyticsData(): Promise<boolean> {
-  try {
-    const files = await readdir(DIR);
-    return files.some((f) => f.endsWith(".jsonl"));
-  } catch {
-    return false;
-  }
+  return (await listFileNames(DIR)).some((f) => f.endsWith(".jsonl"));
 }

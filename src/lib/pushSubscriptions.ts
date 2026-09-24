@@ -1,7 +1,6 @@
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import type { PushSubscription } from "web-push";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 
 /**
  * The founder's devices that asked to be notified (see adminNotify). One
@@ -9,10 +8,10 @@ import { withFileLock } from "@/lib/fileLock";
  * keyed by `endpoint`, which the browser's push service makes unique per
  * subscription, so pressing it twice on the same phone doesn't double up.
  *
- * Lives in persistent/ on the server (deploy/persistent-manifest.txt) like
- * every other runtime-written file; the repo copy is an empty placeholder.
+ * Lives in persistent/ on the VPS (deploy/persistent-manifest.txt) / the
+ * hammasir-store R2 bucket on Cloudflare (key src/data/pushSubscriptions.json).
  */
-const FILE = path.join(process.cwd(), "src/data/pushSubscriptions.json");
+const FILE = "src/data/pushSubscriptions.json";
 
 export interface StoredSubscription {
   subscription: PushSubscription;
@@ -22,16 +21,11 @@ export interface StoredSubscription {
 }
 
 async function readAll(): Promise<StoredSubscription[]> {
-  try {
-    const raw = JSON.parse(await readFile(FILE, "utf-8"));
-    return Array.isArray(raw) ? raw : [];
-  } catch {
-    return [];
-  }
+  return readJson<StoredSubscription[]>(FILE, []);
 }
 
 async function writeAll(all: StoredSubscription[]): Promise<void> {
-  await writeFile(FILE, `${JSON.stringify(all, null, 2)}\n`, "utf-8");
+  await writeJson(FILE, all);
 }
 
 export async function getSubscriptions(): Promise<StoredSubscription[]> {

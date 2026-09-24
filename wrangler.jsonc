@@ -1,0 +1,54 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "hammasir",
+  "account_id": "0dea2fb9099f1350eb0ca9c5f944beea",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // html_handling "none": serve public/*.html as-is (Google site verification
+  // fetches /google….html and must not be 307-rewritten to a clean URL).
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+    "html_handling": "none"
+  },
+  // Durable Object queue for on-demand ISR revalidation (revalidatePath /
+  // revalidateTag) — the DO calls this worker back through the self-binding.
+  "services": [
+    { "binding": "WORKER_SELF_REFERENCE", "service": "hammasir" }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "NEXT_CACHE_DO_QUEUE", "class_name": "DOQueueHandler" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["DOQueueHandler"] }
+  ],
+  // App data + uploads (src/data/**, public/mentors/portal/*).
+  "kv_namespaces": [
+    {
+      "binding": "HAMMASIR_STORE",
+      "id": "b2234081ec8e45eb9db81702c9be460a"
+    },
+    // OpenNext incremental (ISR) cache — separate namespace from app data.
+    {
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "1aca0efd193c411d809ea27f1d43185d"
+    }
+  ],
+  // Strongly-consistent Next tag cache (revalidations table already created).
+  "d1_databases": [
+    {
+      "binding": "NEXT_TAG_CACHE_D1",
+      "database_name": "hammasir-next-cache",
+      "database_id": "c68ac125-3672-4594-95f9-66405b02dbfb"
+    }
+  ],
+  "vars": {
+    "VAPID_SUBJECT": "https://hammasirsite.ir",
+    // Makes next.config.ts headers() emit the nginx security-header set on
+    // Cloudflare only; the VPS has no such var and keeps using nginx's.
+    "CF_RUNTIME": "1"
+  }
+}

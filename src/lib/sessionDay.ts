@@ -3,9 +3,9 @@ import type { PlanDay } from "@/lib/progress";
 
 /**
  * Pure, browser-safe calendar-day helpers — kept out of lib/progress.ts
- * because that file reads local JSON via node:fs and can only run
- * server-side. Client components (ProgressHome) need these two functions,
- * so they live here instead.
+ * because that file pulls in the storage layer (node:fs on the VPS, the R2
+ * binding on Cloudflare) and so can only run server-side. Client components
+ * (ProgressHome) need these two functions, so they live here instead.
  */
 
 /** Calendar day-of-month for a PlanDay, parsed out of its dateLabel (e.g. "۱۲ اردیبهشت" -> ۱۲). */

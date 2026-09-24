@@ -11,9 +11,15 @@
  * both times — the release ships, the app writes to its own directory, and the
  * data disappears at the next deploy with nothing in the logs.
  *
- * It scans for `path.join(process.cwd(), "…")` literals, which is how every
- * runtime path in this codebase is built, and requires each one to be either
- * linked into persistent/ or explicitly marked `read` in the manifest.
+ * It scans for two ways a runtime path is declared in this codebase:
+ *
+ *   - `path.join(process.cwd(), "…")` literals — the VPS-era convention.
+ *   - bare relative-path literals passed to lib/storage.ts
+ *     ("src/data/…", "public/mentors/portal/…") — the Cloudflare/R2-era
+ *     convention, where the same paths are R2 bucket keys.
+ *
+ * Every one must be either linked into persistent/ or explicitly marked
+ * `read` in the manifest.
  */
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -25,6 +31,10 @@ const EXTENSIONS = new Set(['.ts', '.tsx', '.js', '.mjs']);
 
 /** `path.join(process.cwd(), "src/data/x.json")` — captures the literal. */
 const CWD_PATH = /process\.cwd\(\)\s*,\s*["'`]([^"'`]+)["'`]/g;
+
+/** bare storage keys like "src/data/studentBookings.json" or
+ * "public/mentors/portal/x.jpg" (also matches inside template literals). */
+const REL_PATH = /["'`]((?:src\/data|public\/mentors\/portal)\/(?:[^"'`]|\.)+)["'`]/g;
 
 const posix = (p) => p.split(path.sep).join('/').replace(/^\.\//, '');
 
@@ -67,14 +77,21 @@ const dirPaths = linked.filter((entry) => entry.kind === 'dir').map((entry) => e
 
 const found = new Map();
 
+function recordMatch(file, target) {
+  const key = posix(target);
+  if (!found.has(key)) found.set(key, []);
+  found.get(key).push(posix(path.relative(ROOT, file)));
+}
+
+function scanSource(file, source) {
+  for (const match of source.matchAll(CWD_PATH)) recordMatch(file, match[1]);
+  for (const match of source.matchAll(REL_PATH)) recordMatch(file, match[1].replace(/\$\{[^}]+\}/g, '*'));
+}
+
 for (const scanDir of SCAN_DIRS) {
   for await (const file of walk(path.join(ROOT, scanDir))) {
     const source = await readFile(file, 'utf-8');
-    for (const match of source.matchAll(CWD_PATH)) {
-      const target = posix(match[1]);
-      if (!found.has(target)) found.set(target, []);
-      found.get(target).push(posix(path.relative(ROOT, file)));
-    }
+    scanSource(file, source);
   }
 }
 

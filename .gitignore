@@ -36,3 +36,10 @@ src/data/mentorPortal/students/*
 Thumbs.db
 *.log
 hammasirsite.ir-audit/
+
+# ---------- Cloudflare / OpenNext ----------
+.open-next
+.wrangler
+.dev.vars
+.dev.vars.*
+

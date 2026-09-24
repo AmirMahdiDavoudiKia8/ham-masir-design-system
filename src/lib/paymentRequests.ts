@@ -1,7 +1,6 @@
 import { randomBytes } from "node:crypto";
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 
 export interface PaymentRequest {
   code: string;
@@ -17,7 +16,7 @@ export interface PaymentRequest {
   resolvedAt?: string;
 }
 
-const FILE = path.join(process.cwd(), "src/data/paymentRequests.json");
+const FILE = "src/data/paymentRequests.json";
 // Avoids visually-ambiguous characters (0/O, 1/I/l) since a student reads
 // this code off their phone and it round-trips through a Telegram/Bale
 // deep-link `/start` payload.
@@ -31,16 +30,11 @@ function generateCode(): string {
 }
 
 async function getAll(): Promise<PaymentRequest[]> {
-  try {
-    const raw = JSON.parse(await readFile(FILE, "utf-8"));
-    return Array.isArray(raw) ? raw : [];
-  } catch {
-    return [];
-  }
+  return readJson<PaymentRequest[]>(FILE, []);
 }
 
 async function saveAll(requests: PaymentRequest[]): Promise<void> {
-  await writeFile(FILE, `${JSON.stringify(requests, null, 2)}\n`, "utf-8");
+  await writeJson(FILE, requests);
 }
 
 /** Called from the booking/payment screen once identity is verified — creates the pending record the bot will look up by its short code. */

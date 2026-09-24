@@ -1,9 +1,8 @@
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 import { hashPassword, isHashed, verifyPassword } from "@/lib/password";
 
-const FILE = path.join(process.cwd(), "src/data/studentIdentities.json");
+const FILE = "src/data/studentIdentities.json";
 
 export interface StudentAccount {
   name: string;
@@ -13,16 +12,11 @@ export interface StudentAccount {
 type StudentAccounts = Record<string, StudentAccount>;
 
 async function getAll(): Promise<StudentAccounts> {
-  try {
-    const raw = JSON.parse(await readFile(FILE, "utf-8"));
-    return raw && typeof raw === "object" ? raw : {};
-  } catch {
-    return {};
-  }
+  return readJson<StudentAccounts>(FILE, {});
 }
 
 async function saveAll(data: StudentAccounts): Promise<void> {
-  await writeFile(FILE, `${JSON.stringify(data, null, 2)}\n`, "utf-8");
+  await writeJson(FILE, data);
 }
 
 export async function isPhoneKnown(phone: string): Promise<boolean> {

@@ -217,3 +217,46 @@ curl -I https://hammasirsite.ir/student/home        # 200
 pm2 logs hammasir --lines 50                          # no errors
 pm2 status                                            # memory well under the 700M restart threshold
 ```
+
+---
+
+# Cloudflare (primary since 2026-09-24)
+
+The site also — now primarily — runs on **Cloudflare Workers Free** via
+OpenNext (`wrangler.jsonc`, `open-next.config.ts`, `src/lib/storage.ts` → KV).
+Zone `hammasirsite.ir` is active on Cloudflare (NS: cheryl/lennon).
+
+## Everyday commands (this machine)
+
+```powershell
+npm run cf:build     # persistent-coverage gate + CF_RUNTIME=1 + OpenNext build
+npm run cf:deploy    # build + opennextjs-cloudflare deploy
+npm run cf:health    # smoke-test live routes (exits 1 on failure / CPU 1102)
+npm run cf:backup    # pull HAMMASIR_STORE KV → %USERPROFILE%\HamMasirBackups\hammasir-kv-*
+npm run cf:restore -- <dir>   # push a backup folder back into KV (kv-seed.mjs)
+```
+
+CI: `.github/workflows/deploy-cloudflare.yml` (needs `CLOUDFLARE_API_TOKEN`).
+The VPS workflow (`deploy.yml`) can stay on until you're ready to retire the box.
+
+## Data on Cloudflare
+
+| Binding | What |
+|---|---|
+| `HAMMASIR_STORE` (KV) | All runtime JSON + uploads — the new "persistent/" |
+| `NEXT_INC_CACHE_KV` (KV) | OpenNext ISR cache |
+| `NEXT_TAG_CACHE_D1` (D1) | Revalidation tags |
+| `NEXT_CACHE_DO_QUEUE` (DO) | Revalidation queue |
+
+VPS `persistent/` remains the fallback until you decommission the server.
+After any write-heavy day, run `npm run cf:backup` (or schedule it next to
+the existing `HamMasirPersistentBackup` task).
+
+## Free-plan notes
+
+- ~100k req/day, ~10ms CPU/req officially — dynamic pages currently measure
+  ~40ms and return `outcome: ok` (watch `cf:health` / wrangler tail for 1102).
+- Worker routes: `hammasirsite.ir/*` + `www.*` → `hammasir`; `portfolio.*`
+  stays on the VPS origin on purpose.
+- Redirects (www→apex, HTTP→HTTPS except `/[0-9]+.txt`) live in
+  `src/middleware.ts`, not zone rules (OAuth token cannot edit zone settings).

@@ -1,7 +1,31 @@
 import path from "node:path";
 import type { NextConfig } from "next";
 
+/**
+ * Security headers that deploy/security-headers.conf adds on the VPS. On
+ * Cloudflare there is no nginx to include the snippet, so the worker sets the
+ * same headers itself — but only when actually running there: the VPS keeps
+ * owning them via nginx, and doubling up would send every header twice.
+ * CF_RUNTIME is a wrangler var that only exists in wrangler.jsonc.
+ */
+const cfSecurityHeaders = [
+  { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()" },
+  {
+    key: "Content-Security-Policy",
+    value:
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.kavenegar.com https://*.kavenegar.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.kavenegar.com; font-src 'self' data:; media-src 'self' blob:; connect-src 'self' https://*.kavenegar.com; worker-src 'self'; manifest-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'",
+  },
+];
+
 const nextConfig: NextConfig = {
+  async headers() {
+    if (!process.env.CF_RUNTIME) return [];
+    return [{ source: "/(.*)", headers: cfSecurityHeaders }];
+  },
   // Pins the workspace root to this project directory. Without this, Next
   // auto-detects the root by walking up for the nearest lockfile and picks
   // whichever one it finds first — on this machine that's a stray, unrelated

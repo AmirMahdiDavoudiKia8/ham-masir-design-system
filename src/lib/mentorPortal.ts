@@ -1,7 +1,6 @@
-import { readFile, writeFile } from "node:fs/promises";
 import { cookies } from "next/headers";
-import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 import { digitsOnly, normalizePersianText } from "@/lib/format";
 import { hashPassword, isHashed, verifyPassword } from "@/lib/password";
 import type { PlanDay } from "@/lib/progress";
@@ -143,8 +142,8 @@ export interface PortalStudent {
   mentorId?: string;
 }
 
-const MENTORS_FILE = path.join(process.cwd(), "src/data/mentorPortal/mentors.json");
-const STUDENTS_DIR = path.join(process.cwd(), "src/data/mentorPortal/students");
+const MENTORS_FILE = "src/data/mentorPortal/mentors.json";
+const STUDENTS_DIR = "src/data/mentorPortal/students";
 
 /**
  * Mentor accounts (id = phone number) + one JSON file per student — the
@@ -159,12 +158,7 @@ const STUDENTS_DIR = path.join(process.cwd(), "src/data/mentorPortal/students");
  * hand-written plain-text password there still works and self-upgrades.
  */
 export async function getMentorAccounts(): Promise<MentorAccount[]> {
-  try {
-    const raw = JSON.parse(await readFile(MENTORS_FILE, "utf-8"));
-    return Array.isArray(raw) ? raw : [];
-  } catch {
-    return [];
-  }
+  return readJson<MentorAccount[]>(MENTORS_FILE, []);
 }
 
 /**
@@ -225,21 +219,17 @@ export async function getSessionMentor(): Promise<MentorAccount | null> {
 }
 
 function studentFilePath(id: string): string {
-  return path.join(STUDENTS_DIR, `${id}.json`);
+  return `${STUDENTS_DIR}/${id}.json`;
 }
 
 export async function getStudent(id: string): Promise<PortalStudent | null> {
-  try {
-    const raw = JSON.parse(await readFile(studentFilePath(id), "utf-8"));
-    if (!raw || typeof raw !== "object") return null;
-    return raw as PortalStudent;
-  } catch {
-    return null;
-  }
+  const raw = await readJson<unknown>(studentFilePath(id), null);
+  if (!raw || typeof raw !== "object") return null;
+  return raw as PortalStudent;
 }
 
 export async function saveStudent(student: PortalStudent): Promise<void> {
-  await writeFile(studentFilePath(student.id), `${JSON.stringify(student, null, 2)}\n`, "utf-8");
+  await writeJson(studentFilePath(student.id), student);
 }
 
 /**
@@ -264,7 +254,7 @@ export async function updateStudent(
 }
 
 async function saveMentorAccounts(mentors: MentorAccount[]): Promise<void> {
-  await writeFile(MENTORS_FILE, `${JSON.stringify(mentors, null, 2)}\n`, "utf-8");
+  await writeJson(MENTORS_FILE, mentors);
 }
 
 /** Self-registration entry point for the mentor portal — appends a new account (phone number as id) so the mentor can log in right away with the password they just chose. Caller is responsible for checking the phone isn't already registered — see registerMentorAccount for a race-safe check-and-append in one step. */
@@ -323,7 +313,7 @@ export async function updateMentorAccount(id: string, patch: Partial<MentorAccou
   });
 }
 
-const CATALOGUE_MENTORS_FILE = path.join(process.cwd(), "src/data/mentors/mentors.json");
+const CATALOGUE_MENTORS_FILE = "src/data/mentors/mentors.json";
 
 /**
  * A booking's `mentorId` is the *catalogue* id (a slug like "ahmadreza") —
@@ -339,15 +329,11 @@ const CATALOGUE_MENTORS_FILE = path.join(process.cwd(), "src/data/mentors/mentor
  * to avoid a circular import — that module already imports from this one.
  */
 async function resolveMentorRosterId(mentorId: string): Promise<string> {
-  try {
-    const raw = JSON.parse(await readFile(CATALOGUE_MENTORS_FILE, "utf-8"));
-    if (!Array.isArray(raw)) return mentorId;
-    const entry = raw.find((m) => m && typeof m === "object" && m.id === mentorId);
-    const phone = entry?.phone;
-    return typeof phone === "string" && phone.trim() ? phone.trim() : mentorId;
-  } catch {
-    return mentorId;
-  }
+  const raw = await readJson<unknown>(CATALOGUE_MENTORS_FILE, []);
+  if (!Array.isArray(raw)) return mentorId;
+  const entry = raw.find((m) => m && typeof m === "object" && (m as Record<string, unknown>).id === mentorId);
+  const phone = (entry as Record<string, unknown> | undefined)?.phone;
+  return typeof phone === "string" && phone.trim() ? phone.trim() : mentorId;
 }
 
 /** Adds `studentId` to `mentorId`'s roster if that mentor has a portal account and doesn't already have them. Silently does nothing otherwise — not every catalogue mentor has portal access yet. */

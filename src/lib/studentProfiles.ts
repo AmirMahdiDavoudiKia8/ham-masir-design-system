@@ -1,6 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { withFileLock } from "@/lib/fileLock";
+import { readJson, writeJson } from "@/lib/storage";
 
 export interface StoredStudentProfile {
   fieldOfStudy: string;
@@ -11,19 +10,14 @@ export interface StoredStudentProfile {
   contact: string;
 }
 
-const FILE = path.join(process.cwd(), "src/data/studentProfiles.json");
+const FILE = "src/data/studentProfiles.json";
 
 async function getAll(): Promise<Record<string, StoredStudentProfile>> {
-  try {
-    const raw = JSON.parse(await readFile(FILE, "utf-8"));
-    return raw && typeof raw === "object" ? raw : {};
-  } catch {
-    return {};
-  }
+  return readJson<Record<string, StoredStudentProfile>>(FILE, {});
 }
 
 async function saveAll(data: Record<string, StoredStudentProfile>): Promise<void> {
-  await writeFile(FILE, `${JSON.stringify(data, null, 2)}\n`, "utf-8");
+  await writeJson(FILE, data);
 }
 
 export async function getStudentProfile(phone: string): Promise<StoredStudentProfile | null> {
