@@ -53,7 +53,10 @@ const config: Config = {
           soft: "var(--color-alert-soft)",
           foreground: "var(--color-alert-foreground)",
         },
-        danger: "var(--color-danger)",
+        danger: {
+          DEFAULT: "var(--color-danger)",
+          foreground: "var(--color-danger-foreground)",
+        },
         scrim: "var(--color-scrim)",
       },
       borderRadius: {

@@ -76,7 +76,7 @@ export default async function AdminLeadsPage({ searchParams }: LeadsPageProps) {
         <Link
           href="/mentor/admin/leads"
           className={`rounded-full px-3 py-1.5 text-label font-semibold ${
-            !typeFilter ? "bg-primary text-white" : "bg-surface-alt text-muted-foreground"
+            !typeFilter ? "bg-primary text-primary-foreground" : "bg-surface-alt text-muted-foreground"
           }`}
         >
           همه ({toPersianDigits(leads.length)})
@@ -88,7 +88,7 @@ export default async function AdminLeadsPage({ searchParams }: LeadsPageProps) {
               key={t}
               href={`/mentor/admin/leads?type=${t}`}
               className={`rounded-full px-3 py-1.5 text-label font-semibold ${
-                typeFilter === t ? "bg-primary text-white" : "bg-surface-alt text-muted-foreground"
+                typeFilter === t ? "bg-primary text-primary-foreground" : "bg-surface-alt text-muted-foreground"
               }`}
             >
               {TYPE_LABELS[t]} ({toPersianDigits(counts[t])})

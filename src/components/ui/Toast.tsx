@@ -37,7 +37,7 @@ export function Toast() {
       <div
         className={cn(
           "pointer-events-auto flex items-center gap-2 rounded-full px-4 py-2.5 text-caption font-bold shadow-lifted animate-rise-in",
-          isSuccess ? "bg-success text-success-foreground" : "bg-danger text-white",
+          isSuccess ? "bg-success text-success-foreground" : "bg-danger text-danger-foreground",
         )}
       >
         {isSuccess ? <CheckIcon className="h-4 w-4 shrink-0" /> : <XIcon className="h-4 w-4 shrink-0" />}

@@ -116,7 +116,7 @@ export function EnablePushButton({ vapidPublicKey }: EnablePushButtonProps) {
           type="button"
           onClick={enable}
           disabled={status === "working"}
-          className="shrink-0 rounded-md bg-primary px-3 py-1.5 text-label font-bold text-white disabled:opacity-50"
+          className="shrink-0 rounded-md bg-primary px-3 py-1.5 text-label font-bold text-primary-foreground disabled:opacity-50"
         >
           {status === "working" ? "صبر کن…" : status === "on" ? "ارسال تست" : "روشن کن"}
         </button>

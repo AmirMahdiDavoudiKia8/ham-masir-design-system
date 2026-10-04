@@ -277,7 +277,7 @@ export function StudentPlanEditor({ student }: StudentPlanEditorProps) {
               type="button"
               onClick={handleCancel}
               disabled={isCancelPending}
-              className="h-11 flex-1 cursor-pointer rounded-md bg-danger text-caption font-bold text-white transition-all duration-standard ease-gentle active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+              className="h-11 flex-1 cursor-pointer rounded-md bg-danger text-caption font-bold text-danger-foreground transition-all duration-standard ease-gentle active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isCancelPending ? "در حال لغو…" : "بله، مطمئنم"}
             </button>

@@ -116,8 +116,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="fa" dir="rtl" suppressHydrationWarning>
       <head>
+        {/*
+          Night-walk pre-paint: applies the persisted (or OS-preferred) mood
+          before first paint so dark users never flash cream. Mirrors the
+          useTheme hook's STORAGE_KEY ("hammasir-theme") — keep both in sync.
+          Only the semantic token layer flips via `.dark`; no layout changes.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('hammasir-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}}catch(e){}})();",
+          }}
+        />
         {/*
           Only the two weights first paint actually uses (Regular for body
           text, Bold for headings and the primary CTA) — ~102KB instead of the

@@ -54,10 +54,10 @@
   --color-alert-soft: #f8e9da;
   --color-alert-foreground: #4a2e1d;
   --color-danger: #b0644f; /* true errors only — muted warm terracotta, not a screaming red */
+  --color-danger-foreground: #ffffff;
 
   /* Overlay — scrim, ink-tinted rather than flat black */
   --color-scrim: rgba(44, 58, 56, 0.38);
-
   /* Radii — soft-UI scale, nothing sharp */
   --radius-sm: 12px;
   --radius-md: 16px;
@@ -92,4 +92,58 @@
   --leading-caption: 1.6;
   --text-label: 12px;
   --leading-label: 1.5;
+}
+
+/**
+ * Dark mood — "night walk together".
+ * Canonical values live in src/design-system/tokens/tokens.css (.dark).
+ * This mirror exists because tailwind.config.ts documents this file as the
+ * token source; keep both in sync. Only the semantic layer flips — primitives,
+ * radii, motion and type never change between modes.
+ *
+ * Mood notes: warm charcoal-teal night (#202b29, never pure black), cream
+ * text (#f4efe4, never pure white), teal lightened to #7db8ae so it stays
+ * AA-legible on dark, peach kept as-is for warmth. Shadows go black-based,
+ * scrim deepens. Motion/stroke rules unchanged — calm accompanies day & night.
+ */
+.dark {
+  --color-background: #202b29;
+  --color-surface: #2a3634;
+  --color-surface-alt: #33413f;
+  --color-foreground: #f4efe4;
+  --color-muted-foreground: #b9c4c0;
+  --color-foreground-faint: #8b9794;
+  --color-muted: #33413f;
+  --color-border: #3d4a47;
+  --color-primary: #7db8ae;
+  --color-primary-hover: #93c7be;
+  --color-primary-light: #7db8ae;
+  --color-primary-soft: #2f4a46;
+  --color-primary-foreground: #1d2726;
+  --color-secondary: #e8b99a;
+  --color-secondary-dark: #dba783;
+  --color-secondary-soft: #4a3a2c;
+  --color-secondary-foreground: #fbeadd;
+  --color-cream: #4a3a2c;
+  --color-cream-foreground: #fbeadd;
+  --color-verified: #7db8ae;
+  --color-success: #8fc3a5;
+  --color-success-soft: #2c4438;
+  --color-success-foreground: #16241d;
+  --color-alert: #e0aa7e;
+  --color-alert-soft: #4a3a2c;
+  --color-alert-foreground: #fbeadd;
+  --color-danger: #cf8a73;
+  --color-danger-foreground: #1d2726;
+  --color-scrim: rgba(15, 22, 21, 0.6);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-lifted: 0 8px 40px rgba(0, 0, 0, 0.4);
+  --shadow-brand: 0 8px 20px rgba(91, 158, 148, 0.3);
+}
+
+:root {
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
 }

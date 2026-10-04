@@ -68,7 +68,7 @@ export function CancelBookingButton({ bookingId, mentorId, plan, slot, compact }
             type="button"
             onClick={handleConfirm}
             disabled={isPending}
-            className="h-14 w-full cursor-pointer rounded-md bg-danger text-body font-bold text-white transition-all duration-standard ease-gentle active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-14 w-full cursor-pointer rounded-md bg-danger text-body font-bold text-danger-foreground transition-all duration-standard ease-gentle active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? "در حال لغو…" : "لغو جلسه"}
           </button>

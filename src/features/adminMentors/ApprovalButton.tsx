@@ -34,7 +34,7 @@ export function ApprovalButton({ mentorId, approved }: ApprovalButtonProps) {
         onClick={handleClick}
         disabled={pending}
         className={`shrink-0 rounded-lg px-4 py-2 text-caption font-bold transition disabled:opacity-50 ${
-          approved ? "border border-border text-danger hover:bg-alert-soft" : "bg-primary text-white hover:opacity-90"
+          approved ? "border border-border text-danger hover:bg-alert-soft" : "bg-primary text-primary-foreground hover:opacity-90"
         }`}
       >
         {pending ? "..." : approved ? "برداشتن از سایت" : "تایید و انتشار"}

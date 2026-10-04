@@ -1,0 +1,78 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { colors } from "@/lib/tokens";
+
+<Meta title="FOUNDATIONS/Colors" />
+
+# Colors
+
+Six hero colors — the whole Ham-Masir world. Swatches read from `lib/tokens.ts` (typed mirror of `tokens.css`), so docs and code never drift.
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 24 }}>
+  {colors.map((c) => (
+    <div
+      key={c.name}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        padding: 16,
+        borderRadius: 16,
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+      }}
+    >
+      <div
+        aria-hidden
+        style={{
+          width: 64,
+          height: 64,
+          minWidth: 64,
+          minHeight: 64,
+          borderRadius: 16,
+          background: c.hex,
+          border: "1px solid var(--color-border)",
+          boxShadow: "var(--shadow-card)",
+        }}
+      />
+      <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+          <strong style={{ color: "var(--color-foreground)", fontSize: 16 }}>{c.label}</strong>
+          <code
+            dir="ltr"
+            style={{
+              fontSize: 13,
+              padding: "2px 8px",
+              borderRadius: 999,
+              background: "var(--color-surface-alt)",
+              color: "var(--color-muted-foreground)",
+              border: "1px solid var(--color-border)",
+            }}
+          >
+            {c.hex}
+          </code>
+        </div>
+        <span style={{ color: "var(--color-muted-foreground)", fontSize: 13, lineHeight: 1.6 }}>
+          {c.description}
+        </span>
+        <code dir="ltr" style={{ fontSize: 12, color: "var(--color-foreground-faint)" }}>
+          {c.name === "background"
+            ? "bg-background"
+            : c.name === "ink"
+              ? "text-foreground"
+              : c.name === "warning"
+                ? "bg-alert-soft · text-alert · border-alert"
+                : c.name === "danger"
+                  ? "text-danger · border-danger"
+                  : `bg-${c.name} · text-${c.name}-foreground`}
+        </code>
+      </div>
+    </div>
+  ))}
+</div>
+
+<div dir="ltr" style={{ marginTop: 24, padding: 16, borderRadius: 16, background: "var(--color-surface-alt)", color: "var(--color-muted-foreground)", fontSize: 13, lineHeight: 1.7 }}>
+  <strong style={{ color: "var(--color-foreground)" }}>Law — </strong>
+  no pure black, no pure white, no neon, no acid accents. Night mood flips only the
+  semantic layer (<code>.dark</code> in <code>tokens.css</code>); these six hexes are the day-walk
+  anchors everything derives from. Use the <strong>Mood toolbar ↑</strong> to feel them after dark.
+</div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ThemeToggle } from "@/design-system";
 import { SideMenu } from "./SideMenu";
 
 interface HeaderProps {
@@ -16,8 +17,10 @@ export function Header({ title = "هم‌مسیر" }: HeaderProps) {
           {title}
         </span>
       </div>
-      {/* Balances the menu button so the brand mark stays centered. */}
-      <span aria-hidden className="h-11 w-11 shrink-0" />
+      {/* Night-walk toggle — mirrors the menu button's footprint, so the brand mark stays centered. */}
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center">
+        <ThemeToggle className="shadow-none" />
+      </span>
     </header>
   );
 }

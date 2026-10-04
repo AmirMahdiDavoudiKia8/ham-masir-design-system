@@ -69,7 +69,7 @@ export default async function AdminStudentsPage({ searchParams }: StudentsPagePr
         />
         <button
           type="submit"
-          className="shrink-0 rounded-md bg-primary px-4 text-caption font-bold text-white transition-colors duration-standard ease-gentle hover:bg-primary-hover"
+          className="shrink-0 rounded-md bg-primary px-4 text-caption font-bold text-primary-foreground transition-colors duration-standard ease-gentle hover:bg-primary-hover"
         >
           جست‌وجو
         </button>
