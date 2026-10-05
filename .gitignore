@@ -56,3 +56,56 @@ agent/
 sleek-screens/
 skills-lock.json
 
+# ---------- full-app files (this repo tracks only the design system) ----------
+# Tracked: src/design-system, src/lib/{cn,toast,tokens}.ts, src/app/globals.css,
+# .storybook, estedad + vazirmatn-rd fonts, mentors/sara.jpg, root configs, README.
+src/app/*
+!src/app/globals.css
+src/components/
+src/data/
+src/features/
+src/lib/*
+!src/lib/cn.ts
+!src/lib/toast.ts
+!src/lib/tokens.ts
+src/middleware.ts
+src/store/
+src/styles/
+public/_headers
+public/brand/
+public/fonts/pinar/
+public/google4282a803d978c25d.html
+public/kvn-push-sw.js
+public/library/
+public/logo.png
+public/mentor/
+public/mentors/*
+!public/mentors/sara.jpg
+public/sample-voice-intro.m4a
+public/universities/
+bots/
+deploy/
+pinar/
+scripts/
+telegram-ad-bot/
+.github/
+.vscode/
+.env.local.example
+eslint.config.mjs
+next.config.ts
+open-next.config.ts
+wrangler.jsonc
+BG.png
+HamMasir.html
+Logo.png
+MOOD BOARD.png
+Voice 260823_130230.m4a
+ham-masir-brand-guidelines.md
+کتابخانه هم مسیر/
+منتورها/
+برای اپدیت منتورها.html
+سرویس پیامکی/
+راهنما/
+الهام بگیر.jpg
+Mentors/
+

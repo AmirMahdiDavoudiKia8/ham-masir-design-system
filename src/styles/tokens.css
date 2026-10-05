@@ -1,8 +1,0 @@
-/**
- * DEPRECATED shim — do not add values here.
- *
- * Canonical tokens live in `src/design-system/tokens/tokens.css` (imported
- * once by `src/app/globals.css`). This file re-exports them so any lingering
- * reference keeps resolving to the single source of truth.
- */
-@import "../design-system/tokens/tokens.css";
