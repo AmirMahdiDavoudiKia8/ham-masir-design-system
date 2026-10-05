@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ProgressIcon } from "@/components/ui/icons";
+import { ProgressIcon } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import type { CancellationInfo } from "@/lib/mentorPortal";
 import type { ResolvedBooking } from "../resolveBooking";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { ArrowRightIcon } from "@/design-system";
 import { getSessionMentor, getStudent } from "@/lib/mentorPortal";
 import { StudentPlanEditor } from "./StudentPlanEditor";
 

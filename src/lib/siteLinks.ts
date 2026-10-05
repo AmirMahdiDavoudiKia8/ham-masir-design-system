@@ -6,7 +6,7 @@ import {
   LockIcon,
   PhoneIcon,
   SendIcon,
-} from "@/components/ui/icons";
+} from "@/design-system";
 import {
   SITE_BALE,
   SITE_INSTAGRAM,

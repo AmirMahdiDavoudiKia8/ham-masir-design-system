@@ -2,10 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Chip";
-import { Input } from "@/components/ui/Input";
-import { XIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { Chip } from "@/design-system";
+import { Input } from "@/design-system";
+import { XIcon } from "@/design-system";
 import { WeeklyChecklist } from "@/features/progress/components/WeeklyChecklist";
 import { cn } from "@/lib/cn";
 import type { PlanDay, Task, TaskType } from "@/lib/progress";

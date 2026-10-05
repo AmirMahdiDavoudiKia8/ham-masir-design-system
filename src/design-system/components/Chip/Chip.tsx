@@ -1,12 +1,15 @@
-import { ButtonHTMLAttributes } from "react";
+/**
+ * Chip — selectable pill used for tabs, filters, and tags.
+ * aria-pressed carries the state; the native button carries the interaction.
+ */
+import * as React from "react";
 import { cn } from "@/lib/cn";
 
-interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   selected?: boolean;
 }
 
-/** Selectable pill used for tabs, filters, and tags. */
-export function Chip({ selected = false, className, ...props }: ChipProps) {
+export function Chip({ selected = false, className, children, ...props }: ChipProps) {
   return (
     <button
       type="button"
@@ -20,6 +23,9 @@ export function Chip({ selected = false, className, ...props }: ChipProps) {
         className,
       )}
       {...props}
-    />
+    >
+      {children}
+    </button>
   );
 }
+export default Chip;

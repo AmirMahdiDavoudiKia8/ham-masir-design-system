@@ -3,8 +3,8 @@
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { Input } from "@/design-system";
 import { digitsOnly } from "@/lib/format";
 import { loginMentor } from "./actions";
 

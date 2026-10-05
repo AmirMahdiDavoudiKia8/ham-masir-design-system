@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { BottomSheet } from "@/components/ui/BottomSheet";
+import { Sheet } from "@/design-system";
 import { showToast } from "@/lib/toast";
 import { cancelSession } from "../actions";
 
@@ -36,7 +36,7 @@ export function CancelSessionButton() {
         لغو جلسه
       </button>
 
-      <BottomSheet open={open} onClose={() => setOpen(false)} ariaLabel="لغو جلسه">
+      <Sheet open={open} onClose={() => setOpen(false)} ariaLabel="لغو جلسه">
         <div className="flex flex-col gap-4 pt-2">
           {/* Same as CancelBookingButton: nothing is charged up front, so there
               is no refund to describe. */}
@@ -60,7 +60,7 @@ export function CancelSessionButton() {
             {isPending ? "در حال لغو…" : "لغو جلسه"}
           </button>
         </div>
-      </BottomSheet>
+      </Sheet>
     </>
   );
 }

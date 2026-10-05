@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SupportFab } from "@/components/support/SupportFab";
-import { Toast } from "@/components/ui/Toast";
+import { Toast } from "@/design-system";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import {
   SITE_BALE,
@@ -132,8 +132,8 @@ export default function RootLayout({
         />
         {/*
           Only the two weights first paint actually uses (Regular for body
-          text, Bold for headings and the primary CTA) — ~102KB instead of the
-          208KB all four cost. Medium and SemiBold are declared in globals.css
+          text, Bold for headings and the primary CTA) — ~54KB instead of the
+          ~110KB all four cost. Medium and SemiBold are declared in globals.css
           and fetched on demand.
 
           `crossOrigin="anonymous"` is required even though the files are
@@ -142,14 +142,14 @@ export default function RootLayout({
         */}
         <link
           rel="preload"
-          href="/fonts/vazirmatn-rd/Vazirmatn-RD-Regular.woff2"
+          href="/fonts/estedad/Estedad-Regular.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
         />
         <link
           rel="preload"
-          href="/fonts/vazirmatn-rd/Vazirmatn-RD-Bold.woff2"
+          href="/fonts/estedad/Estedad-Bold.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"

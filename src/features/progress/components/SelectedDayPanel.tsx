@@ -1,5 +1,5 @@
 import { toPersianDigits } from "@/lib/format";
-import { XIcon } from "@/components/ui/icons";
+import { XIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import type { CalendarDayStatus, PlanDay } from "@/lib/progress";
 import { ProgressRing } from "./ProgressRing";

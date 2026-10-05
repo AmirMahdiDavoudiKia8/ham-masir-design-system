@@ -22,4 +22,7 @@ export * from "./components/EmptyState";
 export * from "./components/VerifiedBadge";
 export * from "./components/ThemeToggle";
 export * from "./components/Tag";
+export * from "./components/Sheet";
+export * from "./components/Toast";
+export * from "./icons";
 export * from "./foundations";

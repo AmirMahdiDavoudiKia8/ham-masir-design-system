@@ -1,4 +1,4 @@
-import { ClockIcon } from "@/components/ui/icons";
+import { ClockIcon } from "@/design-system";
 import { Tag } from "@/design-system";
 import type { Mentor } from "@/lib/mentors";
 

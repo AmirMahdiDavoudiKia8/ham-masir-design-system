@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/design-system";
 import { toPersianDigits } from "@/lib/format";
 import { SELF_RATING_LABEL } from "../../constants";
 import { explainAllocation } from "../../explanations";

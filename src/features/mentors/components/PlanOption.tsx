@@ -1,4 +1,4 @@
-import { CheckIcon } from "@/components/ui/icons";
+import { CheckIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 
 interface PlanOptionProps {

@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "@/components/navigation/BottomNav";
-import { BookIcon, MenuIcon, XIcon } from "@/components/ui/icons";
+import { BookIcon, MenuIcon, XIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import { SITE_LEGAL_LINKS } from "@/lib/siteLinks";
 

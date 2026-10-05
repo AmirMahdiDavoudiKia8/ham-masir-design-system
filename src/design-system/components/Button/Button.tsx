@@ -1,10 +1,23 @@
-import { ButtonHTMLAttributes, forwardRef } from "react";
+/**
+ * Button — the single action control for everything the student does in
+ * HamMasir, from «رزرو جلسه» to «انصراف».
+ *
+ * Variant axis → variant (primary | secondary | outline | outline-brand | ghost).
+ * Primary is the filled gradient for the ONE main action per screen.
+ * Size axis    → size (md | lg).
+ * State axis   → native :hover / :focus-visible / :disabled.
+ *                Focus is a real browser event, never a prop.
+ * Shape        → pill for standalone CTAs (a card's reserve button), otherwise rounded-md.
+ *
+ * Binds only to semantic tokens.
+ */
+import * as React from "react";
 import { cn } from "@/lib/cn";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "outline-brand" | "ghost";
-type ButtonSize = "md" | "lg";
+export type ButtonVariant = "primary" | "secondary" | "outline" | "outline-brand" | "ghost";
+export type ButtonSize = "md" | "lg";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
@@ -51,7 +64,7 @@ export function buttonClasses(
   );
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { className, variant = "primary", size = "md", fullWidth, pill, ...props },
     ref,
@@ -67,3 +80,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
+export default Button;

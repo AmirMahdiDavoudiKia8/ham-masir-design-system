@@ -1,4 +1,4 @@
-import { AccompaniedLineIcon, StarIcon } from "@/components/ui/icons";
+import { AccompaniedLineIcon, StarIcon } from "@/design-system";
 import type { Mentor } from "@/lib/mentors";
 import { toPersianDigits } from "@/lib/format";
 

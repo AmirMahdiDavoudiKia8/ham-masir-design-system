@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/design-system";
 import { SELF_RATING_LABEL } from "../constants";
 import { SUBJECT_LABEL, TRACK_SUBJECTS } from "../types";
 import type { PlannerFormData, SelfRating, SubjectInput, SubjectKey } from "../types";

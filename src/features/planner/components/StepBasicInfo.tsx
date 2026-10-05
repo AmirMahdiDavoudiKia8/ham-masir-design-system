@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/design-system";
 import { digitsOnly, toPersianDigits } from "@/lib/format";
 import { guessDaysUntilExam } from "../engine";
 import type { GradeLevel, PlannerFormData, Track } from "../types";

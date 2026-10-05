@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { ArrowRightIcon } from "@/design-system";
 import type { PlannerFormData, PlannerResult } from "../../types";
 import { getTrendProjection } from "../../explanations";
 import { AllocationBarChart } from "./AllocationBarChart";

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { buttonClasses } from "@/components/ui/Button";
-import { EmptyState } from "@/components/ui/EmptyState";
-import { ProgressIcon } from "@/components/ui/icons";
+import { buttonClasses } from "@/design-system";
+import { EmptyState } from "@/design-system";
+import { ProgressIcon } from "@/design-system";
 import type { CancellationInfo } from "@/lib/mentorPortal";
 
 interface ProgressCancelledStateProps {

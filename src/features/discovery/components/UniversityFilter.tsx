@@ -1,8 +1,8 @@
 "use client";
 
-import { Chip } from "@/components/ui/Chip";
-import { SuggestInput } from "@/components/ui/SuggestInput";
-import { MapPinIcon } from "@/components/ui/icons";
+import { Chip } from "@/design-system";
+import { SuggestInput } from "./SuggestInput";
+import { MapPinIcon } from "@/design-system";
 import { UNIVERSITY_OPTIONS } from "@/lib/universityLogos";
 
 const PRESET_CITIES = ["تهران", "اصفهان", "مشهد"];

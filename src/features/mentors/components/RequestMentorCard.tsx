@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Chip";
-import { Input } from "@/components/ui/Input";
-import { FemaleIcon, MaleIcon, UsersIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { Chip } from "@/design-system";
+import { Input } from "@/design-system";
+import { FemaleIcon, MaleIcon, UsersIcon } from "@/design-system";
 import { trackClick } from "@/lib/analyticsClient";
 import { showToast } from "@/lib/toast";
 

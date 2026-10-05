@@ -1,4 +1,4 @@
-import { ClockIcon } from "@/components/ui/icons";
+import { ClockIcon } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import type { Mentor } from "@/lib/mentors";
 import { PLAN_META, getPlanPrice, type PlanKey } from "@/lib/plans";

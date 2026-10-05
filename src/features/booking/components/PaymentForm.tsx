@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
-import { Button } from "@/components/ui/Button";
-import { CheckIcon, PhoneIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { CheckIcon, PhoneIcon } from "@/design-system";
 import { PhoneAuthGate } from "@/features/auth/components/PhoneAuthGate";
 import { trackClick } from "@/lib/analyticsClient";
 import type { Mentor } from "@/lib/mentors";

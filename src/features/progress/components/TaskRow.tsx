@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, LockIcon } from "@/components/ui/icons";
+import { CheckIcon, LockIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import type { Task } from "@/lib/progress";
 

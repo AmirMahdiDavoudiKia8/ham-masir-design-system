@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { BottomSheet } from "@/components/ui/BottomSheet";
+import { Sheet } from "@/design-system";
 import { showToast } from "@/lib/toast";
 import type { PlanKey } from "@/lib/plans";
 import { useBookingsStore } from "@/store/bookingsStore";
@@ -57,7 +57,7 @@ export function CancelBookingButton({ bookingId, mentorId, plan, slot, compact }
         لغو جلسه
       </button>
 
-      <BottomSheet open={open} onClose={() => setOpen(false)} ariaLabel="لغو جلسه">
+      <Sheet open={open} onClose={() => setOpen(false)} ariaLabel="لغو جلسه">
         <div className="flex flex-col gap-4 pt-2">
           {/* No refund line: nothing is paid before a session happens (see
               components/brand/PayAfterPromise), so there is no money to return
@@ -73,7 +73,7 @@ export function CancelBookingButton({ bookingId, mentorId, plan, slot, compact }
             {isPending ? "در حال لغو…" : "لغو جلسه"}
           </button>
         </div>
-      </BottomSheet>
+      </Sheet>
     </>
   );
 }

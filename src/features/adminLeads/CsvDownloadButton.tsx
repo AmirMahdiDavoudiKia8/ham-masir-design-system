@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/design-system";
 import type { Lead } from "@/lib/leads";
 
 interface CsvDownloadButtonProps {

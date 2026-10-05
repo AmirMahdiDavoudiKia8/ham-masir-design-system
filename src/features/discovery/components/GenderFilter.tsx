@@ -1,7 +1,7 @@
 "use client";
 
-import { Chip } from "@/components/ui/Chip";
-import { FemaleIcon, MaleIcon, UsersIcon } from "@/components/ui/icons";
+import { Chip } from "@/design-system";
+import { FemaleIcon, MaleIcon, UsersIcon } from "@/design-system";
 
 export const GENDER_OPTIONS = [
   { key: "female", label: "خانم", Icon: FemaleIcon },

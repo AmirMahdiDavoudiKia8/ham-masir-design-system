@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/design-system";
 import { digitsOnly } from "@/lib/format";
 import { SUBJECT_LABEL, TRACK_SUBJECTS } from "../types";
 import type { PlannerFormData, StudySeriousness, Track } from "../types";

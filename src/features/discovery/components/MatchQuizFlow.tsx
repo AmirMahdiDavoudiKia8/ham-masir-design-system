@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { ProgressBar } from "@/design-system";
+import { ArrowRightIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import { toPersianDigits } from "@/lib/format";
 import { useMatchQuizStore, type MatchQuizAnswers } from "@/store/matchQuizStore";

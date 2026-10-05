@@ -1,6 +1,6 @@
 "use client";
 
-import { LockIcon } from "@/components/ui/icons";
+import { LockIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import type { PlanDay } from "@/lib/progress";
 import { ProgressRing } from "./ProgressRing";

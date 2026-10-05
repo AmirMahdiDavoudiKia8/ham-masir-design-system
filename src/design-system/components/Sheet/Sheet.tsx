@@ -1,11 +1,19 @@
+/**
+ * Sheet — generic bottom sheet: dimmed scrim, slide-up panel,
+ * drag-down-to-dismiss handle, and a close button. Stays mounted
+ * (translated off-screen) while closed so the closing animation can play
+ * instead of just vanishing. Portals to document.body so `position: fixed`
+ * can't be trapped by an ancestor's transform (e.g. the page's rise-in
+ * animations).
+ */
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/cn";
-import { XIcon } from "@/components/ui/icons";
+import { XIcon } from "../../icons";
 
-interface BottomSheetProps {
+interface SheetProps {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
@@ -14,14 +22,7 @@ interface BottomSheetProps {
 
 const DRAG_CLOSE_THRESHOLD = 110;
 
-/**
- * Generic bottom sheet: dimmed scrim, slide-up panel, drag-down-to-dismiss
- * handle, and a close button. Stays mounted (translated off-screen) while
- * closed so the closing animation can play instead of just vanishing.
- * Portals to document.body so `position: fixed` can't be trapped by an
- * ancestor's transform (e.g. the page's rise-in animations).
- */
-export function BottomSheet({ open, onClose, children, ariaLabel }: BottomSheetProps) {
+export function Sheet({ open, onClose, children, ariaLabel }: SheetProps) {
   const [mounted, setMounted] = useState(false);
   const [dragY, setDragY] = useState(0);
   const draggingRef = useRef(false);
@@ -87,7 +88,7 @@ export function BottomSheet({ open, onClose, children, ariaLabel }: BottomSheetP
         aria-modal="true"
         aria-label={ariaLabel}
         className={cn(
-          "relative flex max-h-[88vh] w-full max-w-md flex-col rounded-t-lg bg-surface shadow-lifted transition-transform duration-sheet ease-gentle",
+          "relative flex max-h-[88vh] w-full max-w-md flex-col rounded-t-sheet border-x border-t border-border bg-surface shadow-sheet transition-transform duration-sheet ease-gentle",
           open ? "translate-y-0" : "translate-y-full",
         )}
         style={dragY ? { transform: `translateY(${dragY}px)`, transition: "none" } : undefined}
@@ -119,3 +120,4 @@ export function BottomSheet({ open, onClose, children, ariaLabel }: BottomSheetP
     document.body,
   );
 }
+export default Sheet;

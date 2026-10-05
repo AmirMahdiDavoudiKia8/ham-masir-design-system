@@ -1,4 +1,4 @@
-import { AwardIcon } from "@/components/ui/icons";
+import { AwardIcon } from "@/design-system";
 import type { Mentor } from "@/lib/mentors";
 import { MentorAvatar } from "./MentorAvatar";
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdminSession } from "@/lib/adminAuth";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/design-system";
 import { toPersianDigits } from "@/lib/format";
 import { LEAD_TYPE_LABEL } from "@/lib/leadTypes";
 import { getConversionBySource, getMultiTouchPhones, getStudentJourney } from "@/lib/studentJourney";

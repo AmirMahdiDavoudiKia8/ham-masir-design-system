@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/design-system";
 import type { PlannerFormData } from "../types";
 import { StepField } from "./StepField";
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ProfileIcon } from "@/components/ui/icons";
+import { ProfileIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 
 interface MentorAvatarProps {

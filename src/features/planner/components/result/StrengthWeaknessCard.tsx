@@ -1,4 +1,4 @@
-import { CheckIcon, SparkleIcon } from "@/components/ui/icons";
+import { CheckIcon, SparkleIcon } from "@/design-system";
 import { toPersianDigits } from "@/lib/format";
 import { buildStrengthWeaknessSummary } from "../../explanations";
 import type { SubjectAllocation } from "../../types";

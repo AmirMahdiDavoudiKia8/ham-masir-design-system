@@ -1,4 +1,4 @@
-import { buttonClasses } from "@/components/ui/Button";
+import { buttonClasses } from "@/design-system";
 
 interface SessionEntryButtonProps {
   /** The mentor's Google Meet link (see StudentPlanEditor). */

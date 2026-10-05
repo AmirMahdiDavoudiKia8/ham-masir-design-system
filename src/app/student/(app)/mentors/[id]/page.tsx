@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { buttonClasses } from "@/components/ui/Button";
-import { AccompaniedLineIcon } from "@/components/ui/icons";
+import { buttonClasses } from "@/design-system";
+import { AccompaniedLineIcon } from "@/design-system";
 import { MentorAvailability } from "@/features/mentors/components/MentorAvailability";
 import { MentorIdentity } from "@/features/mentors/components/MentorIdentity";
 import { MentorNarrative } from "@/features/mentors/components/MentorNarrative";

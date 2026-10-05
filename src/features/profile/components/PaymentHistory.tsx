@@ -1,7 +1,7 @@
 "use client";
 
-import { CoinIcon } from "@/components/ui/icons";
-import { EmptyState } from "@/components/ui/EmptyState";
+import { CoinIcon } from "@/design-system";
+import { EmptyState } from "@/design-system";
 import { Tag } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import { resolveBooking } from "@/features/sessions/resolveBooking";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { Input } from "@/design-system";
 import { digitsOnly, normalizePersianText, toPersianDigits } from "@/lib/format";
 import { showToast } from "@/lib/toast";
 import { useOnboardingStore } from "@/store/onboardingStore";

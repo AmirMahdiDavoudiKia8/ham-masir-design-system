@@ -1,5 +1,5 @@
 import { CompactHeader } from "@/components/layout/CompactHeader";
-import { ChatIcon, PhoneIcon, SendIcon } from "@/components/ui/icons";
+import { ChatIcon, PhoneIcon, SendIcon } from "@/design-system";
 import { SITE_BALE, SITE_TELEGRAM } from "@/lib/siteConfig";
 
 /**

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { Input } from "@/design-system";
 import { digitsOnly } from "@/lib/format";
 
 interface PhoneStepProps {

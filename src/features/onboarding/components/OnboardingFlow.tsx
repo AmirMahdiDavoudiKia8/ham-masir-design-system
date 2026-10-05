@@ -2,9 +2,9 @@
 
 import { useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { ProgressBar } from "@/design-system";
+import { Input } from "@/design-system";
 import {
   ArrowRightIcon,
   BoltIcon,
@@ -16,7 +16,7 @@ import {
   SparkleIcon,
   VideoIcon,
   type IconProps,
-} from "@/components/ui/icons";
+} from "@/design-system";
 import { PhoneAuthGate } from "@/features/auth/components/PhoneAuthGate";
 import { cn } from "@/lib/cn";
 import { toPersianDigits } from "@/lib/format";

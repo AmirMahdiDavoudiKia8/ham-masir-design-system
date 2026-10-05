@@ -3,9 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { SuggestInput } from "@/components/ui/SuggestInput";
-import { ArrowLeftIcon, CalendarIcon, ChevronDownIcon, SearchIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { SuggestInput } from "./SuggestInput";
+import { ArrowLeftIcon, CalendarIcon, ChevronDownIcon, SearchIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import { filterMentors, type Mentor, type MentorFilters } from "@/lib/mentorFilters";
 import { toPersianDigits } from "@/lib/format";

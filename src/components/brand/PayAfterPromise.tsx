@@ -1,4 +1,4 @@
-import { CheckIcon, ClockIcon, CoinIcon, ShieldCheckIcon } from "@/components/ui/icons";
+import { CheckIcon, ClockIcon, CoinIcon, ShieldCheckIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 
 /**

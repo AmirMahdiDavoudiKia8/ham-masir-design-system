@@ -1,4 +1,4 @@
-import { SparkleIcon } from "@/components/ui/icons";
+import { SparkleIcon } from "@/design-system";
 
 /** brand.md §7: warm, non-judgmental, forward-looking — never "چرا عقب افتادی؟" */
 export function MissedDaysNudge() {

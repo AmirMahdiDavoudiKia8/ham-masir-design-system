@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { Input } from "@/design-system";
 import { digitsOnly } from "@/lib/format";
 import { useMatchQuizStore } from "@/store/matchQuizStore";
 import { TRACK_LABEL_FA } from "../../constants";

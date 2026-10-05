@@ -2,9 +2,9 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Chip";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { Chip } from "@/design-system";
+import { Input } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import { digitsOnly } from "@/lib/format";
 import { useOnboardingStore, type OnboardingAnswers } from "@/store/onboardingStore";

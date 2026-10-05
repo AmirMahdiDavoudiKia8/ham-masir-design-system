@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Input } from "@/components/ui/Input";
-import { SearchIcon } from "@/components/ui/icons";
+import { Input } from "@/design-system";
+import { SearchIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 
 interface SuggestInputProps {

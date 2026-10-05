@@ -1,7 +1,7 @@
 "use client";
 
-import { Chip } from "@/components/ui/Chip";
-import { XIcon } from "@/components/ui/icons";
+import { Chip } from "@/design-system";
+import { XIcon } from "@/design-system";
 import type { MentorFilters } from "@/lib/mentorFilters";
 
 interface ResultsBarProps {

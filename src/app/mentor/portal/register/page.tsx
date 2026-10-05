@@ -3,9 +3,9 @@
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { Input } from "@/design-system";
+import { ArrowRightIcon } from "@/design-system";
 import { PhoneStep } from "@/features/auth/components/PhoneStep";
 import { normalizePersianText } from "@/lib/format";
 import { registerMentor } from "./actions";

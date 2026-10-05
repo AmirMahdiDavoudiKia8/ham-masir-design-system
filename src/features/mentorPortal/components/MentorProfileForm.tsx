@@ -2,9 +2,9 @@
 
 import { useMemo, useRef, useState, useTransition } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { CameraIcon, CheckIcon, UploadIcon } from "@/components/ui/icons";
+import { Button } from "@/design-system";
+import { Card } from "@/design-system";
+import { CameraIcon, CheckIcon, UploadIcon } from "@/design-system";
 import {
   finishMentorProfile,
   saveMentorIdentity,

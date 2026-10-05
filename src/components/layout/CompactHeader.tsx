@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { ArrowRightIcon } from "@/design-system";
 
 interface CompactHeaderProps {
   title: string;

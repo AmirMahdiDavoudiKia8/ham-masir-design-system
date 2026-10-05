@@ -1,6 +1,6 @@
 "use client";
 
-import { Chip } from "@/components/ui/Chip";
+import { Chip } from "@/design-system";
 import { FIELDS_BY_TRACK } from "@/features/discovery/fieldsByTrack";
 import { GOAL_TIER_LABEL, TRACK_LABEL_FA } from "../constants";
 import type { GoalTier, PlannerFormData, Track } from "../types";

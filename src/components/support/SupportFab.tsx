@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChatIcon, XIcon } from "@/components/ui/icons";
+import { ChatIcon, XIcon } from "@/design-system";
 import { SITE_CONTACTS } from "@/lib/siteLinks";
 
 /**

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowLeftIcon, EditIcon, LogOutIcon } from "@/components/ui/icons";
+import { ArrowLeftIcon, EditIcon, LogOutIcon } from "@/design-system";
 import { getSessionMentor, getStudent, isMentorProfileComplete } from "@/lib/mentorPortal";
 import { logoutMentor } from "../login/actions";
 

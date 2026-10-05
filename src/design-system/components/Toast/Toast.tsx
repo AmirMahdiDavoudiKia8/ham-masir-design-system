@@ -1,13 +1,14 @@
+/** Toast — fire-and-forget success/error banner.
+ * Mounted once in the root layout — see lib/toast for how to trigger it. */
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckIcon, XIcon } from "@/components/ui/icons";
+import { CheckIcon, XIcon } from "../../icons";
 import { cn } from "@/lib/cn";
 import { consumeStoredToast, TOAST_EVENT_NAME, type ToastPayload } from "@/lib/toast";
 
 const AUTO_DISMISS_MS = 3000;
 
-/** Mounted once in the root layout — see lib/toast for how to trigger it. */
 export function Toast() {
   const [toast, setToast] = useState<ToastPayload | null>(null);
 
@@ -46,3 +47,4 @@ export function Toast() {
     </div>
   );
 }
+export default Toast;

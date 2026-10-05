@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChatIcon, CoinIcon, EditIcon, LogOutIcon, type IconProps } from "@/components/ui/icons";
+import { ChatIcon, CoinIcon, EditIcon, LogOutIcon, type IconProps } from "@/design-system";
 import { cn } from "@/lib/cn";
 import { showToast } from "@/lib/toast";
 import { useBookingsStore } from "@/store/bookingsStore";

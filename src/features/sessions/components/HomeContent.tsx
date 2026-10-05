@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { buttonClasses } from "@/components/ui/Button";
-import { ArrowLeftIcon, UsersIcon } from "@/components/ui/icons";
+import { buttonClasses } from "@/design-system";
+import { ArrowLeftIcon, UsersIcon } from "@/design-system";
 import { cn } from "@/lib/cn";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { PayAfterPromise } from "@/components/brand/PayAfterPromise";

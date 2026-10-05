@@ -9,7 +9,7 @@ import {
   ProgressIcon,
   UsersIcon,
   type IconProps,
-} from "@/components/ui/icons";
+} from "@/design-system";
 
 export interface NavItem {
   key: string;

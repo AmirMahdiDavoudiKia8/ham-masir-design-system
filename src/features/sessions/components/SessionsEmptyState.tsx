@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { buttonClasses } from "@/components/ui/Button";
-import { EmptyState } from "@/components/ui/EmptyState";
-import { AccompaniedLineIcon } from "@/components/ui/icons";
+import { buttonClasses } from "@/design-system";
+import { EmptyState } from "@/design-system";
+import { AccompaniedLineIcon } from "@/design-system";
 
 /** brand.md §7: an invitation, not a void — never blame the student for having nothing here yet. */
 export function SessionsEmptyState() {

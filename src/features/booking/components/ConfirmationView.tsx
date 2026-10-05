@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PayAfterBanner } from "@/components/brand/PayAfterPromise";
-import { buttonClasses } from "@/components/ui/Button";
-import { CheckIcon, SparkleIcon } from "@/components/ui/icons";
+import { buttonClasses } from "@/design-system";
+import { CheckIcon, SparkleIcon } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import type { Mentor } from "@/lib/mentors";
 import { PLAN_META, type PlanKey } from "@/lib/plans";

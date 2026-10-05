@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/design-system";
+import { Input } from "@/design-system";
 import { isAdminSession } from "@/lib/adminAuth";
 import { loginAdmin } from "./actions";
 

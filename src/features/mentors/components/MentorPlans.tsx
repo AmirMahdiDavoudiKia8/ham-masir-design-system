@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/design-system";
 import { PayAfterPromise } from "@/components/brand/PayAfterPromise";
 import type { Mentor } from "@/lib/mentors";
 import { PLAN_META, getPlanPrice, type PlanKey } from "@/lib/plans";

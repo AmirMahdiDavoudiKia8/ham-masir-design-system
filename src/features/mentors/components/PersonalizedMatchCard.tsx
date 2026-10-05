@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { CheckIcon, EditIcon, SparkleIcon } from "@/components/ui/icons";
+import { CheckIcon, EditIcon, SparkleIcon } from "@/design-system";
 
 interface PersonalizedMatchCardProps {
   /** True once the student has already answered the match quiz — swaps the invite copy for a toggle instead of asking again. */

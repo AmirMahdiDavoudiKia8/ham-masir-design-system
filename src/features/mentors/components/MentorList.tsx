@@ -1,6 +1,6 @@
-import { EmptyState } from "@/components/ui/EmptyState";
-import { Button } from "@/components/ui/Button";
-import { SearchIcon } from "@/components/ui/icons";
+import { EmptyState } from "@/design-system";
+import { Button } from "@/design-system";
+import { SearchIcon } from "@/design-system";
 import type { Mentor } from "@/lib/mentors";
 import { MentorCard } from "./MentorCard";
 import { RequestMentorCard } from "./RequestMentorCard";
