@@ -1,0 +1,358 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { typeScale, typeWeights } from "@/lib/tokens";
+import { Button } from "../components/Button";
+import { Badge } from "../components/Badge";
+import { Chip } from "../components/Chip";
+import { Input } from "../components/Input";
+import { Alert } from "../components/Alert";
+
+<Meta title="FOUNDATIONS/Typography" />
+
+# Typography
+
+export const P = ({ children }) => (
+  <p dir="rtl" style={{ textAlign: "right", fontSize: 15, lineHeight: 1.9, color: "var(--color-foreground)" }}>
+    {children}
+  </p>
+);
+
+export const H2 = ({ children }) => (
+  <h2 dir="rtl" style={{ textAlign: "right", fontSize: 20, fontWeight: 700, color: "var(--color-foreground)", marginTop: 32 }}>
+    {children}
+  </h2>
+);
+
+export const C = ({ children }) => (
+  <code dir="ltr" style={{ fontSize: "0.85em", padding: "1px 6px", borderRadius: 6, background: "var(--color-surface-alt)", border: "1px solid var(--color-border)", unicodeBidi: "embed" }}>
+    {children}
+  </code>
+);
+
+export const card = {
+  padding: "14px 16px",
+  borderRadius: 16,
+  background: "var(--color-surface)",
+  border: "1px solid var(--color-border)",
+};
+
+export const thStyle = {
+  textAlign: "right",
+  fontSize: 13,
+  fontWeight: 700,
+  color: "var(--color-foreground)",
+  padding: "10px 12px",
+  borderBottom: "1px solid var(--color-border)",
+};
+
+export const tdStyle = {
+  textAlign: "right",
+  fontSize: 13,
+  color: "var(--color-muted-foreground)",
+  padding: "10px 12px",
+  borderBottom: "1px solid var(--color-border)",
+  verticalAlign: "top",
+  lineHeight: 1.9,
+};
+
+export const sampleFor = {
+  "Display Large": "مسیرت رو تنها نرو",
+  "Display Medium": "با کسی که راهِ تو را رفته",
+  "Display Small": "چون کنکور دو نفری آسون‌تره",
+  "Heading 1": "هم‌مسیرت رو پیدا کن",
+  "Heading 2": "هم‌مسیرهایی که می‌تونی انتخاب کنی",
+  "Heading 3": "روال کار چجوریه؟",
+  "Heading 4": "طرحی که بهت می‌خوره رو انتخاب کن",
+  "Heading 5": "جلسه‌ها کجا برگزار می‌شه؟",
+  "Heading 6": "سوالات پرتکرار",
+  "Body Large": "اینجا یکی رو انتخاب می‌کنی که یکی‌دو سال پیش دقیقاً همین‌جا ایستاده بود؛ با همون تردیدها، همون شب‌های بد و همون سردرگمی‌ها.",
+  "Body Medium": "اول می‌شینی با هم‌مسیرت حرف می‌زنی؛ بعد اگه واقعاً به کارت اومد هزینه جلسه رو پرداخت می‌کنی.",
+  "Body Small": "هر روز یه شروعِ تازه‌ست. بیا از همین‌جا ادامه بدیم.",
+  "Label Large": "برنامه‌ساز کنکور رو امتحان کن",
+  "Label Medium": "رزرو کن",
+  "Label Small": "۲۴ هم‌مسیر · ۱۲۷ جلسه",
+  Caption: "برای رزرو، صفر تومان — بعد از جلسه تصمیم می‌گیری.",
+  Overline: "قدم اول · آشنایی",
+};
+
+export const weightFor = {
+  "Display Large": 700,
+  "Display Medium": 700,
+  "Display Small": 700,
+  "Heading 1": 700,
+  "Heading 2": 600,
+  "Heading 3": 600,
+  "Heading 4": 600,
+  "Heading 5": 600,
+  "Heading 6": 600,
+  "Body Large": 400,
+  "Body Medium": 400,
+  "Body Small": 400,
+  "Label Large": 500,
+  "Label Medium": 500,
+  "Label Small": 500,
+  Caption: 400,
+  Overline: 600,
+};
+
+export const usageFa = {
+  "Display Large": "تیتر اصلی صفحه فرود و پیام‌های کمپینی. در هر صفحه حداکثر یک نمونه استفاده شود.",
+  "Display Medium": "تیتر اصلی صفحات، مانند صفحه یافتن هم‌مسیر یا نتیجه برنامه‌ریزی.",
+  "Display Small": "عنوان برجسته بخش‌ها و پیام‌های صفحات خالی.",
+  "Heading 1": "عنوان اصلی صفحه؛ در هر صفحه فقط یک h1 استفاده شود.",
+  "Heading 2": "عنوان بخش‌های اصلی صفحه.",
+  "Heading 3": "عنوان کارت‌ها و پنجره‌های محاوره‌ای.",
+  "Heading 4": "عنوان بخش‌های کم‌تأکید؛ اندازه نزدیک به متن بدنه است و وزن فونت سلسله‌مراتب را مشخص می‌کند.",
+  "Heading 5": "عنوان فهرست‌های متراکم و بخش‌های فرم.",
+  "Heading 6": "عنوان‌های کوتاه و کمکی که در نزدیکی تیتر اصلی قرار می‌گیرند.",
+  "Body Large": "متن آغازین صفحه‌های فرود و لید توضیحات هم‌مسیر.",
+  "Body Medium": "اندازه پیش‌فرض مطالعه برای پاراگراف‌ها، ورودی‌های فرم و کارت‌های هم‌مسیر.",
+  "Body Small": "متن‌های توضیحی ثانویه، برچسب چک‌باکس‌ها و راهنمایی‌های کوتاه.",
+  "Label Large": "کنترل‌های دارای تأکید و برچسب زبانه‌ها.",
+  "Label Medium": "دکمه‌های کوچک، نشان‌ها و جداکننده‌ها.",
+  "Label Small": "فقط برای شمارنده‌ها و اطلاعات فرعی؛ هرگز برای متن‌های ضروری، خطاها یا عناصر قابل تعامل استفاده نشود.",
+  Caption: "راهنمای ورودی‌ها، متن کمکی فرم و اطلاعات ثانویه.",
+  Overline: "برچسب‌های کوتاه بالای تیترها برای معرفی موضوع بخش.",
+};
+
+export const responsiveFa = {
+  "Display Large": "شناور از 32 تا 40 پیکسل با clamp؛ حالت ثابت فقط بالای breakpoint بزرگ.",
+  "Display Medium": "شناور از 30 تا 34 پیکسل با clamp.",
+  "Display Small": "ثابت؛ در صفحه‌های کوچک از نسخه شناور متوسط استفاده شود.",
+  "Heading 1": "ثابت در همه عرض‌ها.",
+  "Heading 2": "ثابت در همه عرض‌ها.",
+  "Heading 3": "ثابت در همه عرض‌ها.",
+  "Heading 4": "ثابت در همه عرض‌ها.",
+  "Heading 5": "ثابت در همه عرض‌ها.",
+  "Heading 6": "ثابت در همه عرض‌ها.",
+  "Body Large": "ثابت؛ برای حفظ خوانایی کوچک نمی‌شود.",
+  "Body Medium": "ثابت در همه عرض‌ها.",
+  "Body Small": "ثابت در همه عرض‌ها.",
+  "Label Large": "ثابت در همه عرض‌ها.",
+  "Label Medium": "ثابت در همه عرض‌ها.",
+  "Label Small": "ثابت؛ کوچک‌تر نمی‌شود.",
+  Caption: "ثابت در همه عرض‌ها.",
+  Overline: "ثابت در همه عرض‌ها.",
+};
+
+export const weightVoiceFa = {
+  Regular: "متن بدنه و کپشن‌ها؛ صدای اصلی مطالعه.",
+  Medium: "لیبل‌ها و نشان‌ها؛ تأکید آرام.",
+  SemiBold: "تیترهای سطح دوم تا ششم و برچسب کنترل‌ها.",
+  Bold: "تیترهای نمایشی، عنوان اصلی صفحه، دکمه‌ها و اعداد کلیدی.",
+};
+
+export const weightClassFor = {
+  Regular: "font-normal",
+  Medium: "font-medium",
+  SemiBold: "font-semibold",
+  Bold: "font-bold",
+};
+
+export const faRules = [
+  { title: "جهت RTL فقط در عنصر اصلی html تعریف می‌شود.", body: <>جهت راست‌به‌چپ فقط یک‌بار در عنصر اصلی <C>&lt;html&gt;</C> با ویژگی <C>dir="rtl"</C> و زبان <C>lang="fa"</C> تعریف می‌شود؛ نیازی نیست این ویژگی در تمام عناصر تکرار شود.</> },
+  { title: "استفاده از ویژگی‌های منطقی به‌جای مقادیر ثابت چپ و راست.", body: <>استفاده از ویژگی‌های منطقی CSS مانند <C>ps-</C>، <C>pe-</C>، <C>start-</C>، <C>end-</C> و <C>text-start</C> باعث می‌شود چیدمان کامپوننت‌ها با جهت متن سازگار بماند.</> },
+  { title: "بخش‌های مستقل لاتین باید جهت LTR داشته باشند.", body: <>شماره‌های تماس، شناسه‌ها، کدهای رزرو و شمارنده مراحل در بخش مستقلی با جهت <C>dir="ltr"</C> نمایش داده می‌شوند.</> },
+  { title: "استفاده از ارقام فارسی برای اعداد قابل مشاهده توسط کاربر.", body: <>اعداد قابل مشاهده برای کاربر باید در صورت نیاز با <C>toPersianDigits()</C> به ارقام فارسی تبدیل شوند (۰۱۲۳۴۵۶۷۸۹).</> },
+  { title: "عدم استفاده از حروف بزرگ یا فاصله‌گذاری تزئینی در متن فارسی.", body: <>قاعده برند هم‌مسیر است: نه حروف تمام‌بزرگ فارسی، نه فاصله‌گذاری سنگین حروف. برچسب بالای تیتر با وزن SemiBold و رنگ خنثی مشخص می‌شود.</> },
+  { title: "حفظ فاصله خطوط مناسب برای خوانایی متن فارسی.", body: <>ارتفاع خطوط به‌صورت بدون واحد و سخاوتمندانه تعریف می‌شود (۱٫۵ تا ۱٫۹) تا در بزرگ‌نمایی مرورگر نیز رفتار مناسبی داشته باشد.</> },
+  { title: "تیترهای بلند باید به‌درستی شکسته شوند و هرگز بریده نشوند.", body: <>از <C>text-balance</C> برای تیترها و <C>text-pretty</C> برای پاراگراف‌ها استفاده شود؛ بدون ارتفاع ثابت برای ظرف متن و بدون ترکیب <C>nowrap</C> با بریدگی روی محتوای واقعی.</> },
+];
+
+export const componentRows = [
+  { name: "Button sm / md / lg", tokens: "text-label / text-caption / text-body · font-bold" },
+  { name: "Card title / desc / body", tokens: "text-h3 semibold + text-balance / text-caption muted / text-body" },
+  { name: "Badge", tokens: "text-label medium (semantic variants)" },
+  { name: "Chip", tokens: "text-caption semibold" },
+  { name: "Input / Textarea label · field · hint · error", tokens: "text-caption / text-body / text-caption / text-caption danger-strong" },
+  { name: "Checkbox", tokens: "text-body foreground" },
+  { name: "Avatar fallback initial", tokens: "text-label → text-h1 by size, bold" },
+  { name: "MentorCard name / subtitle / rank", tokens: "text-caption–text-body bold / muted / action-primary" },
+  { name: "Alert title / body", tokens: "text-caption semibold / text-body" },
+];
+
+<P>تایپوگرافی فارسی‌محور برای همراهی با دانش‌آموزی که در مسیر کنکور با فشار و سردرگمی روبه‌روست. یک خانواده فونت (<C>Estedad</C>)، فاصله خطوط سخاوتمندانه و پشتیبانی پیش‌فرض از راست‌به‌چپ. تمام نمونه‌های این مستند با اندازه واقعی و بر اساس توکن‌های <C>lib/tokens.ts</C> نمایش داده می‌شوند؛ این توکن‌ها با <C>tokens.css</C> هماهنگ‌اند تا مستندات و پیاده‌سازی از یک مرجع مشترک پیروی کنند.</P>
+
+<H2>۱. خانواده‌های فونت <span dir="ltr">(Font Families)</span></H2>
+
+<P>فونت استعداد (<C>Estedad</C>) آگاهانه حفظ شده است. فرم نرم و منحنی‌های متعادل آن با شخصیت آرام و انسانی هم‌مسیر هماهنگ است. فایل‌های فونت با فرمت <C>WOFF2</C> و به‌صورت بهینه‌سازی‌شده میزبانی می‌شوند. برای جلوگیری از جابه‌جایی ناخواسته چیدمان هنگام بارگذاری فونت، از <C>font-display: optional</C> استفاده شده است. وزن‌های <C>Regular</C> و <C>Bold</C> برای نمایش اولیه آماده‌اند و وزن‌های <C>Medium</C> و <C>SemiBold</C> در صورت نیاز بارگذاری می‌شوند. فونت جایگزین <C>Tahoma, sans-serif</C> نیز برای پوشش نویسه‌های احتمالی در نظر گرفته شده است. با توجه به نتیجه بررسی فعلی، دلیل فنی برای جایگزینی فونت وجود ندارد و هویت تایپوگرافی حفظ می‌شود.</P>
+
+<div dir="rtl" style={{ ...card, padding: 0, overflow: "hidden", marginTop: 12 }}>
+  <table dir="rtl" style={{ width: "100%", borderCollapse: "collapse" }}>
+    <thead>
+      <tr>
+        <th style={thStyle}>وزن</th>
+        <th style={thStyle}>فایل</th>
+        <th style={thStyle}>کلاس Tailwind</th>
+        <th style={thStyle}>کاربرد بصری</th>
+      </tr>
+    </thead>
+    <tbody>
+      {typeWeights.map((w) => (
+        <tr key={w.name}>
+          <td style={tdStyle}>{w.name} {w.value}</td>
+          <td style={tdStyle}><C>{w.file}</C></td>
+          <td style={tdStyle}><C>{weightClassFor[w.name]}</C></td>
+          <td style={tdStyle}>{weightVoiceFa[w.name]}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<P>قاعده قطعی: فقط وزن‌های 400، 500، 600 و 700 در سیستم تعریف شده‌اند. از <C>font-extrabold</C> و <C>font-black</C> استفاده نکنید؛ وزن‌های پشتیبانی‌نشده ممکن است توسط مرورگر به‌صورت مصنوعی ساخته شوند و وضوح فرم حروف فارسی را کاهش دهند.</P>
+
+<H2>۲. مقیاس تایپوگرافی <span dir="ltr">(Typography Scale)</span></H2>
+
+<P>اندازه‌های پایه فعلی حفظ شده‌اند: Display برابر 30، عنوان اصلی 24، عنوان سطح دوم 20، عنوان سطح سوم 17، متن بدنه 16، کپشن 13 و لیبل 12 پیکسل. اندازه‌های جدید برای تکمیل سلسله‌مراتب به این مقیاس اضافه شده‌اند. هر سبک تایپوگرافی باید کاربرد مشخصی در محصول داشته باشد.</P>
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+  {typeScale.map((t) => (
+    <div key={t.tier} style={card}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: 12 }}>
+        <strong style={{ color: "var(--color-foreground)", fontSize: 13 }}>{t.tier}</strong>
+        <code style={{ color: "var(--color-muted-foreground)" }}>{t.token}</code>
+        <code style={{ color: "var(--color-foreground-faint)" }}>
+          {t.size} · {t.weight} · ×{t.leading} · {t.tailwind}
+        </code>
+      </div>
+      <div
+        dir="rtl"
+        style={{
+          fontSize: t.size,
+          fontWeight: weightFor[t.tier],
+          lineHeight: t.leading,
+          color: "var(--color-foreground)",
+          fontFamily: '"Estedad", Tahoma, sans-serif',
+          marginTop: 6,
+        }}
+      >
+        {sampleFor[t.tier]}
+      </div>
+      <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-muted-foreground)", lineHeight: 1.9, margin: "6px 0 0" }}>
+        {usageFa[t.tier]} <em>رفتار واکنش‌گرا: {responsiveFa[t.tier]}</em>
+      </p>
+    </div>
+  ))}
+</div>
+
+<H2>۳. وزن‌های فونت <span dir="ltr">(Font Weights)</span></H2>
+
+<P>چهار وزن فونت برای کاربردهای مشخص تعریف شده‌اند. وزن فونت باید به تفکیک سلسله‌مراتب و نقش محتوا کمک کند، نه اینکه صرفاً برای تزئین استفاده شود. متن بدنه حتی در حالت تأکید، وزن Regular خود را حفظ می‌کند؛ برای ایجاد تأکید می‌توان از اندازه، فاصله یا رنگ استفاده کرد. وزن تیترها نیز بر اساس جایگاه آن‌ها در ساختار محتوا تعیین می‌شود.</P>
+
+<H2>۴. ارتفاع خطوط <span dir="ltr">(Line Height)</span></H2>
+
+<P>ارتفاع خطوط به‌صورت بدون واحد تعریف می‌شود تا در بزرگ‌نمایی مرورگر رفتار مناسبی داشته باشد. فاصله خطوط در متن فارسی سخاوتمندانه است: متن بدنه نباید کمتر از 1.7 باشد و در تیترهای نمایشی می‌توان تا 1.2 کاهش داد. هر سبک تایپوگرافی توکن مستقل خود را با الگوی <C>{"--leading-*"}</C> دارد؛ کامپوننت‌ها نباید این مقادیر را با کلاس‌های پراکنده <C>{"leading-*"}</C> بازنویسی کنند.</P>
+
+<H2>۵. تایپوگرافی واکنش‌گرا <span dir="ltr">(Responsive Typography)</span></H2>
+
+<P>اندازه‌های شناور فقط در جاهایی استفاده می‌شوند که به تجربه بهتر کمک کنند. تیترهای نمایشی با <C>clamp()</C> در محدوده‌های تعریف‌شده تغییر اندازه می‌دهند: اندازه بزرگ از 32 تا 40 پیکسل و اندازه متوسط از 30 تا 34 پیکسل. این رفتار از بازه‌های موجود <C>{"--bp-*"}</C> پیروی می‌کند و نیازی به تعریف breakpoint جدید ندارد. اندازه متن بدنه، لیبل‌ها و کپشن‌ها در عرض‌های مختلف ثابت می‌ماند تا خوانایی حفظ شود. اندازه 11 پیکسل برای <C>label-sm</C> فقط به اطلاعات فرعی محدود است.</P>
+
+<div dir="rtl" style={{ ...card, marginTop: 12, padding: 20 }}>
+  <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-foreground-faint)", margin: "0 0 8px" }}>برای مشاهده رفتار تایپوگرافی، عرض بوم را تغییر دهید.</p>
+  <div className="text-display-lg-fluid font-bold" style={{ color: "var(--color-foreground)", fontFamily: '"Estedad", Tahoma, sans-serif' }}>
+    مسیرت رو تنها نرو
+  </div>
+  <p dir="ltr" style={{ textAlign: "left", fontSize: 12, color: "var(--color-foreground-faint)", margin: "8px 0 0" }}><code>text-display-lg-fluid</code></p>
+</div>
+
+<H2>۶. نمونه‌های فارسی و راست‌به‌چپ <span dir="ltr">(Persian / RTL)</span></H2>
+
+<P>جهت راست‌به‌چپ فقط یک‌بار در عنصر اصلی <C>&lt;html&gt;</C> با ویژگی <C>dir="rtl"</C> و زبان <C>lang="fa"</C> تعریف می‌شود؛ نیازی نیست این ویژگی در تمام عناصر تکرار شود. استفاده از ویژگی‌های منطقی CSS مانند <C>ps-</C>، <C>pe-</C>، <C>start-</C>، <C>end-</C> و <C>text-start</C> باعث می‌شود چیدمان کامپوننت‌ها با جهت متن سازگار بماند. اعداد قابل مشاهده برای کاربر نیز باید در صورت نیاز با <C>toPersianDigits()</C> به ارقام فارسی تبدیل شوند.</P>
+
+<div dir="rtl" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+  <div style={{ ...card, padding: 20 }}>
+    <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-foreground-faint)", margin: "0 0 8px" }}>تیتر بلند؛ استفاده از <C>text-balance</C> برای توزیع متعادل خطوط، بدون بریدگی متن.</p>
+    <h2 className="text-balance text-h2 font-semibold" style={{ color: "var(--color-foreground)" }}>
+      سخت‌ترین بخش ماجرا لزوماً درس‌خوندن نیست؛ سخت‌ترین بخشش اینه که نمی‌دونی کاری که داری انجام می‌دی درسته یا نه
+    </h2>
+  </div>
+  <div style={{ ...card, padding: 20 }}>
+    <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-foreground-faint)", margin: "0 0 8px" }}>توضیحات هم‌مسیر؛ استفاده از <C>text-pretty</C> و ارتفاع خط 1.75 برای خوانایی بهتر.</p>
+    <p className="text-pretty text-body-lg" style={{ color: "var(--color-foreground)", lineHeight: 1.75 }}>
+      سارا اربابی — روان‌شناسی فردوسی مشهد، رتبه ۸۹۳۷ منطقه دو. یکی‌دو سال پیش دقیقاً جای تو بودم؛ حالا اینجام تا مسیر رو با هم بریم.
+    </p>
+  </div>
+  <div style={{ ...card, padding: 20 }}>
+    <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-foreground-faint)", margin: "0 0 8px" }}>برچسب فرم و متن راهنما؛ اندازه کپشن 13 پیکسل.</p>
+    <div style={{ marginTop: 8 }}>
+      <Input label="شماره موبایل" placeholder="مثل ۰۹۱۲۳۴۵۶۷۸۹" hint="کد تأیید به همین شماره پیامک می‌شه." />
+    </div>
+  </div>
+</div>
+
+<H2>قواعد اجرایی سیستم</H2>
+
+<div dir="rtl" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+  {faRules.map((r) => (
+    <div key={r.title} style={{ ...card, padding: "10px 14px", fontSize: 13 }}>
+      <strong style={{ color: "var(--color-foreground)" }}>{r.title}</strong>
+      <br />
+      <span style={{ color: "var(--color-muted-foreground)", lineHeight: 1.9 }}>{r.body}</span>
+    </div>
+  ))}
+</div>
+
+<H2>۷. نمونه‌های ترکیبی فارسی و انگلیسی <span dir="ltr">(Mixed Persian / English)</span></H2>
+
+<P>اصطلاحات انگلیسی درون متن فارسی باید با حفظ فونت Estedad و در یک بخش مستقل با جهت <C>dir="ltr"</C> نمایش داده شوند تا ترتیب حروف و نشانه‌گذاری درست باقی بماند. بخش‌های مستقل لاتین مانند شماره‌ها، شناسه‌ها و کدها از کلاس <C>.font-latin</C> با فونت Tahoma و جداسازی جهت نوشتار استفاده می‌کنند تا علائم نگارشی جابه‌جا نشوند.</P>
+
+<div dir="rtl" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+  <div style={{ ...card, padding: 20, fontSize: 16, lineHeight: 1.9, color: "var(--color-foreground)", textAlign: "right" }}>
+    جلسه‌ت توی <span dir="ltr">Google Meet</span> برگزار می‌شه؛ لینک ورود چند دقیقه قبل از شروع فعال می‌شه.
+    <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-foreground-faint)", margin: "8px 0 0" }}>اصطلاح انگلیسی درون متن؛ حفظ فونت Estedad و جهت LTR برای نمایش صحیح پرانتزها (منابع، برنامه).</p>
+  </div>
+  <div style={{ ...card, padding: 20 }}>
+    <div className="font-latin" style={{ fontSize: 15, color: "var(--color-foreground)", textAlign: "left" }}>@hammasirsite · +98 992 020 9010 · RSV-8K2QD</div>
+    <p dir="rtl" style={{ textAlign: "right", fontSize: 12, color: "var(--color-foreground-faint)", margin: "8px 0 0" }}>بخش مستقل لاتین؛ استفاده از Tahoma و جداسازی جهت نوشتار.</p>
+  </div>
+</div>
+
+<H2>۸. نحوه استفاده در کامپوننت‌ها <span dir="ltr">(Component Usage)</span></H2>
+
+<P>نتیجه بررسی: هر 9 کامپوننت اصلی از کلاس‌های توکن‌شده و وزن‌های تعریف‌شده استفاده می‌کنند. اندازه‌های دلخواه، وزن‌های مصنوعی و حروف بزرگ غیرضروری در این نگاشت‌ها استفاده نشده‌اند. ارتباط هر کامپوننت با سبک‌های تایپوگرافی به شرح زیر است:</P>
+
+<div dir="rtl" style={{ ...card, padding: 0, overflow: "hidden", marginTop: 12 }}>
+  <table dir="rtl" style={{ width: "100%", borderCollapse: "collapse" }}>
+    <thead>
+      <tr>
+        <th style={thStyle}>کامپوننت</th>
+        <th style={thStyle}>توکن‌های تایپوگرافی</th>
+      </tr>
+    </thead>
+    <tbody>
+      {componentRows.map((r) => (
+        <tr key={r.name}>
+          <td style={tdStyle}><C>{r.name}</C></td>
+          <td style={tdStyle}><C>{r.tokens}</C></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<P>نمونه‌های زنده زیر با همان توکن‌های جدول ساخته شده‌اند و برچسب‌های داخل آن‌ها بخشی از رابط محصول‌اند:</P>
+
+<div dir="rtl" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginTop: 12, padding: 20, borderRadius: 20, background: "var(--color-surface)", border: "1px solid var(--color-border)" }}>
+  <Button variant="primary">رزرو کن</Button>
+  <Badge variant="confirmed">تأیید شده</Badge>
+  <Chip selected>تجربی</Chip>
+</div>
+<div dir="rtl" style={{ marginTop: 12 }}>
+  <Alert tone="success" title="ثبت شد">رزروت ثبت شد؛ برای هماهنگی تایم دقیق باهات تماس می‌گیریم.</Alert>
+</div>
+
+<H2>۹. دستورالعمل‌های دسترس‌پذیری <span dir="ltr">(Accessibility)</span></H2>
+
+<div dir="rtl" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12, fontSize: 14, lineHeight: 1.9 }}>
+  <div style={card}><strong style={{ color: "var(--color-foreground)" }}>حداقل اندازه متن</strong><p style={{ color: "var(--color-muted-foreground)", margin: "4px 0 0" }}>متن ضروری هرگز کوچک‌تر از 12 پیکسل نیست؛ <C>label-sm</C> (11 پیکسل) فقط برای شمارنده‌ها و اطلاعات فرعی است، نه دکمه‌ها، برچسب‌ها یا خطاها.</p></div>
+  <div style={card}><strong style={{ color: "var(--color-foreground)" }}>ارتفاع خطوط</strong><p style={{ color: "var(--color-muted-foreground)", margin: "4px 0 0" }}>متن بدنه کمتر از 1.7 نیست و هیچ‌جا کمتر از 1.5 نداریم؛ مقادیر بدون واحد‌اند تا بزرگ‌نمایی مرورگر متن را بازچینی کند، نه اینکه ببرد.</p></div>
+  <div style={card}><strong style={{ color: "var(--color-foreground)" }}>بازچینی محتوا در بزرگ‌نمایی و عرض‌های مختلف</strong><p style={{ color: "var(--color-muted-foreground)", margin: "4px 0 0" }}>بدون ارتفاع ثابت برای ظرف متن؛ بدون <C>nowrap</C> و بریدگی روی محتوای واقعی؛ تیترها <C>text-balance</C> و پاراگراف‌ها <C>text-pretty</C>.</p></div>
+  <div style={card}><strong style={{ color: "var(--color-foreground)" }}>سلسله‌مراتب محتوا</strong><p style={{ color: "var(--color-muted-foreground)", margin: "4px 0 0" }}>در هر صفحه دقیقاً یک <C>h1</C>، تیترهای پشت‌سرهم، برچسب فرم متصل با <C>htmlFor</C> و خطاها با <C>role="alert"</C>.</p></div>
+  <div style={card}><strong style={{ color: "var(--color-foreground)" }}>وزن فونت به‌تنهایی سلسله‌مراتب ایجاد نمی‌کند.</strong><p style={{ color: "var(--color-muted-foreground)", margin: "4px 0 0" }}>وزن فونت جایگزین ساختار معنایی تیترها نیست؛ اگر با حذف توپر بودن، ترتیب محتوا همچنان خوانا باشد، سلسله‌مراتب واقعی است.</p></div>
+  <div style={card}><strong style={{ color: "var(--color-foreground)" }}>بررسی بزرگ‌نمایی مرورگر</strong><p style={{ color: "var(--color-muted-foreground)", margin: "4px 0 0" }}>آنچه تأیید شده: توکن‌ها <C>px</C> با ارتفاع خط بدون واحد‌اند و بیلد استوری‌بوک هر 68 استوری را بدون خطا نمایش می‌دهد؛ تیترهای شناور با <C>clamp</C> در کران 32 تا 40 پیکسل مهار شده‌اند. آنچه هنوز با چشم بررسی نشده: پیمایش کامل صفحه‌ها در بزرگ‌نمایی 200٪ مرورگر — پیش از انتشار تغییرات بزرگ لندینگ، این بازبینی چشمی لازم است.</p></div>
+</div>
+
+<div dir="rtl" style={{ marginTop: 24, padding: 16, borderRadius: 16, background: "var(--color-surface-alt)", color: "var(--color-muted-foreground)", fontSize: 13, lineHeight: 1.9, textAlign: "right" }}>
+  <strong style={{ color: "var(--color-foreground)" }}>قاعده نهایی — </strong>
+  ارتفاع خطوط فارسی باید سخاوتمندانه و در محدوده 1.5 تا 1.9 باشد. از حروف بزرگ انگلیسی به‌عنوان تزئین، فاصله‌گذاری غیرضروری حروف فارسی و وزن‌های مصنوعی فونت استفاده نکنید. تایپوگرافی هم‌مسیر باید گرما و آرامش منتقل کند، نه اغراق و هیجان مصنوعی؛ چه در حالت روشن و چه در حالت تاریک.
+</div>

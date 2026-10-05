@@ -1,0 +1,151 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { radii, radiusSemantic, borderWidths, elevations } from "@/lib/tokens";
+import { Button } from "../components/Button";
+import { Badge } from "../components/Badge";
+import { Chip } from "../components/Chip";
+import { Input } from "../components/Input";
+import { Card } from "../components/Card";
+import { Alert } from "../components/Alert";
+import { Avatar } from "../components/Avatar";
+
+<Meta title="FOUNDATIONS/Surfaces" />
+
+# سطوح: شعاع، خط دور و سایه
+
+export const P = ({ children }) => (
+  <p dir="rtl" style={{ textAlign: "right", fontSize: 15, lineHeight: 1.9, color: "var(--color-foreground)" }}>
+    {children}
+  </p>
+);
+
+export const H2 = ({ children }) => (
+  <h2 dir="rtl" style={{ textAlign: "right", fontSize: 20, fontWeight: 700, color: "var(--color-foreground)", marginTop: 32 }}>
+    {children}
+  </h2>
+);
+
+export const C = ({ children }) => (
+  <code dir="ltr" style={{ fontSize: "0.85em", padding: "1px 6px", borderRadius: 6, background: "var(--color-surface-alt)", border: "1px solid var(--color-border)", unicodeBidi: "embed" }}>
+    {children}
+  </code>
+);
+
+export const thStyle = {
+  textAlign: "right",
+  fontSize: 13,
+  fontWeight: 700,
+  color: "var(--color-foreground)",
+  padding: "10px 12px",
+  borderBottom: "1px solid var(--color-border)",
+};
+
+export const tdStyle = {
+  textAlign: "right",
+  fontSize: 13,
+  color: "var(--color-muted-foreground)",
+  padding: "10px 12px",
+  borderBottom: "1px solid var(--color-border)",
+  verticalAlign: "middle",
+};
+
+export const Row = ({ radius = 16, shadow = "none", border = "1px solid var(--color-border)", children }) => (
+  <div dir="rtl" style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", borderBottom: "1px solid var(--color-border)" }}>
+    <span aria-hidden style={{ width: 72, height: 48, flexShrink: 0, borderRadius: radius, background: "var(--color-surface)", border, boxShadow: shadow }} />
+    <span style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>{children}</span>
+  </div>
+);
+
+<P>زبان بصری هم‌مسیر باید گرم، آرام و قابل‌اعتماد باشد. گوشه‌های گرد به رابط کاربری حس صمیمیت می‌دهند، خطوط مرزی به آن نظم می‌بخشند و سایه‌ها فقط زمانی به کار می‌روند که به درک بهتر سلسله‌مراتب کمک کنند. تمام این مقادیر از <C>tokens.css</C> تأمین می‌شوند و کامپوننت‌ها به توکن‌های معنایی مانند <C>rounded-card</C>، <C>border-border-strong</C> و <C>shadow-card</C> متصل‌اند؛ نه به مقادیر رنگ و اندازه‌ای که به‌صورت دستی در هر بخش تعریف شده باشند.</P>
+
+<H2>شعاع (Radius)</H2>
+
+<P>مقادیر <C>sm/md/lg</C> (۱۲/۱۶/۲۰) حفظ شده‌اند تا ظاهر فعلی جابه‌جا نشود؛ پله‌های <C>none/xs/xl/2xl</C> فاصله‌ها را کامل می‌کنند. قانون برند سر جایش است: پیش‌فرض همیشه گرد است و <C>radius-none</C> فقط برای لبه‌های چسبیده (مثل دستگیره شیت یا نوار پیشرفت) استفاده می‌شود.</P>
+
+<div dir="rtl" style={{ border: "1px solid var(--color-border)", borderRadius: 16, overflow: "hidden", marginTop: 12 }}>
+  <div dir="rtl" style={{ display: "flex", gap: 24, padding: "10px 12px", borderBottom: "1px solid var(--color-border)", fontSize: 13, fontWeight: 700, color: "var(--color-foreground)" }}>
+    <span style={{ flex: 1 }}>توکن</span><span style={{ flex: 1 }}>مقدار</span><span style={{ flex: 2 }}>کاربرد پیشنهادی</span>
+  </div>
+  {radii.map((r) => (
+    <div key={r.token} dir="rtl" style={{ display: "flex", gap: 24, alignItems: "center", padding: "10px 12px", borderBottom: "1px solid var(--color-border)" }}>
+      <span style={{ flex: 1 }}><C>--radius-{r.token}</C></span>
+      <span dir="ltr" style={{ flex: 1, fontSize: 13, color: "var(--color-muted-foreground)" }}>{r.px}px</span>
+      <span style={{ flex: 2, display: "flex", alignItems: "center", gap: 10 }}>
+        <span aria-hidden style={{ width: 40, height: 28, borderRadius: r.px === 9999 ? 9999 : r.px, background: "var(--color-primary-soft)", border: "1px solid var(--color-border)" }} />
+        <span style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>{r.usage}</span>
+      </span>
+    </div>
+  ))}
+</div>
+
+<P>برای حفظ یکپارچگی، هر کامپوننت باید از شعاع متناسب با نقش خودش استفاده کند، نه یک مقدار دلخواه. <C>rounded-button</C> برای دکمه‌ها، <C>rounded-input</C> برای ورودی‌ها و تکست‌اریاها، <C>rounded-card</C> برای کارت‌ها و آلرت‌ها و <C>rounded-dialog</C> / <C>rounded-sheet</C> برای دیالوگ‌ها و شیت‌ها در نظر گرفته شده‌اند. <C>rounded-badge</C> برای بج‌ها و <C>rounded-chip</C> / <C>rounded-avatar</C> برای چیپ‌ها و آواتارهای کاملاً گرد استفاده می‌شوند.</P>
+
+<H2>خط دور (Borders)</H2>
+
+<P>ضخامت خطوط مرزی از یک مقیاس مشخص پیروی می‌کند: <C>1px</C> برای جداکننده‌ها و مرزهای معمول کارت‌ها، <C>1.5px</C> برای تأکیدهای محدود و <C>2px</C> فقط برای موارد خاص، مثل نمایش یک کارت منتخب منتور. رنگ خطوط هم باید بر اساس کاربردشان انتخاب شود: <C>border-border</C> برای مرزهای پیش‌فرض، <C>border-border-subtle</C> برای جداکننده‌های ظریف، <C>border-border-strong</C> برای ورودی‌ها و کنترل‌هایی که به کنتراست بیشتری نیاز دارند، <C>border-border-focus</C> برای وضعیت فوکوس، <C>border-border-disabled</C> برای عناصر غیرفعال، <C>border-border-danger</C> برای خطا و <C>border-border-success</C> برای موفقیت.</P>
+
+<div dir="rtl" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+  {borderWidths.map((b) => (
+    <div key={b.token} dir="rtl" style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: 16 }}>
+      <span aria-hidden style={{ flex: 1, borderTop: `${b.px}px solid var(--color-border-strong)` }} />
+      <span style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}><C>--border-width-{b.token}</C> — {b.px}px — {b.usage}</span>
+    </div>
+  ))}
+  <div dir="rtl" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
+    {[["border-border", "پیش‌فرض"], ["border-border-subtle", "کم‌رنگ"], ["border-border-strong", "قوی (ورودی)"], ["border-border-danger", "خطا"], ["border-border-success", "موفقیت"]].map(([cls, label]) => (
+      <span key={cls} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--color-muted-foreground)", background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: 12, padding: "8px 12px" }}>
+        <span aria-hidden style={{ width: 16, height: 16, borderRadius: 6 }} className={`${cls} border-2`} /> {label} <C>{cls}</C>
+      </span>
+    ))}
+  </div>
+</div>
+
+<H2>سایه و ارتفاع (Elevation)</H2>
+
+<P>برای سایه‌ها پنج سطح کافی است. در سطح صفر، هیچ سایه‌ای نداریم و مرزبندی عناصر با کمک خطوط و تفاوت سطح پس‌زمینه انجام می‌شود. کارت‌ها در حالت عادی بدون سایه نمایش داده می‌شوند و فقط هنگام هاور، در صورت نیاز، کمی از سطح صفحه فاصله می‌گیرند. سایه‌های قوی‌تر برای عناصر شناور مثل دراپ‌دان، پاپ‌اور، شیت، دیالوگ و دکمه‌های شناور هستند. <C>shadow-brand</C> هم فقط برای تأکید بر اکشن اصلی یا چیپ انتخاب‌شده استفاده می‌شود، نه به‌عنوان یک جلوه تزئینی.</P>
+
+<div dir="rtl" style={{ border: "1px solid var(--color-border)", borderRadius: 16, overflow: "hidden", marginTop: 12 }}>
+  {elevations.map((e) => (
+    <Row
+      key={e.level}
+      radius={16}
+      shadow={e.level === 0 ? "none" : e.level === 1 ? "0 1px 3px rgba(44,58,56,0.12)" : e.level === 2 ? "var(--shadow-card)" : e.level === 3 ? "var(--shadow-floating)" : "var(--shadow-dialog)"}
+    >
+      <span><C>{e.cssVar}</C> — <C>{e.tailwind}</C> — {e.usage}</span>
+    </Row>
+  ))}
+  <div dir="rtl" style={{ padding: "10px 12px", fontSize: 13, color: "var(--color-muted-foreground)" }}>
+    نگاشت معنایی: <C>shadow-card</C> (کارت شناور)، <C>shadow-dropdown / shadow-popover / shadow-floating</C> (شناورها)، <C>shadow-dialog / shadow-sheet</C> (دیالوگ و شیت)، <C>shadow-brand</C> (فقط اکشن اصلی و انتخاب‌شده). <C>shadow-lifted</C> نام قدیمی سطح ۳ است و برای سازگاری مانده.
+  </div>
+</div>
+
+<H2>مثال روی کامپوننت‌های واقعی</H2>
+
+<div dir="rtl" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+  <Card title="کارت نمونه" description="بدون سایه خوابیده؛ مرز و سطح کافی است. روی حالت تعاملی هاور کنید.">
+    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <Button variant="primary">اقدام اصلی</Button>
+      <Button variant="secondary">انصراف</Button>
+    </div>
+  </Card>
+  <Card title="کارت تعاملی" interactive description="هاور: مرز قوی‌تر + سایه کارت.">
+    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+      <Badge variant="confirmed">تأیید شده</Badge>
+      <Chip selected>انتخاب‌شده</Chip>
+      <Chip>گزینه</Chip>
+    </div>
+  </Card>
+  <Alert tone="success" title="موفق">این آلرت با مرز و سطح ساخته شده، بدون سایه.</Alert>
+  <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+    <Input label="ورودی نمونه" placeholder="09xxxxxxxxx" />
+    <Avatar name="سارا" />
+  </div>
+</div>
+
+<H2>باید و نباید</H2>
+
+<div dir="rtl" style={{ display: "grid", gap: 8, marginTop: 12 }}>
+  <div style={{ padding: "12px 14px", background: "var(--color-feedback-success-bg)", border: "1px solid var(--color-feedback-success-border)", borderRadius: 16, fontSize: 14, color: "var(--color-feedback-success-text)" }}><strong>بهتر است:</strong> کارت‌ها با <C>rounded-card + border-border + shadow-none</C> نمایش داده شوند و در صورت نیاز، هنگام هاور از <C>shadow-card</C> استفاده کنند. ورودی‌ها باید <C>rounded-input + border-border-strong</C> داشته باشند. در حالت خطا، علاوه بر <C>border-danger</C>، پیام خطای واضحی نمایش داده شود و در صورت لزوم از <C>role=alert</C> استفاده شود. فوکوس نیز باید با یک حلقه دوگانه و کاملاً قابل‌مشاهده مشخص شود، نه صرفاً با تغییر سایه.</div>
+  <div style={{ padding: "12px 14px", background: "var(--color-feedback-danger-bg)", border: "1px solid var(--color-feedback-danger-border)", borderRadius: 16, fontSize: 14, color: "var(--color-feedback-danger-text)" }}><strong>بهتر است از این موارد پرهیز کنیم:</strong> استفاده از یک شعاع یکسان برای تمام اجزا، مثل گرد کردن کامل کارت‌ها؛ افزودن سایه به همه کارت‌ها؛ استفاده از <C>transition-all</C> به‌جای انتقال هدفمند ویژگی‌هایی مثل <C>box-shadow, transform, background-color, border-color</C>؛ حذف نشانگر فوکوس بدون جایگزین مناسب؛ و انتقال مفهوم خطا یا موفقیت صرفاً از طریق رنگ.</div>
+</div>
+
+<P>در رابط فارسی، جهت کلی صفحه با <C>dir="rtl"</C> روی <C>html</C> مشخص می‌شود؛ اما برای فاصله‌گذاری و موقعیت عناصر باید تا جای ممکن از ویژگی‌های منطقی CSS استفاده کنیم تا چیدمان در هر دو جهت درست باقی بماند. در Tailwind، کلاس‌هایی مثل <C>ps/pe</C> و <C>start/end</C> و برای گوشه‌های بالایی شیت، <C>rounded-t-sheet</C> به کار می‌روند. نام توکن‌ها، کلاس‌ها و نمونه‌کدها نیز همیشه به انگلیسی و با جهت چپ‌به‌راست نمایش داده می‌شوند.</P>

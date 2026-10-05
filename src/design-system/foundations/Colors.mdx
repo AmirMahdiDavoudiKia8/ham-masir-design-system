@@ -1,0 +1,348 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { colors, primitives, semanticTokens } from "@/lib/tokens";
+import { Button } from "../components/Button";
+import { Alert } from "../components/Alert";
+
+<Meta title="FOUNDATIONS/Colors" />
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+پایه‌ی رنگی هم‌مسیر باید حس‌وحالی گرم، آرام و انسانی داشته باشد. رنگ‌های اصلی از لوگو و مفهوم «خطِ همراه» گرفته شده‌اند:
+sage teal `#5B9E94`، warm peach `#E8B99A`، warm cream `#F6F1E9`، deep teal-charcoal `#2C3A38`، warm amber `#D99A6C` و muted terracotta `#B0644F`.
+
+تمام مقادیر رنگی این بخش باید از `lib/tokens.ts` خوانده شوند که mirror تایپ‌شده‌ی `tokens.css` است؛ بنابراین مستندات و کد نباید از هم فاصله بگیرند یا مقدار متفاوتی داشته باشند.
+
+با تغییر **Mood toolbar ↑** باید بتوان تمام بخش‌ها را در حالت Dark هم بررسی کرد؛ نام توکن‌ها و نقش آن‌ها ثابت بماند، اما primitiveهای مورد استفاده در Dark Mode تغییر کنند.
+
+</div>
+
+export const famNames = Object.keys(primitives);
+
+export function primHex(ref) {
+  if (!ref) return null;
+  const m = String(ref).match(/#[0-9a-fA-F]{6}/);
+  if (m) return m[0];
+  const low = String(ref).toLowerCase();
+  if (low.startsWith("white")) return "#ffffff";
+  for (const fam of famNames) {
+    if (low.startsWith(fam + "-")) {
+      const step = low.slice(fam.length + 1).split(" ")[0];
+      const hit = (primitives[fam] || []).find((s) => s.step === step);
+      if (hit) return hit.hex;
+    }
+  }
+  return null;
+}
+
+export function Swatch({ hex, size = 40 }) {
+  if (!hex) return null;
+  return (
+    <span
+      aria-hidden
+      dir="ltr"
+      style={{
+        display: "inline-block",
+        width: size,
+        height: size,
+        minWidth: size,
+        borderRadius: 12,
+        background: hex,
+        border: "1px solid var(--color-border)",
+        boxShadow: "var(--shadow-card)",
+        verticalAlign: "middle",
+      }}
+    />
+  );
+}
+
+export function TokenTable({ rows }) {
+  return (
+    <div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+      {rows.map((t) => {
+        const lh = primHex(t.light);
+        const dh = primHex(t.dark);
+        return (
+          <div
+            key={t.token}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              padding: "10px 14px",
+              borderRadius: 12,
+              background: "var(--color-surface)",
+              border: "1px solid var(--color-border)",
+              fontSize: 13,
+            }}
+          >
+            <span style={{ display: "inline-flex", gap: 4 }}>
+              <Swatch hex={lh} size={32} />
+              <Swatch hex={dh} size={32} />
+            </span>
+            <span style={{ minWidth: 0 }}>
+              <strong style={{ color: "var(--color-foreground)" }}>
+                <code>{t.token}</code>
+              </strong>{" "}
+              <span style={{ color: "var(--color-muted-foreground)" }}>
+                {t.light} → {t.dark}
+              </span>
+              <br />
+              <span style={{ color: "var(--color-muted-foreground)" }}>{t.usage}</span>{" "}
+              <code style={{ color: "var(--color-foreground-faint)", fontSize: 12 }}>{t.tailwind}</code>
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Anchor Colors
+
+شش رنگ اصلی برند را ثابت و قابل‌شناسایی نگه دار و آن‌ها را جابه‌جا یا بازتعریف نکن.
+
+توجه: ترکیب Sage-500 با سفید کنتراست **3.11:1** دارد؛ بنابراین فقط برای عناصر تزئینی و متن‌های بزرگ مناسب است. برای متن و actionهایی که محتوای متنی دارند، از نسخه‌های تیره‌تر همین خانواده استفاده کن.
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 24 }}>
+  {colors.map((c) => (
+    <div
+      key={c.name}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        padding: 16,
+        borderRadius: 16,
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+      }}
+    >
+      <div
+        aria-hidden
+        style={{
+          width: 64,
+          height: 64,
+          minWidth: 64,
+          minHeight: 64,
+          borderRadius: 16,
+          background: c.hex,
+          border: "1px solid var(--color-border)",
+          boxShadow: "var(--shadow-card)",
+        }}
+      />
+      <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+          <strong style={{ color: "var(--color-foreground)", fontSize: 16 }}>{c.label}</strong>
+          <code
+            dir="ltr"
+            style={{
+              fontSize: 13,
+              padding: "2px 8px",
+              borderRadius: 999,
+              background: "var(--color-surface-alt)",
+              color: "var(--color-muted-foreground)",
+              border: "1px solid var(--color-border)",
+            }}
+          >
+            {c.hex}
+          </code>
+        </div>
+        <span style={{ color: "var(--color-muted-foreground)", fontSize: 13, lineHeight: 1.6 }}>
+          {c.description}
+        </span>
+        <code dir="ltr" style={{ fontSize: 12, color: "var(--color-foreground-faint)" }}>
+          {c.name === "background"
+            ? "bg-background"
+            : c.name === "ink"
+              ? "text-foreground"
+              : c.name === "warning"
+                ? "bg-alert-soft · text-alert · border-alert"
+                : c.name === "danger"
+                  ? "text-danger · border-danger"
+                  : `bg-${c.name} · text-${c.name}-foreground`}
+        </code>
+      </div>
+    </div>
+  ))}
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Raw Color Ramps
+
+رَمپ‌های خام رنگی مستقیماً توسط کامپوننت‌ها استفاده نشوند. کامپوننت‌ها باید فقط از Semantic Tokens استفاده کنند.
+
+دو alias عمدی بین خانواده‌های رنگی وجود دارد و باید دقیقاً به همین شکل باقی بماند؛ یعنی یک مقدار با دو نام، بدون ایجاد دو رنگ مستقل:
+
+- `teal-900 == ink-700` → رنگ اصلی Anchor Ink
+- `peach-600 == alert-500` → رنگ اصلی Anchor Amber
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 12 }}>
+  {Object.entries(primitives).map(([fam, steps]) => (
+    <div key={fam} style={{ padding: 14, borderRadius: 14, background: "var(--color-surface)", border: "1px solid var(--color-border)" }}>
+      <strong style={{ color: "var(--color-foreground)", textTransform: "capitalize" }}>{fam}</strong>
+      <div style={{ display: "flex", gap: 6, marginTop: 10, flexWrap: "wrap" }}>
+        {steps.map((s) => (
+          <span key={s.step} title={`${fam}-${s.step} ${s.hex}${s.note ? " — " + s.note : ""}`} style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+            <Swatch hex={s.hex} size={36} />
+            <code style={{ fontSize: 10, color: "var(--color-muted-foreground)" }}>{s.step}</code>
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Semantic Tokens
+
+نام هر توکن باید بر اساس کاربرد و هدف آن باشد، نه صرفاً نام رنگ.
+
+هر Semantic Token باید به یک Primitive مشخص ارجاع دهد و هیچ مقدار رنگی نباید به‌صورت مستقل و خارج از Token System تعریف شود.
+
+برای استفاده در UI، کلاس `tailwind` مربوط به هر Token را استفاده کن.
+
+</div>
+
+<TokenTable rows={semanticTokens.filter((t) => t.token.startsWith("bg-"))} />
+
+<TokenTable rows={semanticTokens.filter((t) => t.token.startsWith("text-"))} />
+
+<TokenTable rows={semanticTokens.filter((t) => t.token.startsWith("border-"))} />
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Accessibility & States
+
+تمام ترکیب‌های رنگی فعال باید حداقل الزامات کنتراست **AA** را رعایت کنند.
+
+برای حالت Disabled، الزام کنتراست اعمال نمی‌شود؛ اما Disabled همیشه باید همراه با این موارد باشد:
+
+- `cursor-not-allowed`
+- کاهش opacity
+- حفظ یک label یا نشانه‌ی قابل مشاهده
+
+هرگز نباید Disabled بودن فقط با تغییر رنگ نشان داده شود.
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 12 }}>
+  <Button variant="primary">رزرو کن</Button>
+  <Button variant="secondary">انصراف</Button>
+  <Button variant="primary" disabled>غیرفعال</Button>
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Semantic Feedback
+
+رنگ پس‌زمینه، رنگ متن و رنگ Border هر Semantic State باید همیشه با هم تعریف و استفاده شوند و نباید جدا از هم انتخاب شوند.
+
+هر Feedback Box باید علاوه بر رنگ، یک Icon مناسب و یک `role` مشخص داشته باشد (`status` یا `alert`). مفهوم وضعیت نباید فقط از طریق رنگ منتقل شود.
+
+**Info — خاکستری مایل به سبز، بدون آبی اشباع‌شده**
+
+یک پیام خنثی و آرام با ته‌رنگ سرد.
+نباید شبیه آبی استاندارد و اشباع‌شده باشد.
+
+**Success — تأییدی آرام، بدون هیجان اضافی**
+
+نشانه‌ای از پیشرفت و نتیجه‌ی مثبت، اما بدون حس جشن یا اغراق.
+از یک check ملایم و حس پیشرفت آرام استفاده کن.
+
+**Warning — یک تلنگر گرم، نه تذکر یا سرزنش**
+
+لحن باید دوستانه و انسانی باشد؛ چیزی شبیه این مفهوم:
+«هر روز می‌تواند یک شروع تازه باشد. از همین‌جا ادامه بدهیم.»
+
+**Danger — فقط برای خطاهای واقعی**
+
+پیام باید آرام، مشخص و کاربردی باشد و قدم بعدی را روشن کند.
+از قرمز هشداردهنده و بیش‌ازحد تهاجمی استفاده نکن.
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+  <Alert tone="info" title="Info — dusty slate-teal, no saturated blue">
+    A calm neutral notice with a cool tint.
+  </Alert>
+  <Alert tone="success" title="Success — quiet affirmation, no fireworks">
+    Steady, shared progress. Soft check, gentle rise.
+  </Alert>
+  <Alert tone="alert" title="Warning — warm nudge, never a scold">
+    Every day is a fresh start. Let's continue from here.
+  </Alert>
+  <Alert tone="danger" title="Danger — true errors only">
+    Calm, specific, with the next step. No alarm red.
+  </Alert>
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### WCAG 2.2 Contrast Validation
+
+تمام نسبت‌های کنتراست زیر بر اساس WCAG 2.2 و با استفاده از relative luminance محاسبه شده‌اند؛ این اعداد تخمینی نیستند.
+
+اهداف کنتراست:
+
+- متن معمولی: حداقل **4.5:1**
+- متن بزرگ: حداقل **3:1**
+- مرزها و Boundaryهای ضروری: حداقل **3:1**
+
+| ترکیب | نسبت کنتراست | نتیجه |
+|---|---:|---|
+| White روی `action-primary` (`teal-700`) | 6.09:1 | ✅ AA برای متن معمولی |
+| `ink-900` روی `action-secondary` (`peach-400`) | 6.96:1 | ✅ AA برای متن معمولی |
+| `ink-700` روی Canvas | 10.56:1 | ✅ AA برای متن معمولی |
+| `ink-500` به‌عنوان متن ثانویه روی Canvas | 4.97:1 | ✅ AA برای متن معمولی |
+| `teal-700` به‌عنوان Link روی Canvas + underline | 5.41:1 | ✅ AA برای متن معمولی |
+| `teal-700` برای Verified-strong روی Surface | 5.94:1 | ✅ AA برای متن معمولی |
+| `danger-700` برای متن خطا روی Canvas | 6.69:1 | ✅ AA برای متن معمولی |
+| Cream Text روی Night Canvas | 12.73:1 | ✅ AA برای متن معمولی |
+| `night-200` برای متن ثانویه روی Night Canvas | 8.14:1 | ✅ AA برای متن معمولی |
+| `ink-900` روی `teal-night-400` برای Dark Action | 6.81:1 | ✅ AA برای متن معمولی |
+| White روی `sage-500` به‌عنوان رنگ اصلی برند | 3.11:1 | ⚠️ فقط متن بزرگ / عناصر گرافیکی |
+| `teal-500` برای Label روی `primary-soft` | 2.62:1 | ❌ هرگز استفاده نشود — به‌جای آن از `action-primary` با نسبت 5.13:1 استفاده شود |
+| `ink-300` برای Placeholder کم‌رنگ روی Canvas | 2.26:1 | ❌ هرگز استفاده نشود — Placeholderها از `muted` با نسبت 4.97:1 استفاده کنند |
+| White روی `success-500` | 2.72:1 | ❌ هرگز استفاده نشود — متن Success باید از `success-700` با نسبت 4.70:1 استفاده کند |
+
+### نمونه‌های نادرست — Don't
+
+این موارد نباید در UI استفاده شوند:
+
+- متن کوچک سفید روی `sage-500`؛ برای مثال «رزرو کن» با کنتراست 3.11:1 ❌
+- Border ضروری Input با رنگ بسیار کم‌رنگ Cream و نسبت 1.27:1 ❌
+- نمایش خطا فقط با تغییر رنگ، بدون Icon و بدون `role` ❌
+
+### نمونه‌های درست — Do
+
+- دکمه‌ی `action-primary` با متن «رزرو کن» و کنتراست 6.09:1 ✅
+- Inputها با `border-strong` و کنتراست 5.46:1 نسبت به زمینه‌ی مربوطه ✅
+- خطاها همراه با Icon، `role="alert"` و متن با کنتراست قوی نمایش داده شوند ✅
+- تمام Linkها همیشه underline داشته باشند تا قابل تشخیص بودن آن‌ها فقط به رنگ وابسته نباشد ✅
+
+### قانون اصلی رنگ
+
+از موارد زیر استفاده نکن:
+
+- مشکی خالص
+- سفید خالص
+- رنگ‌های Neon
+- رنگ‌های Acid
+- Accentهای بیش‌ازحد تند
+- آبی‌های اشباع‌شده
+- بنفش‌های رایج SaaS
+- قرمزهای هشداردهنده و Alarm-like
+
+رنگ‌های برند نباید صرفاً به‌خاطر هویت بصری مجبور به استفاده برای متن شوند. اگر یک رنگ برند کنتراست کافی برای متن ندارد، همان رنگ باید نقش تزئینی خود را حفظ کند و نسخه‌ی تیره‌تر همان خانواده برای متن و Action استفاده شود.
+
+در نهایت، با استفاده از **Mood toolbar ↑** تمام نسبت‌های بالا را در حالت Dark نیز بررسی کن و مطمئن شو که جفت‌رنگ‌های مربوط به Dark Mode همچنان مطابق همین اصول عمل می‌کنند.
+
+</div>

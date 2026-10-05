@@ -1,0 +1,10 @@
+/**
+ * HamMasir brand typeface inside the Storybook preview iframe.
+ * Estedad is declared via @font-face in globals.css (self-hosted);
+ * this makes it the default everywhere stories and docs render,
+ * the same way `font-sans` does in the Next.js app.
+ * Monospace code blocks keep their own stack (more specific selectors win).
+ */
+body {
+  font-family: "Estedad", Tahoma, sans-serif;
+}

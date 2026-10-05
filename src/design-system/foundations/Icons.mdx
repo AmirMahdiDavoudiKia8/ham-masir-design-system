@@ -1,0 +1,77 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import * as IconSet from "../icons";
+
+<Meta title="FOUNDATIONS/Icons" />
+
+<div dir="ltr" style={{ textAlign: "left" }}>
+
+# Icons
+
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+مجموعه آیکون‌های هم‌مسیر باید یک زبان بصری یکپارچه داشته باشد: همه‌ی آیکون‌ها از یک خانواده‌ی Stroke با ضخامت 1.75px، ViewBox برابر 24 و گوشه‌ها و انتهای Rounded استفاده کنند. آیکون جدید را در design-system/icons.tsx اضافه کن و در Featureها از Inline SVGهای اختصاصی استفاده نکن. StarIcon یک Prop اختیاری به نام filled دارد و سایر آیکون‌ها Props استاندارد SVG را دریافت می‌کنند. ردیف اول آیکون‌های استفاده‌شده در صفحات واقعی محصول است؛ ردیف دوم مجموعه‌ی قابل‌استفاده برای نیازهای نزدیک آینده است و فعلاً در محصول استفاده نمی‌شود، بنابراین برای آن‌ها Usage مصنوعی ایجاد نکن.
+
+</div>
+
+export const iconNames = Object.keys(IconSet).filter((k) => k.endsWith("Icon"));
+
+export const usedIcons = [
+  "AccompaniedLineIcon", "ArrowLeftIcon", "ArrowRightIcon", "AwardIcon",
+  "BookIcon", "BoltIcon", "BuildingIcon", "CalendarIcon", "CameraIcon",
+  "ChatIcon", "CheckIcon", "ChevronDownIcon", "ClockIcon", "CoinIcon",
+  "CompassIcon", "EditIcon", "FemaleIcon", "HomeIcon", "InstagramIcon",
+  "LockIcon", "LogOutIcon", "MaleIcon", "MapPinIcon", "MenuIcon",
+  "PhoneIcon", "ProfileIcon", "ProgressIcon", "SearchIcon", "SendIcon",
+  "ShieldCheckIcon", "SparkleIcon", "StarIcon", "UploadIcon", "UsersIcon",
+  "VideoIcon", "XIcon",
+];
+export const reserveIcons = iconNames.filter((n) => !usedIcons.includes(n));
+
+export function IconTile({ name }) {
+  const Cmp = IconSet[name];
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 6,
+        width: 104,
+        padding: "12px 8px",
+        borderRadius: 12,
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+        color: "var(--color-foreground)",
+      }}
+    >
+      <Cmp style={{ width: 24, height: 24 }} />
+      <code style={{ fontSize: 10, textAlign: "center", overflowWrap: "anywhere" }}>{name}</code>
+    </div>
+  );
+}
+
+<div dir="ltr" style={{ textAlign: "left" }}>
+
+## Used across the product
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 8 }}>
+  {usedIcons.map((name) => (
+    <IconTile key={name} name={name} />
+  ))}
+</div>
+
+<div dir="ltr" style={{ textAlign: "left" }}>
+
+## Reusable reserve
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 8 }}>
+  {reserveIcons.map((name) => (
+    <IconTile key={name} name={name} />
+  ))}
+</div>

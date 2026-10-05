@@ -1,0 +1,26 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { shadows } from "./spacing";
+
+<Meta title="FOUNDATIONS/Shadows" />
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Shadows
+
+Elevation در هم‌مسیر باید آرام و هدفمند باشد. سطوح در حالت عادی بیشتر با Border و رنگ Surface سلسله‌مراتب می‌گیرند و Shadow فقط برای نشان‌دادن بالا آمدن، انتخاب‌شدن یا شناور بودن استفاده می‌شود. `none` برای سطح‌های عادی Grid، `card` برای Cardها و Hover روی Mentor Tile، `brand` برای Glow اصلی و حالت‌های Primary/Selected، و `lifted` برای عناصر شناور مثل Bottom Sheet، Toast، Side Menu، Support Button و Suggestion Dropdown است. `floating` برای Hover روی Theme Toggle و `dropdown` برای Hover روی Strip Card استفاده می‌شود. `popover`، `dialog` و `sheet` تعریف شده‌اند اما فعلاً استفاده نمی‌شوند. مقادیر باید با `tokens.css` هماهنگ باشند.
+
+</div>
+
+<div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 16 }}>
+  {Object.entries(shadows).map(([name, cls]) => (
+    <div key={name} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+      <span
+        aria-hidden
+        style={{ width: 120, height: 72, background: "var(--color-surface)", borderRadius: 12 }}
+        className={cls}
+      />
+      <code style={{ fontSize: 12 }}>{name}</code>
+      <code style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{cls}</code>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,235 @@
+{
+  "studyPlan": {
+    "weekLabel": "برنامه‌ی این هفته",
+    "days": [
+      {
+        "dayLabel": "شنبه",
+        "dateLabel": "۱۰ اردیبهشت",
+        "isToday": false,
+        "tasks": [
+          {
+            "id": "d1t1",
+            "subject": "فیزیک",
+            "topic": "فصل ۳",
+            "type": "تست",
+            "target": "۳۰ تست",
+            "done": true
+          },
+          {
+            "id": "d1t2",
+            "subject": "شیمی",
+            "topic": "جمع‌بندی گازها",
+            "type": "درسنامه",
+            "target": "۱ فصل",
+            "done": true
+          }
+        ]
+      },
+      {
+        "dayLabel": "یکشنبه",
+        "dateLabel": "۱۱ اردیبهشت",
+        "isToday": false,
+        "tasks": [
+          {
+            "id": "d2t1",
+            "subject": "زیست",
+            "topic": "فصل ۵",
+            "type": "تست",
+            "target": "۴۰ تست",
+            "done": true
+          },
+          {
+            "id": "d2t2",
+            "subject": "ریاضی",
+            "topic": "مثلثات",
+            "type": "درسنامه",
+            "target": "۱ فصل",
+            "done": false
+          }
+        ]
+      },
+      {
+        "dayLabel": "دوشنبه",
+        "dateLabel": "۱۲ اردیبهشت",
+        "isToday": true,
+        "tasks": [
+          {
+            "id": "d3t1",
+            "subject": "فیزیک",
+            "topic": "فصل ۴",
+            "type": "درسنامه",
+            "target": "۱ فصل",
+            "done": true
+          },
+          {
+            "id": "d3t2",
+            "subject": "شیمی",
+            "topic": "استوکیومتری",
+            "type": "تست",
+            "target": "۲۵ تست",
+            "done": false
+          },
+          {
+            "id": "d3t3",
+            "subject": "زیست",
+            "topic": "فصل ۶",
+            "type": "تست",
+            "target": "۳۰ تست",
+            "done": false
+          }
+        ]
+      },
+      {
+        "dayLabel": "سه‌شنبه",
+        "dateLabel": "۱۳ اردیبهشت",
+        "isToday": false,
+        "tasks": [
+          {
+            "id": "d4t1",
+            "subject": "ریاضی",
+            "topic": "حد و پیوستگی",
+            "type": "تست",
+            "target": "۲۰ تست",
+            "done": false
+          }
+        ]
+      },
+      {
+        "dayLabel": "چهارشنبه",
+        "dateLabel": "۱۴ اردیبهشت",
+        "isToday": false,
+        "tasks": [
+          {
+            "id": "d5t1",
+            "subject": "فیزیک",
+            "topic": "فصل ۴",
+            "type": "تست",
+            "target": "۳۰ تست",
+            "done": false
+          }
+        ]
+      },
+      {
+        "dayLabel": "پنجشنبه",
+        "dateLabel": "۱۵ اردیبهشت",
+        "isToday": false,
+        "tasks": [
+          {
+            "id": "d6t1",
+            "subject": "شیمی",
+            "topic": "جمع‌بندی",
+            "type": "درسنامه",
+            "target": "۱ فصل",
+            "done": false
+          }
+        ]
+      },
+      {
+        "dayLabel": "جمعه",
+        "dateLabel": "۱۶ اردیبهشت",
+        "isToday": false,
+        "tasks": []
+      }
+    ]
+  },
+  "monthCalendar": {
+    "monthLabel": "اردیبهشت",
+    "startWeekday": 0,
+    "todayDay": 12,
+    "days": [
+      {
+        "day": 1
+      },
+      {
+        "day": 2
+      },
+      {
+        "day": 3
+      },
+      {
+        "day": 4
+      },
+      {
+        "day": 5
+      },
+      {
+        "day": 6
+      },
+      {
+        "day": 7
+      },
+      {
+        "day": 8
+      },
+      {
+        "day": 9
+      },
+      {
+        "day": 10
+      },
+      {
+        "day": 11
+      },
+      {
+        "day": 12
+      },
+      {
+        "day": 13
+      },
+      {
+        "day": 14
+      },
+      {
+        "day": 15
+      },
+      {
+        "day": 16
+      },
+      {
+        "day": 17
+      },
+      {
+        "day": 18
+      },
+      {
+        "day": 19
+      },
+      {
+        "day": 20
+      },
+      {
+        "day": 21
+      },
+      {
+        "day": 22
+      },
+      {
+        "day": 23
+      },
+      {
+        "day": 24
+      },
+      {
+        "day": 25
+      },
+      {
+        "day": 26
+      },
+      {
+        "day": 27
+      },
+      {
+        "day": 28
+      },
+      {
+        "day": 29
+      },
+      {
+        "day": 30
+      },
+      {
+        "day": 31
+      }
+    ]
+  }
+}

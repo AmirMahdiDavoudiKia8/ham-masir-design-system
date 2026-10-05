@@ -1,0 +1,205 @@
+@import "../design-system/tokens/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Brand typeface — Estedad (استعداد), self-hosted from /public/fonts.
+ *
+ * Declared by hand rather than through `next/font/local`, for one reason:
+ * next/font preloads either ALL weights of a family or none, and preloading
+ * all four costs 208KB on the critical path of every first visit when only
+ * Regular and Bold are used above the fold. Splitting a family across two
+ * next/font calls does not work — CSS matches weights *within* one family and
+ * only falls through family-to-family for missing glyphs, so 500/600 would
+ * silently render at 400/700. Declaring the family here lets app/layout.tsx
+ * preload exactly the two weights first paint needs (~102KB) while Medium and
+ * SemiBold load on demand.
+ *
+ * Side benefit: no dependency on next/font's build-time manifest, which was
+ * silently emitting no preloads at all on Windows builds (see git history for
+ * scripts/patch-next-font-windows.mjs).
+ *
+ * font-display: optional everywhere — a font that arrives after first paint
+ * must NOT swap in, because re-flowing Persian text shifts the whole page
+ * (this was the live CLS of 0.100 on /student/home). The two preloaded
+ * weights normally arrive in time and are used; the other two fall back to
+ * the system Persian face for that page view if they miss the window.
+ */
+@font-face {
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: optional;
+}
+
+:root {
+  /* Single alias for the brand face — Tailwind's `font-sans` wiring in
+     tailwind.config.ts reads this, so rebranding type means editing here. */
+  --font-estedad: "Estedad";
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise-in {
+  animation: rise-in var(--duration-entrance) var(--ease-gentle) both;
+}
+
+/*
+ * Above-the-fold variant: the same gentle upward settle, WITHOUT the fade.
+ *
+ * Chrome does not count an element as painted for Largest Contentful Paint
+ * while it is at opacity 0, so fading in the hero text — which IS the LCP
+ * element on /student/home — pushed LCP back by the length of the fade on
+ * every visit. Moving only `transform` keeps the text visible from its very
+ * first frame (LCP lands on first paint) while keeping the brand's
+ * "motion accompanies, nothing pops" feel. Use this on anything visible
+ * without scrolling; keep .animate-rise-in (with the fade) for content below
+ * the fold, where it has no effect on LCP.
+ */
+@keyframes rise-in-visible {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-rise-in-visible {
+  animation: rise-in-visible var(--duration-entrance) var(--ease-gentle) both;
+}
+
+/* Hides the scrollbar on horizontally-scrollable chip rows without disabling scroll. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dual-thumb range slider (two overlapping <input type="range">).
+   The track is transparent + pointer-events:none so clicks reach whichever
+   input's thumb is closer; the thumb itself opts back into pointer-events. */
+.range-thumb::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: transparent;
+}
+.range-thumb::-moz-range-track {
+  background: transparent;
+}
+.range-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 3px solid var(--color-primary);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  margin-top: 0;
+}
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 3px solid var(--color-primary);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+/* Planner loading transition: two lines (echoing the logo's "Accompanied
+   Line" motif) easing toward each other and back, instead of a spinner. */
+.planner-loading-line {
+  position: absolute;
+  width: 3px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  animation-duration: 1.4s;
+  animation-timing-function: var(--ease-gentle);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.planner-loading-line--primary {
+  background: var(--color-primary);
+  animation-name: planner-line-approach-a;
+}
+.planner-loading-line--secondary {
+  background: var(--color-secondary);
+  animation-name: planner-line-approach-b;
+}
+@keyframes planner-line-approach-a {
+  from {
+    transform: translateX(-18px);
+  }
+  to {
+    transform: translateX(-4px);
+  }
+}
+@keyframes planner-line-approach-b {
+  from {
+    transform: translateX(18px);
+  }
+  to {
+    transform: translateX(4px);
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "hammasir-bots",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Telegram/Bale payment-coordination bots for HamMasir — standalone from the Next.js app, deployed as separate PM2 processes on the same VPS.",
+  "dependencies": {
+    "grammy": "^1.30.0"
+  }
+}
