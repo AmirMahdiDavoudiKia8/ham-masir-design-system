@@ -1,5 +1,6 @@
 /** Toast — fire-and-forget success/error banner.
- * Mounted once in the root layout — see lib/toast for how to trigger it. */
+ * Mounted once in the root layout — see lib/toast for how to trigger it.
+ * Status: canonical — shipped app-wide via the root layout. */
 "use client";
 
 import { useEffect, useState } from "react";

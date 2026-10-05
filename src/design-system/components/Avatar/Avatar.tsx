@@ -1,6 +1,9 @@
 /**
  * Avatar — photo or calm fallback initial on a soft primary tint.
  * Fallback matters: mentors join before uploading a photo.
+ *
+ * Status: pending-decision — product ships MentorAvatar (feature-level);
+ * align with that pattern before adopting this component.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";

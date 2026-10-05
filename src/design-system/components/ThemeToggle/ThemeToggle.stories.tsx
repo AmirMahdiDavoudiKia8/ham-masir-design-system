@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
+import * as React from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Card } from "../Card";
 import { Button } from "../Button";
@@ -6,9 +7,17 @@ import { Alert } from "../Alert";
 import { MentorCard } from "../MentorCard";
 
 const meta: Meta<typeof ThemeToggle> = {
-  title: "Core/ThemeToggle",
+  title: "COMPONENTS/ThemeToggle",
   component: ThemeToggle,
-  parameters: { layout: "centered" },
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component:
+          "سوییچ حالت روز/شب. دکمه‌ی واقعی (button) با aria-pressed که تم فعال رو نشون می‌ده و آیکن خورشید/ماه عوض می‌شه — پس وضعیت فقط با رنگ منتقل نمی‌شه. با کلیک، Enter یا Space تغییر می‌کنه و با Tab فوکوس visible داره.",
+      },
+    },
+  },
   tags: ["autodocs"],
 };
 
@@ -25,6 +34,31 @@ export const Dark: Story = {
 };
 
 /**
+ * مثال تعاملی: با کلیک (یا Enter/Space روی دکمه‌ی فوکوس‌شده) تم عوض می‌شه،
+ * aria-pressed و aria-label هم هم‌زمان به‌روز می‌شن. این استوری فقط وضعیت
+ * داخلی دکمه رو نشون می‌ده و تم کل صفحه رو عوض نمی‌کنه.
+ */
+function InteractiveDemo() {
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  return (
+    <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+      <ThemeToggle theme={theme} onToggle={() => setTheme((t) => (t === "dark" ? "light" : "dark"))} />
+      <span className="text-caption text-muted-foreground">
+        تم فعلی: {theme === "dark" ? "شب (aria-pressed=true)" : "روز (aria-pressed=false)"}
+      </span>
+    </div>
+  );
+}
+
+export const Interactive: Story = {
+  render: () => <InteractiveDemo />,
+};
+
+export const Disabled: Story = {
+  args: { theme: "light", disabled: true },
+};
+
+/**
  * Night walk — the same companionship, after dark. Warm charcoal-teal night,
  * cream text, lightened teal, peach kept warm. Flip the Mood toolbar above
  * between Light and Dark to feel the whole card accompany you.
@@ -38,10 +72,8 @@ export const NightWalkPreview: Story = {
       </div>
       <MentorCard
         name="سارا محمدی"
-        major="پزشکی"
-        university="تهران"
-        rating={4.8}
-        sessions={32}
+        subtitle="پزشکی، تهران"
+        rank="رتبه ۱۲ کنکور ۱۴۰۳"
       />
       <Alert tone="alert" title="کمی عقب افتادی">
         هر روز یه شروعِ تازه‌ست. بیا از همین‌جا ادامه بدیم.

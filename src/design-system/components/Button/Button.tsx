@@ -10,6 +10,8 @@
  * Shape        → pill for standalone CTAs (a card's reserve button), otherwise rounded-md.
  *
  * Binds only to semantic tokens.
+ *
+ * Status: canonical — shipped across product screens.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";

@@ -8,7 +8,7 @@ import { Button } from "../Button";
 import { Sheet } from "./Sheet";
 
 const meta = {
-  title: "Component/Sheet",
+  title: "OVERLAYS/Sheet",
   component: Sheet,
   tags: ["autodocs"],
   parameters: {

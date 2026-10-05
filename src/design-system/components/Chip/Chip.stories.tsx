@@ -7,7 +7,7 @@ import * as React from "react";
 import { Chip } from "./Chip";
 
 const meta = {
-  title: "Component/Chip",
+  title: "COMPONENTS/Chip",
   component: Chip,
   tags: ["autodocs"],
   parameters: {

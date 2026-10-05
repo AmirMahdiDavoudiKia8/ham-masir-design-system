@@ -9,7 +9,7 @@ import { Button } from "../Button";
 import { Toast } from "./Toast";
 
 const meta = {
-  title: "Component/Toast",
+  title: "FEEDBACK/Toast",
   component: Toast,
   tags: ["autodocs"],
   parameters: {

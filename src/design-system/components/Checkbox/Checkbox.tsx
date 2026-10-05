@@ -4,6 +4,8 @@
  * a peer-styled box draws the visuals, including a real check glyph —
  * fill color alone is too weak a checked signal.
  * Label wraps input + box: one shared hit target, no dead zones.
+ *
+ * Status: retire-candidate — no checkboxes exist anywhere in the product.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";

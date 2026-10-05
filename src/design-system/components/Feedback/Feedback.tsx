@@ -1,4 +1,5 @@
-/** Spinner — calm ring. Prefer Skeleton for loading states (no anxious spinners). */
+/** Spinner — calm ring. Prefer Skeleton for loading states (no anxious spinners).
+ * Status: proposal — generic reserve, not yet adopted by product. */
 import { cn } from "@/lib/cn";
 export function Spinner({ label = "در حال بارگذاری", className }: { label?: string; className?: string }) {
   return (
@@ -8,11 +9,13 @@ export function Spinner({ label = "در حال بارگذاری", className }: {
     </span>
   );
 }
-/** Skeleton — soft pulse placeholder. */
+/** Skeleton — soft pulse placeholder.
+ * Status: proposal — generic reserve, not yet adopted by product. */
 export function Skeleton({ className }: { className?: string }) {
   return <div aria-hidden className={cn("animate-pulse rounded-sm bg-muted", className)} />;
 }
-/** ProgressBar — thin rounded progress track used at the top of multi-step flows. */
+/** ProgressBar — thin rounded progress track used at the top of multi-step flows.
+ * Status: canonical — shipped in discovery, onboarding and planner flows. */
 export function ProgressBar({ value }: { value: number }) {
   return (
     <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>

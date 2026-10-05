@@ -6,6 +6,8 @@ export type IconProps = SVGProps<SVGSVGElement>;
  * Shared icon set — single stroke family (1.75px, 24 viewBox, rounded caps)
  * so every icon on the screen reads as one visual language. Add new icons
  * here rather than one-off inline SVGs in feature components.
+ *
+ * Status: canonical — shipped across ~50 product files.
  */
 function base(props: IconProps) {
   return {

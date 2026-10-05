@@ -5,6 +5,8 @@
  * instead of just vanishing. Portals to document.body so `position: fixed`
  * can't be trapped by an ancestor's transform (e.g. the page's rise-in
  * animations).
+ *
+ * Status: canonical — shipped in the session-cancel flows.
  */
 "use client";
 

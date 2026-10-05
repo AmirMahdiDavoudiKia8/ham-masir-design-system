@@ -11,6 +11,8 @@
  * Title text-h3 semibold; description text-caption muted.
  * Without any slot (title/description/actions/leadingAction) the card is a
  * plain surface container and renders children directly.
+ *
+ * Status: canonical — shipped in planner and mentor-portal surfaces.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";

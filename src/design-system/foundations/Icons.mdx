@@ -1,0 +1,39 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import * as IconSet from "../icons";
+
+<Meta title="FOUNDATIONS/Icons" />
+
+# Icons
+
+The shared icon set: one stroke family (1.75px, 24 viewBox, rounded caps)
+so every icon on screen reads as one visual language. Add new icons in
+`design-system/icons.tsx` rather than one-off inline SVGs in features.
+`StarIcon` takes an optional `filled` prop; the rest take standard SVG props.
+
+export const iconNames = Object.keys(IconSet).filter((k) => k.endsWith("Icon"));
+
+<div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 16 }}>
+  {iconNames.map((name) => {
+    const Cmp = IconSet[name];
+    return (
+      <div
+        key={name}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 6,
+          width: 104,
+          padding: "12px 8px",
+          borderRadius: 12,
+          background: "var(--color-surface)",
+          border: "1px solid var(--color-border)",
+          color: "var(--color-foreground)",
+        }}
+      >
+        <Cmp style={{ width: 24, height: 24 }} />
+        <code style={{ fontSize: 10, textAlign: "center", overflowWrap: "anywhere" }}>{name}</code>
+      </div>
+    );
+  })}
+</div>

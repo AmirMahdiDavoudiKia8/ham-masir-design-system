@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Tag } from "./Tag";
 
 const meta = {
-  title: "Component/Tag",
+  title: "COMPONENTS/Tag",
   component: Tag,
   tags: ["autodocs"],
   parameters: {

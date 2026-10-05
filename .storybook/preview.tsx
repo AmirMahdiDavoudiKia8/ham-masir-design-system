@@ -29,8 +29,8 @@ function ThemeWrapper({
     root.classList.toggle("dark", theme === "dark");
     root.style.colorScheme = theme;
     // Keep the canvas backdrop in sync when the backgrounds addon is off.
-    document.body.style.backgroundColor =
-      theme === "dark" ? "#202b29" : "#f6f1e9";
+    // Reads the semantic token (flips with .dark) — never a hardcoded hex.
+    document.body.style.backgroundColor = "var(--color-background)";
   }, [theme]);
   return <>{children}</>;
 }
@@ -71,7 +71,19 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ["Introduction", "FOUNDATIONS", "Core", "Forms", "Application"],
+        order: [
+          "Introduction",
+          "FOUNDATIONS",
+          ["Colors", "Surfaces", "Typography", "Spacing", "Radius", "Borders", "Shadows", "Motion", "Icons"],
+          "COMPONENTS",
+          ["Avatar", "Badge", "Button", "Card", "Chip", "Tag", "ThemeToggle"],
+          "FORMS",
+          ["Checkbox", "Input", "Textarea"],
+          "FEEDBACK",
+          ["Alert", "EmptyState", "ProgressBar", "Spinner & Skeleton", "Toast"],
+          "OVERLAYS",
+          ["Sheet"],
+        ],
       },
     },
   },

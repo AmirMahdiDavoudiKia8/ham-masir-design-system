@@ -1,0 +1,19 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { spacing } from "./spacing";
+
+<Meta title="FOUNDATIONS/Spacing" />
+
+# Spacing
+
+The Ham-Masir spacing scale: 4-based steps. Gutters 20–24, minimum gap 16,
+tap targets 48 or more. Every gap, padding and margin in components reads from
+this scale — never ad-hoc pixel values.
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
+  {spacing.map((s) => (
+    <div key={s} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <span style={{ width: 40, fontSize: 13, color: "var(--color-muted-foreground)", fontVariantNumeric: "tabular-nums" }}>{s}</span>
+      <span aria-hidden style={{ display: "block", height: 12, width: s * 4, background: "var(--color-primary)", borderRadius: 6, opacity: 0.75 }} />
+    </div>
+  ))}
+</div>

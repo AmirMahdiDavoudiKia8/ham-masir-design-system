@@ -1,0 +1,32 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { motion } from "./motion";
+
+<Meta title="FOUNDATIONS/Motion" />
+
+# Motion
+
+Ham-Masir motion is patient and accompanying — gentle color/transform
+transitions, never bounce or spring. Components reference these durations
+through Tailwind (`duration-micro`, `duration-standard`, `duration-entrance`,
+`duration-sheet`) with the shared easing curve.
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
+  {Object.entries(motion).map(([name, value]) => (
+    <div
+      key={name}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        padding: "10px 14px",
+        borderRadius: 12,
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+        fontSize: 13,
+      }}
+    >
+      <code style={{ minWidth: 90 }}>{name}</code>
+      <code style={{ color: "var(--color-muted-foreground)" }}>{value}</code>
+    </div>
+  ))}
+</div>

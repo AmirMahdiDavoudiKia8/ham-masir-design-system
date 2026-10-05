@@ -2,6 +2,8 @@
  * Input — label + field + error. Focus is a native browser event (Tailwind
  * focus: variant), error is a prop (comes from validation logic).
  * Visible leader-teal focus ring; calm Persian error text under the field.
+ *
+ * Status: canonical — shipped across product forms.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";

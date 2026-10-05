@@ -1,6 +1,8 @@
 /**
  * Chip — selectable pill used for tabs, filters, and tags.
  * aria-pressed carries the state; the native button carries the interaction.
+ *
+ * Status: canonical — shipped in discovery, planner and portal filters.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";

@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { radius, radiusSemantic } from "./spacing";
+
+<Meta title="FOUNDATIONS/Radius" />
+
+# Radius
+
+Primitive radius steps plus the semantic aliases components actually use —
+prefer the semantic names (`rounded-card`, `rounded-chip`) so a shape change
+lands everywhere at once. Values mirror `tokens.css`.
+
+export function RadiusRow({ name, cls }) {
+  return (
+    <div dir="ltr" style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0" }}>
+      <span aria-hidden style={{ width: 64, height: 40, background: "var(--color-primary-soft)", border: "1px solid var(--color-border)" }} className={cls} />
+      <code style={{ fontSize: 13 }}>{name}</code>
+    </div>
+  );
+}
+
+## Primitive steps
+
+<div style={{ marginTop: 8 }}>
+  {Object.entries(radius).map(([name, cls]) => (
+    <RadiusRow key={name} name={`${name} → ${cls}`} cls={cls} />
+  ))}
+</div>
+
+## Semantic aliases
+
+<div style={{ marginTop: 8 }}>
+  {Object.entries(radiusSemantic).map(([name, cls]) => (
+    <RadiusRow key={name} name={`${name} → ${cls}`} cls={cls} />
+  ))}
+</div>

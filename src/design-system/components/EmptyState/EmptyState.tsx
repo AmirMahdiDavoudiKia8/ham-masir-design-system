@@ -1,6 +1,8 @@
 /**
  * EmptyState — generic empty-state block, an invitation rather than a void.
  * Reusable wherever a list/search can come back with nothing.
+ *
+ * Status: canonical — shipped in sessions, mentors, profile and progress.
  */
 import * as React from "react";
 

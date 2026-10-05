@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { borderColors, borderWidthPx, borderWidths } from "./borders";
+
+<Meta title="FOUNDATIONS/Borders" />
+
+# Borders
+
+Border widths plus the semantic border colors. Components bind to these —
+never hardcoded px widths or hex colors. Widths mirror `tokens.css`.
+
+## Widths
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
+  {Object.entries(borderWidths).map(([name, cls]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <span aria-hidden style={{ width: 120, height: 32, background: "var(--color-surface)", borderRadius: 8 }} className={`${cls} border-border`} />
+      <code style={{ fontSize: 13 }}>{name} → {cls} ({borderWidthPx[name]}px)</code>
+    </div>
+  ))}
+</div>
+
+## Colors
+
+<div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
+  {Object.entries(borderColors).map(([name, cls]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <span aria-hidden style={{ width: 120, height: 32, background: "var(--color-surface)", borderRadius: 8 }} className={`border ${cls}`} />
+      <code style={{ fontSize: 13 }}>{name} → {cls}</code>
+    </div>
+  ))}
+</div>

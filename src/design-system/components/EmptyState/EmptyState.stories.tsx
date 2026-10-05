@@ -8,7 +8,7 @@ import { Button } from "../Button";
 import { SearchIcon } from "../../icons";
 
 const meta = {
-  title: "Component/EmptyState",
+  title: "FEEDBACK/EmptyState",
   component: EmptyState,
   tags: ["autodocs"],
   parameters: {

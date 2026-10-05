@@ -1,6 +1,8 @@
 /**
  * Tag — small read-only label pill for display metadata.
  * Unlike Chip, never selectable/interactive.
+ *
+ * Status: canonical — shipped for booking status and availability labels.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";
