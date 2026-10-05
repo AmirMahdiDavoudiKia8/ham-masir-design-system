@@ -2,7 +2,7 @@
 
 import { CoinIcon } from "@/components/ui/icons";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { Tag } from "@/components/ui/Tag";
+import { Tag } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import { resolveBooking } from "@/features/sessions/resolveBooking";
 import { toPersianDigits } from "@/lib/format";

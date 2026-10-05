@@ -20,21 +20,22 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       <label
         htmlFor={inputId}
         className={cn(
-          "inline-flex min-h-[44px] cursor-pointer touch-manipulation items-center gap-2.5 text-body text-foreground",
+          "group inline-flex min-h-[44px] cursor-pointer touch-manipulation items-center gap-2.5 text-body text-foreground",
           disabled && "cursor-not-allowed opacity-50",
+          className,
         )}
       >
         <input ref={ref} id={inputId} type="checkbox" disabled={disabled} className="peer sr-only" {...props} />
         <span
           aria-hidden
           className={cn(
-            "flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-border bg-surface",
-            "transition duration-standard ease-gentle",
+            "flex h-5 w-5 shrink-0 items-center justify-center rounded-xs border border-border-strong bg-surface",
+            "transition-colors duration-standard ease-gentle",
+            "group-hover:border-primary",
             "peer-checked:border-primary peer-checked:bg-primary",
             "peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background",
             "peer-disabled:cursor-not-allowed",
             "peer-checked:[&>svg]:opacity-100",
-            className,
           )}
         >
           <svg viewBox="0 0 12 12" fill="none" aria-hidden className="h-3 w-3 text-primary-foreground opacity-0 transition-opacity duration-micro">

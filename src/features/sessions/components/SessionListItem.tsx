@@ -1,4 +1,4 @@
-import { Tag } from "@/components/ui/Tag";
+import { Tag } from "@/design-system";
 import { MentorAvatar } from "@/features/mentors/components/MentorAvatar";
 import type { ResolvedBooking } from "../resolveBooking";
 import { CancelBookingButton } from "./CancelBookingButton";

@@ -1,9 +1,12 @@
-import { HTMLAttributes } from "react";
+/**
+ * Tag — small read-only label pill for display metadata.
+ * Unlike Chip, never selectable/interactive.
+ */
+import * as React from "react";
 import { cn } from "@/lib/cn";
 
-type TagProps = HTMLAttributes<HTMLSpanElement>;
+export type TagProps = React.HTMLAttributes<HTMLSpanElement>;
 
-/** Small read-only label pill for display metadata — unlike Chip, never selectable/interactive. */
 export function Tag({ className, ...props }: TagProps) {
   return (
     <span
@@ -15,3 +18,4 @@ export function Tag({ className, ...props }: TagProps) {
     />
   );
 }
+export default Tag;

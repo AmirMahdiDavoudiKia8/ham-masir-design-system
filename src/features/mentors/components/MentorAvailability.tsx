@@ -1,5 +1,5 @@
 import { ClockIcon } from "@/components/ui/icons";
-import { Tag } from "@/components/ui/Tag";
+import { Tag } from "@/design-system";
 import type { Mentor } from "@/lib/mentors";
 
 interface MentorAvailabilityProps {
