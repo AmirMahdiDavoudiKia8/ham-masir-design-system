@@ -52,17 +52,15 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    backgrounds: { value: "light" },
+    theme: "light",
   },
   parameters: {
     layout: "centered",
-    backgrounds: {
-      default: "light",
-      options: {
-        light: { name: "Light — day walk", value: "#f6f1e9" },
-        dark: { name: "Dark — night walk", value: "#202b29" },
-      },
-    },
+    // One theme control only (the Mood toolbar above). The built-in
+    // backgrounds toolbar is disabled: it painted a second, identical
+    // "day walk / night walk" menu that only recolored the canvas backdrop
+    // while tokens stayed light — a fake, broken-looking dark mode.
+    backgrounds: { disable: true },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -89,9 +87,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
-      const theme =
-        (context.globals.theme as "light" | "dark" | undefined) ??
-        (context.globals.backgrounds?.value === "#202b29" ? "dark" : "light");
+      const theme = (context.globals.theme as "light" | "dark" | undefined) ?? "light";
       const mood: "light" | "dark" = theme === "dark" ? "dark" : "light";
       return (
         <ThemeWrapper theme={mood}>
