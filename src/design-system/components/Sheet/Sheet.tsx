@@ -88,7 +88,7 @@ export function Sheet({ open, onClose, children, ariaLabel }: SheetProps) {
         aria-modal="true"
         aria-label={ariaLabel}
         className={cn(
-          "relative flex max-h-[88vh] w-full max-w-md flex-col rounded-t-sheet border-x border-t border-border bg-surface shadow-sheet transition-transform duration-sheet ease-gentle",
+          "relative flex max-h-[88vh] w-full max-w-md flex-col rounded-t-lg bg-surface shadow-lifted transition-transform duration-sheet ease-gentle",
           open ? "translate-y-0" : "translate-y-full",
         )}
         style={dragY ? { transform: `translateY(${dragY}px)`, transition: "none" } : undefined}
