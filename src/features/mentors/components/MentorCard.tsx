@@ -4,7 +4,7 @@ import Link from "next/link";
 import { formatRankForCard } from "@/lib/format";
 import { trackClick } from "@/lib/analyticsClient";
 import type { Mentor } from "@/lib/mentors";
-import { MentorAvatar } from "./MentorAvatar";
+import { mentorCardClasses, MentorTile } from "@/design-system";
 
 interface MentorCardProps {
   mentor: Mentor;
@@ -13,10 +13,10 @@ interface MentorCardProps {
 }
 
 /**
- * A compact, centered tile for the two-column results grid — photo, name,
- * field + university, and rank (which already carries the acceptance year).
- * No price here; that only lives on the profile now. The whole card is the
- * tap target.
+ * Compact tile for the two-column results grid. Visuals come from the
+ * design system's MentorCard (layout="grid") — this wrapper only adds
+ * app concerns: the profile Link, click tracking, and Mentor → tile
+ * field mapping. If it ever looks different from Storybook, that's a bug.
  */
 export function MentorCard({ mentor, queryString }: MentorCardProps) {
   const { id, name, photo, field, university, rank } = mentor;
@@ -29,23 +29,15 @@ export function MentorCard({ mentor, queryString }: MentorCardProps) {
       href={href}
       onClick={() => trackClick("/student/mentors", "mentor_card")}
       aria-label={name ? `مشاهده پروفایل ${name}` : "مشاهده پروفایل این هم‌مسیر"}
-      className="flex w-full cursor-pointer flex-col items-center gap-2 rounded-lg bg-surface p-4 text-center shadow-card transition-all duration-standard ease-gentle hover:-translate-y-0.5 hover:shadow-lifted active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className={mentorCardClasses("grid")}
     >
-      <MentorAvatar photo={photo} name={name} size={64} />
-
-      <h3
-        className={
-          name
-            ? "truncate text-caption font-bold text-foreground"
-            : "truncate text-caption font-bold text-muted-foreground"
-        }
-      >
-        {name ?? "هم‌مسیر"}
-      </h3>
-
-      {subtitle && <p className="truncate text-label text-muted-foreground">{subtitle}</p>}
-
-      {rank && <p className="truncate text-label font-semibold text-primary">{formatRankForCard(rank)}</p>}
+      <MentorTile
+        name={name}
+        photoUrl={photo ?? undefined}
+        subtitle={subtitle || undefined}
+        rank={rank ? formatRankForCard(rank) : undefined}
+        layout="grid"
+      />
     </Link>
   );
 }

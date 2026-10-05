@@ -23,6 +23,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(apex, 301);
   }
 
+  // Local development runs over plain HTTP with no TLS terminator —
+  // redirecting it to https://localhost breaks `npm run dev` entirely.
+  if (host.startsWith("localhost") || host.startsWith("127.0.0.1") || host.startsWith("[::1]")) {
+    return NextResponse.next();
+  }
+
   const proto =
     request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() ||
     url.protocol.replace(":", "");

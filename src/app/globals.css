@@ -1,11 +1,11 @@
-@import "../styles/tokens.css";
+@import "../design-system/tokens/tokens.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
- * Brand typeface — Vazirmatn RD, self-hosted from /public/fonts.
+ * Brand typeface — Estedad (استعداد), self-hosted from /public/fonts.
  *
  * Declared by hand rather than through `next/font/local`, for one reason:
  * next/font preloads either ALL weights of a family or none, and preloading
@@ -28,41 +28,41 @@
  * the system Persian face for that page view if they miss the window.
  */
 @font-face {
-  font-family: "Vazirmatn RD";
-  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-Regular.woff2") format("woff2");
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: optional;
 }
 
 @font-face {
-  font-family: "Vazirmatn RD";
-  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-Medium.woff2") format("woff2");
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: optional;
 }
 
 @font-face {
-  font-family: "Vazirmatn RD";
-  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-SemiBold.woff2") format("woff2");
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: optional;
 }
 
 @font-face {
-  font-family: "Vazirmatn RD";
-  src: url("/fonts/vazirmatn-rd/Vazirmatn-RD-Bold.woff2") format("woff2");
+  font-family: "Estedad";
+  src: url("/fonts/estedad/Estedad-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: optional;
 }
 
 :root {
-  /* Kept under its old name so Tailwind's `font-sans` wiring in
-     tailwind.config.ts and every component using it need no changes. */
-  --font-pinar: "Vazirmatn RD";
+  /* Single alias for the brand face — Tailwind's `font-sans` wiring in
+     tailwind.config.ts reads this, so rebranding type means editing here. */
+  --font-estedad: "Estedad";
 }
 
 html {

@@ -17,7 +17,7 @@ export const SITE_TAGLINE = "کنکور دو نفری آسون‌تره — پر
 /**
  * The 1200×630 share card — the 1.91:1 ratio Telegram, Bale, WhatsApp and X
  * all crop to, so nothing important gets cut. Built from the brand palette
- * and the real Vazirmatn face; it leads with «اول جلسه، بعد پرداخت» because
+ * and the real Estedad face; it leads with «اول جلسه، بعد پرداخت» because
  * that promise is the reason someone forwards the link at all.
  *
  * Source is a rendered HTML layout, not a hand-drawn asset: to change the
