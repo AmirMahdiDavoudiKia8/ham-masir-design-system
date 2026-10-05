@@ -24,7 +24,7 @@ const meta = {
     ariaLabel: { control: "text", description: "لیبل دسترس‌پذیری دیالوگ" },
   },
   args: {
-    open: true,
+    open: false,
     onClose: () => {},
     ariaLabel: "لغو جلسه",
     children: (
@@ -38,18 +38,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Open: Story = {
-  render: (args) => (
-    <Sheet {...args}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 8 }}>
-        <h2 className="text-h3 font-bold text-foreground">مطمئنی می‌خوای این جلسه رو لغو کنی؟</h2>
-        <Button size="lg" fullWidth>
-          لغو جلسه
-        </Button>
-      </div>
-    </Sheet>
-  ),
-};
+/**
+ * No always-open story on purpose: an open sheet pins a fixed overlay and
+ * locks body scroll, which would trap the docs page itself. Open it from
+ * the button below instead.
+ */
 
 /** Full interaction: open via button, close via X / scrim / Escape / drag-down. */
 function InteractiveDemo() {

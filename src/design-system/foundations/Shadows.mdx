@@ -3,11 +3,19 @@ import { shadows } from "./spacing";
 
 <Meta title="FOUNDATIONS/Shadows" />
 
+<div dir="rtl" style={{ textAlign: "right" }}>
+
 # Shadows
 
-Elevation plus semantic shadows. Resting surfaces stay quiet (border and
-surface carry hierarchy); shadows mark lift — hover, dropdowns, dialogs,
-sheets, toasts. Values mirror `tokens.css`.
+Elevation in Ham-Masir is quiet and earned. Resting surfaces carry hierarchy
+with border and surface color — shadow marks lift, selection, or float.
+`none` is the resting grid tile; `card` is the resting card surface and the
+hover lift on mentor tiles; `brand` is the primary/selected glow (filled
+primary buttons, selected chips and options); `lifted` is floating chrome
+(bottom sheet, toast, side menu, support button, suggestion dropdown).
+`floating` is the theme-toggle hover lift; `dropdown` deepens the strip-card
+hover. `popover`, `dialog` and `sheet` are defined and reserved — currently
+unused. Values mirror `tokens.css`.
 
 <div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 16 }}>
   {Object.entries(shadows).map(([name, cls]) => (
@@ -21,4 +29,6 @@ sheets, toasts. Values mirror `tokens.css`.
       <code style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{cls}</code>
     </div>
   ))}
+</div>
+
 </div>
