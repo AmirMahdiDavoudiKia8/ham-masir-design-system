@@ -18,7 +18,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "دکمه‌ی اصلی برای هر اقدامی که کاربر تو هم‌مسیر انجام می‌ده — از «رزرو جلسه» گرفته تا «انصراف». Primary (پرشده، گرادیانی) فقط برای مهم‌ترین اقدام صفحه استفاده می‌شه؛ هر صفحه نباید بیشتر از یک دکمه‌ی primary داشته باشه. outline و outline-brand برای اقدام‌های فرعی، ghost برای کم‌رنگ‌ترین حالت. سایزها: md استاندارد، lg برای صفحات ورود یا اقدام‌های تمام‌عرض.",
+          "هر کاری که کاربر تو هم‌مسیر انجام می‌دهد، از رزرو جلسه تا انصراف، با دکمه شروع می‌شود. فقط حواست باشد هر صفحه بیشتر از یک دکمه‌ی primary نداشته باشد؛ همان پرشده‌ی گرادیانی که برای مهم‌ترین اقدام صفحه کنار گذاشته‌ایم. برای کارهای فرعی سراغ outline یا outline-brand برو، و وقتی اقدام کم‌رنگ‌تر است، ghost. اندازه‌ی md حالت پیش‌فرض است؛ lg را فقط وقتی بگذار که دکمه تمام‌عرض شده، مثل صفحه‌های ورود.",
       },
     },
   },
@@ -26,22 +26,22 @@ const meta = {
     variant: {
       control: "select",
       options: ["primary", "secondary", "outline", "outline-brand", "ghost"],
-      description: "استایل بصری دکمه",
+      description: "ظاهر دکمه",
       table: { defaultValue: { summary: "primary" } },
     },
     size: {
       control: "select",
       options: ["md", "lg"],
-      description: "سایز — md / lg",
+      description: "اندازه (md یا lg)",
       table: { defaultValue: { summary: "md" } },
     },
     disabled: {
       control: "boolean",
-      description: "غیرفعال (native disabled)",
+      description: "غیرفعال، با همان disabled خود مرورگر",
     },
     pill: {
       control: "boolean",
-      description: "فرم کاملاً گرد (pill) برای CTAهای مستقل",
+      description: "کاملاً گرد (pill) — برای دکمه‌های مستقل و شاخص",
     },
     children: {
       control: "text",

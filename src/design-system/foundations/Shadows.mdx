@@ -5,17 +5,11 @@ import { shadows } from "./spacing";
 
 <div dir="rtl" style={{ textAlign: "right" }}>
 
-# Shadows
+### Shadows
 
-Elevation in Ham-Masir is quiet and earned. Resting surfaces carry hierarchy
-with border and surface color — shadow marks lift, selection, or float.
-`none` is the resting grid tile; `card` is the resting card surface and the
-hover lift on mentor tiles; `brand` is the primary/selected glow (filled
-primary buttons, selected chips and options); `lifted` is floating chrome
-(bottom sheet, toast, side menu, support button, suggestion dropdown).
-`floating` is the theme-toggle hover lift; `dropdown` deepens the strip-card
-hover. `popover`, `dialog` and `sheet` are defined and reserved — currently
-unused. Values mirror `tokens.css`.
+Elevation در هم‌مسیر باید آرام و هدفمند باشد. سطوح در حالت عادی بیشتر با Border و رنگ Surface سلسله‌مراتب می‌گیرند و Shadow فقط برای نشان‌دادن بالا آمدن، انتخاب‌شدن یا شناور بودن استفاده می‌شود. `none` برای سطح‌های عادی Grid، `card` برای Cardها و Hover روی Mentor Tile، `brand` برای Glow اصلی و حالت‌های Primary/Selected، و `lifted` برای عناصر شناور مثل Bottom Sheet، Toast، Side Menu، Support Button و Suggestion Dropdown است. `floating` برای Hover روی Theme Toggle و `dropdown` برای Hover روی Strip Card استفاده می‌شود. `popover`، `dialog` و `sheet` تعریف شده‌اند اما فعلاً استفاده نمی‌شوند. مقادیر باید با `tokens.css` هماهنگ باشند.
+
+</div>
 
 <div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 16 }}>
   {Object.entries(shadows).map(([name, cls]) => (
@@ -29,6 +23,4 @@ unused. Values mirror `tokens.css`.
       <code style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{cls}</code>
     </div>
   ))}
-</div>
-
 </div>

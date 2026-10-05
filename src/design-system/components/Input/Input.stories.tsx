@@ -13,15 +13,15 @@ const meta = {
     docs: {
       description: {
         component:
-          "فیلد ورودی متن، برای جاهایی مثل شماره تلفن یا نام. Default حالت عادیه؛ Focus وقتی کاربر کلیک می‌کنه حاشیه رنگ primary می‌گیره؛ Error وقتی ورودی نامعتبره حاشیه قرمز می‌شه و یه پیام کوتاه و بدون لحن سرزنش‌گر زیرش توضیح می‌ده چی اشتباهه.",
+          "فیلد متن، برای جاهایی مثل شماره تلفن یا نام. در حالت Default چیز خاصی دیده نمی‌شود؛ به محض که کاربر کلیک کند، حاشیه رنگ primary می‌گیرد و فوکوس معلوم می‌شود. اگر ورودی نامعتبر باشد، حاشیه قرمز می‌شود و یک پیام کوتاه زیرش می‌آید که بدون سرزنش توضیح می‌دهد ایراد کجاست.",
       },
     },
   },
   argTypes: {
-    label: { control: "text", description: "لیبل بالای فیلد" },
-    hint: { control: "text", description: "متن راهنما (وقتی خطا هست نشون داده نمی‌شه)" },
-    error: { control: "text", description: "متن خطای اعتبارسنجی" },
-    placeholder: { control: "text", description: "متن پیش‌فرض داخل فیلد" },
+    label: { control: "text", description: "برچسب بالای فیلد" },
+    hint: { control: "text", description: "متن راهنما — وقتی خطا دارد نمایش داده نمی‌شود" },
+    error: { control: "text", description: "متن خطایی که به کاربر نشان داده می‌شود" },
+    placeholder: { control: "text", description: "متنی که تا وقتی کاربر چیزی ننویسد داخل فیلد دیده می‌شود" },
     disabled: { control: "boolean", description: "غیرفعال" },
   },  args: { label: "شماره تلفن", placeholder: "09xxxxxxxxx" },
 } satisfies Meta<typeof Input>;

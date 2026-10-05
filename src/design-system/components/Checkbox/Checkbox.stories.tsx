@@ -14,13 +14,13 @@ const meta = {
     docs: {
       description: {
         component:
-          "گزینه‌ی تیک‌خور، برای تاییدها و ترجیحات — مثل «یادم بمون» یا تایید قوانین. حالت‌ها: تیک‌خورده، خالی، و غیرفعال وقتی گزینه فعلاً قابل انتخاب نیست.",
+          "تیک‌زن برای چیزهایی که باید تأیید یا به خاطر سپرده شوند؛ مثل «یادم بمون» یا پذیرفتن قوانین. سه حالت دارد: تیک‌خورده، خالی، و غیرفعال وقتی که گزینه فعلاً انتخاب‌شدنی نیست.",
       },
     },
   },
   argTypes: {
     label: { control: "text", description: "متن کنار تیک" },
-    defaultChecked: { control: "boolean", description: "وضعیت اولیه (uncontrolled)" },
+    defaultChecked: { control: "boolean", description: "وضعیت اولیه، بدون کنترل از بیرون (uncontrolled)" },
     disabled: { control: "boolean", description: "غیرفعال" },
   },
   args: { label: "یادم بمون" },

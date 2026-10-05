@@ -15,15 +15,15 @@ const meta = {
     docs: {
       description: {
         component:
-          "ظرف پایه برای گروه‌بندی محتوا — زیرساخت خیلی از بخش‌های هم‌مسیر. Base یه ظرف ساده و ثابته بدون واکنش به کلیک؛ Interactive وقتی کل کارت قابل‌کلیکه (مثل کارت یه هم‌مسیر)، با یه سایه‌ی ملایم موقع هاور.",
+          "ظرف پایه‌ای که محتوا را در خود جمع می‌کند؛ تقریباً همه‌ی بخش‌های هم‌مسیر روی همین بنا شده‌اند. Base یک ظرف ساده و ساکن است که به کلیک واکنش نشان نمی‌دهد. اگر قرار است کل کارت قابل کلیک باشد — مثل کارت یک هم‌مسیر — Interactive را روشن کن؛ موقع هاور یک سایه‌ی ملایم می‌گیرد.",
       },
     },
   },
   decorators: [(Story) => <div style={{ width: 340 }}><Story /></div>],
   argTypes: {
     title: { control: "text", description: "تیتر کارت" },
-    description: { control: "text", description: "توضیح پشتیبان" },
-    interactive: { control: "boolean", description: "هاور ملایم (یه :hover state)" },
+    description: { control: "text", description: "توضیح کوتاه زیر تیتر" },
+    interactive: { control: "boolean", description: "حالت هاور ملایم، یعنی همان :hover" },
   },
   args: {
     title: "عنوان کارت",

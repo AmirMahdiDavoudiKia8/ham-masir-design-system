@@ -14,12 +14,12 @@ const meta = {
     docs: {
       description: {
         component:
-          "قرص انتخابی برای فیلترها و تب‌ها — مثل گروه‌های رشته تو صفحه‌ی کشف. حالت انتخاب‌شده با رنگ primary مشخصه؛ ردیف فیلتر افقی اسکرول می‌خوره.",
+          "قرص انتخابی برای فیلترها و تب‌ها؛ همان چیزی که در صفحه‌ی کشف گروه‌های رشته را نشان می‌دهد. وقتی انتخاب شود، رنگ primary آن را از بقیه جدا می‌کند. ردیف فیلترها هم افقی است و اگر جا کم بیاید اسکرول می‌خورد.",
       },
     },
   },
   argTypes: {
-    selected: { control: "boolean", description: "وضعیت انتخاب (aria-pressed)" },
+    selected: { control: "boolean", description: "انتخاب‌شده یا نه (aria-pressed)" },
     children: { control: "text", description: "متن چیپ" },
     disabled: { control: "boolean", description: "غیرفعال" },
   },

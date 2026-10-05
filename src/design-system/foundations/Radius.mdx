@@ -1,14 +1,6 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 import { radius, radiusSemantic } from "./spacing";
 
-<Meta title="FOUNDATIONS/Radius" />
-
-# Radius
-
-Primitive radius steps plus the semantic aliases components actually use —
-prefer the semantic names (`rounded-card`, `rounded-chip`) so a shape change
-lands everywhere at once. Values mirror `tokens.css`.
-
 export function RadiusRow({ name, cls }) {
   return (
     <div dir="ltr" style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0" }}>
@@ -18,17 +10,32 @@ export function RadiusRow({ name, cls }) {
   );
 }
 
-## Primitive steps
+<Meta title="FOUNDATIONS/Radius" />
 
-<div style={{ marginTop: 8 }}>
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+### Radius System
+
+مقیاس Radius هم‌مسیر شامل مقادیر پایه‌ی Primitive و نام‌های معنایی‌ای است که کامپوننت‌های واقعی محصول از آن‌ها استفاده می‌کنند.
+
+در استفاده از Radius، تا جای ممکن از نام‌های Semantic استفاده کن؛ برای مثال:
+
+- `rounded-card`
+- `rounded-chip`
+
+این کار باعث می‌شود اگر در آینده شکل یا میزان گردی یک نوع کامپوننت تغییر کرد، تغییر فقط در یک Token انجام شود و به‌صورت یکپارچه در تمام نقاطی که از آن استفاده می‌کنند اعمال شود.
+
+مقادیر Primitive و Semantic Aliasها باید دقیقاً با مقادیر تعریف‌شده در `tokens.css` هماهنگ باشند و هیچ مقدار Radius مستقلی خارج از Token System تعریف نشود.
+
+</div>
+
+<div dir="ltr" style={{ marginTop: 8 }}>
   {Object.entries(radius).map(([name, cls]) => (
     <RadiusRow key={name} name={`${name} → ${cls}`} cls={cls} />
   ))}
 </div>
 
-## Semantic aliases
-
-<div style={{ marginTop: 8 }}>
+<div dir="ltr" style={{ marginTop: 8 }}>
   {Object.entries(radiusSemantic).map(([name, cls]) => (
     <RadiusRow key={name} name={`${name} → ${cls}`} cls={cls} />
   ))}

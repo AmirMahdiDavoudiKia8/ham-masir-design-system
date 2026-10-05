@@ -13,15 +13,15 @@ const meta = {
     docs: {
       description: {
         component:
-          "برای متن‌های بلندتر — مثل بیوگرافی یه هم‌مسیر یا توضیح یه شکایت از جلسه. همون الگوی حالت‌های Input رو دنبال می‌کنه، با فضای بیشتر برای تایپ.",
+          "برای متن‌های بلندتر؛ مثل بیوگرافی یک هم‌مسیر یا توضیحی که کاربر برای شکایت از جلسه می‌نویسد. دقیقاً همان الگوی حالت‌های Input را دنبال می‌کند، فقط جای بیشتری برای تایپ دارد.",
       },
     },
   },
   argTypes: {
-    label: { control: "text", description: "لیبل بالای فیلد" },
+    label: { control: "text", description: "برچسب بالای فیلد" },
     hint: { control: "text", description: "متن راهنما" },
-    error: { control: "text", description: "متن خطای اعتبارسنجی" },
-    placeholder: { control: "text", description: "متن پیش‌فرض داخل فیلد" },
+    error: { control: "text", description: "متن خطایی که به کاربر نشان داده می‌شود" },
+    placeholder: { control: "text", description: "متنی که تا وقتی کاربر چیزی ننویسد داخل فیلد دیده می‌شود" },
     disabled: { control: "boolean", description: "غیرفعال" },
   },
   args: { label: "بیوگرافی", placeholder: "خودت رو معرفی کن..." },

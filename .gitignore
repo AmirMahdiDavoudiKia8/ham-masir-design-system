@@ -43,3 +43,16 @@ hammasirsite.ir-audit/
 .dev.vars
 .dev.vars.*
 
+# ---------- build output / local strays (never commit) ----------
+storybook-static/
+*.zip
+/main.ts
+/preview.css
+
+# ---------- personal tooling ----------
+.agents/
+.claude/
+agent/
+sleek-screens/
+skills-lock.json
+

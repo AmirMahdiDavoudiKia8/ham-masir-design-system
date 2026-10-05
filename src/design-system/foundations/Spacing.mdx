@@ -3,11 +3,21 @@ import { spacing } from "./spacing";
 
 <Meta title="FOUNDATIONS/Spacing" />
 
-# Spacing
+<div dir="rtl" style={{ textAlign: "right" }}>
 
-The Ham-Masir spacing scale: 4-based steps. Gutters 20–24, minimum gap 16,
-tap targets 48 or more. Every gap, padding and margin in components reads from
-this scale — never ad-hoc pixel values.
+### Spacing System
+
+مقیاس فاصله‌گذاری هم‌مسیر بر پایه‌ی گام‌های 4px طراحی شده است.
+
+- فاصله‌های کناری و Gutters: بین **20 تا 24px**
+- حداقل فاصله بین عناصر: **16px**
+- حداقل اندازه‌ی Tap Target: **48px یا بیشتر**
+
+تمام `gap`، `padding` و `margin`‌های استفاده‌شده در کامپوننت‌ها باید از همین Spacing Scale استفاده کنند.
+
+از مقادیر پیکسلی دلخواه و خارج از این مقیاس استفاده نکن؛ هیچ فاصله‌ای نباید به‌صورت Ad-hoc تعریف شود.
+
+</div>
 
 <div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
   {spacing.map((s) => (

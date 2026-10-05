@@ -3,12 +3,17 @@ import { motion } from "./motion";
 
 <Meta title="FOUNDATIONS/Motion" />
 
+<div dir="ltr" style={{ textAlign: "left" }}>
+
 # Motion
 
-Ham-Masir motion is patient and accompanying — gentle color/transform
-transitions, never bounce or spring. Components reference these durations
-through Tailwind (`duration-micro`, `duration-standard`, `duration-entrance`,
-`duration-sheet`) with the shared easing curve.
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+حرکت و انیمیشن در هم‌مسیر باید صبورانه و همراه‌کننده باشد؛ انتقال‌های رنگ و Transform ملایم باشند و هرگز از Bounce یا Spring استفاده نشود. کامپوننت‌ها مدت‌زمان انیمیشن را از طریق Tailwind (duration-micro، duration-standard، duration-entrance، duration-sheet) دریافت می‌کنند و همه از یک منحنی Easing مشترک استفاده می‌کنند.
+
+</div>
 
 <div dir="ltr" style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
   {Object.entries(motion).map(([name, value]) => (

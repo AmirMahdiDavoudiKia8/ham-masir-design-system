@@ -3,20 +3,20 @@ import * as IconSet from "../icons";
 
 <Meta title="FOUNDATIONS/Icons" />
 
-<div dir="rtl" style={{ textAlign: "right" }}>
+<div dir="ltr" style={{ textAlign: "left" }}>
 
 # Icons
 
-The shared icon set: one stroke family (1.75px, 24 viewBox, rounded caps)
-so every icon on screen reads as one visual language. Add new icons in
-`design-system/icons.tsx` rather than one-off inline SVGs in features.
-`StarIcon` takes an optional `filled` prop; the rest take standard SVG props.
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
+مجموعه آیکون‌های هم‌مسیر باید یک زبان بصری یکپارچه داشته باشد: همه‌ی آیکون‌ها از یک خانواده‌ی Stroke با ضخامت 1.75px، ViewBox برابر 24 و گوشه‌ها و انتهای Rounded استفاده کنند. آیکون جدید را در design-system/icons.tsx اضافه کن و در Featureها از Inline SVGهای اختصاصی استفاده نکن. StarIcon یک Prop اختیاری به نام filled دارد و سایر آیکون‌ها Props استاندارد SVG را دریافت می‌کنند. ردیف اول آیکون‌های استفاده‌شده در صفحات واقعی محصول است؛ ردیف دوم مجموعه‌ی قابل‌استفاده برای نیازهای نزدیک آینده است و فعلاً در محصول استفاده نمی‌شود، بنابراین برای آن‌ها Usage مصنوعی ایجاد نکن.
 
 </div>
 
 export const iconNames = Object.keys(IconSet).filter((k) => k.endsWith("Icon"));
 
-// Audited 2026-10-05 against product imports: these 36 ship on real screens.
 export const usedIcons = [
   "AccompaniedLineIcon", "ArrowLeftIcon", "ArrowRightIcon", "AwardIcon",
   "BookIcon", "BoltIcon", "BuildingIcon", "CalendarIcon", "CameraIcon",
@@ -27,8 +27,6 @@ export const usedIcons = [
   "ShieldCheckIcon", "SparkleIcon", "StarIcon", "UploadIcon", "UsersIcon",
   "VideoIcon", "XIcon",
 ];
-// The rest below are reusable reserve — generic icons kept for near-term
-// needs, not currently consumed by any screen. Do not invent usages for them.
 export const reserveIcons = iconNames.filter((n) => !usedIcons.includes(n));
 
 export function IconTile({ name }) {
@@ -54,7 +52,7 @@ export function IconTile({ name }) {
   );
 }
 
-<div dir="rtl" style={{ textAlign: "right" }}>
+<div dir="ltr" style={{ textAlign: "left" }}>
 
 ## Used across the product
 
@@ -66,7 +64,7 @@ export function IconTile({ name }) {
   ))}
 </div>
 
-<div dir="rtl" style={{ textAlign: "right" }}>
+<div dir="ltr" style={{ textAlign: "left" }}>
 
 ## Reusable reserve
 

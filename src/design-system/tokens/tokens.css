@@ -1,18 +1,35 @@
 /**
  * HAMMASIR Design System — tokens.css
  *
+ * CANONICAL SOURCE OF TRUTH for all color (and motion/type/radius) values.
+ * Imported once at the app root by `src/app/globals.css`.
+ * (`src/styles/tokens.css` is a deprecated re-export shim — do not add values there.)
+ *
  * Three-layer architecture (mirrors Sakani's structure, HAMMASIR brand):
- *   1. Primitives — raw scales (teal / peach / ink / functional ramps)
- *   2. Semantic   — purpose-named aliases that flip between light and dark
- *   3. Components — bind ONLY to semantic tokens, never to primitives
+ *   1. Primitives — raw scales (teal / peach / cream / ink / success / alert /
+ *      danger / info / night ramps). Full 50–900 (+ a few documented extras).
+ *   2. Semantic   — purpose-named aliases (`--color-bg-canvas`,
+ *      `--color-action-primary`, `--color-feedback-success-bg`, …) that flip
+ *      between light and `.dark`. Components bind ONLY to this layer.
+ *   3. Components — Tailwind classes (bg-action-primary, text-link,
+ *      border-border-strong, …) defined in `tailwind.config.ts`, which read
+ *      these variables — never raw hex in components.
  *
- * Single source of truth. Components reference Tailwind classes
- * (bg-primary, text-foreground, rounded-lg, ...) which read these
- * variables — never raw hex in components.
+ * Brand anchors (ham-masir-brand-guidelines.md, "The Accompanied Line") —
+ * preserved exactly, never shifted:
+ *   sage teal #5B9E94 · warm peach #E8B99A · warm cream #F6F1E9 ·
+ *   deep teal-charcoal #2C3A38 · warm amber #D99A6C · muted terracotta #B0644F
+ * No pure black/white, no saturated blues, no SaaS purples, no harsh reds,
+ * no neon, no harsh gradients, no 0-radius corners.
  *
- * Values pinned from ham-masir-brand-guidelines.md ("The Accompanied Line"):
- * teal (the mentor) + peach (the student) + warm cream + deep warm ink.
- * No pure black/white, no neon, no harsh gradients, no 0-radius corners.
+ * Two INTENTIONAL cross-family aliases (same value, two names, documented here
+ * so they are never "cleaned up" independently):
+ *   --primitive-teal-900 == --primitive-ink-700 == #2C3A38 (the anchor ink)
+ *   --primitive-peach-600 == --primitive-alert-500 == #D99A6C (the anchor amber)
+ *
+ * Accessibility: every text-bearing pair below was measured, not guessed.
+ * White on sage-500 is 3.11:1 — large-text/graphics only. Text-bearing actions
+ * therefore use teal-700+ (white 6.09:1+). See FOUNDATIONS/Colors for the table.
  *
  * Inspired by Sakani Design System's token architecture (MIT).
  * Original values; structure adapted with attribution.
@@ -24,13 +41,14 @@
   --bp-md: 768px;
   --bp-lg: 1024px;
 
-  /* Typography — Vazirmatn RD (self-hosted), wired as --font-pinar. */
-  --font-sans: "Vazirmatn RD", var(--font-pinar, "Vazirmatn RD"), Tahoma, sans-serif;
-  --font-mono: ui-monospace, "Vazirmatn RD", monospace;
+  /* Typography — Estedad (استعداد, self-hosted), wired as --font-estedad. */
+  --font-sans: "Estedad", var(--font-estedad, "Estedad"), Tahoma, sans-serif;
+  --font-mono: ui-monospace, "Estedad", monospace;
 
   /* ---- Layer 1: primitives ---- */
 
-  /* Leader teal ramp (primary — "the one who walked the path") */
+  /* Leader teal ramp (primary — "the one who walked the path").
+     500 #5B9E94 is the untouchable brand anchor. */
   --primitive-teal-50: #eef6f4;
   --primitive-teal-100: #e3eeec;
   --primitive-teal-200: #c6ddd9;
@@ -40,93 +58,238 @@
   --primitive-teal-600: #46857c;
   --primitive-teal-700: #376b64;
   --primitive-teal-800: #2f5753;
-  --primitive-teal-900: #2c3a38;
+  --primitive-teal-900: #2c3a38; /* intentional alias of ink-700 (anchor ink) */
   --primitive-teal-950: #1d2726;
+  /* Dark-theme tints of the same hue (unchanged hue family, lifted for AA on night) */
+  --primitive-teal-night-300: #93c7be; /* dark action hover */
+  --primitive-teal-night-400: #7db8ae; /* dark action resting */
+  /* Deep teal well for dark primary-soft surfaces */
+  --primitive-teal-850: #2f4a46;
+  /* Lifted teal well — dark soft surfaces that must stay readable with light
+     text (teal-200 on it is 4.79:1; the old 850 gave 4.27:1 with night-400).
+     Purpose-built, hence a name instead of a scale step. */
+  --primitive-teal-well: #3b6259;
 
-  /* Companion peach ramp (secondary — "the student") */
+  /* Companion peach ramp (secondary — "the student"). 400 #E8B99A is the anchor. */
   --primitive-peach-50: #fdf5ee;
   --primitive-peach-100: #fbeadd;
   --primitive-peach-200: #f6d9c2;
   --primitive-peach-300: #f0c5a5;
   --primitive-peach-400: #e8b99a;
   --primitive-peach-500: #dba783;
-  --primitive-peach-600: #d99a6c;
+  --primitive-peach-600: #d99a6c; /* intentional alias of alert-500 (anchor amber) */
   --primitive-peach-700: #b87a4e;
   --primitive-peach-800: #8a5c3c;
+  --primitive-peach-850: #4a3a2c; /* dark secondary/alert soft well */
   --primitive-peach-900: #4a2e1d;
 
-  /* Warm neutrals (cream / paper family) */
+  /* Warm neutrals (cream / paper family). 300 #F6F1E9 is the anchor canvas.
+     Warm-tinted throughout — never cold gray. 800/900 are non-text wells. */
   --primitive-cream-50: #fffdf8;
   --primitive-cream-100: #fffcf6;
+  --primitive-cream-150: #f4efe4; /* dark primary text ("never pure white") */
   --primitive-cream-200: #f7f4ed;
   --primitive-cream-300: #f6f1e9;
   --primitive-cream-400: #f3e1cb;
   --primitive-cream-500: #f1ece0;
   --primitive-cream-600: #e7e1d3;
   --primitive-cream-700: #d6cdb6;
+  --primitive-cream-800: #c4b697;
+  --primitive-cream-900: #9a8e74;
 
-  /* Ink ramp (deep warm teal-charcoal — replaces navy) */
-  --primitive-ink-300: #9aa5a1;
-  --primitive-ink-400: #6e7b78;
-  --primitive-ink-500: #5c6b68;
+  /* Ink ramp (deep warm teal-charcoal — replaces navy). 700 #2C3A38 is the anchor. */
+  --primitive-ink-50: #f3f5f4;
+  --primitive-ink-100: #e4e9e6;
+  --primitive-ink-200: #c6d1cb;
+  --primitive-ink-300: #9aa5a1; /* decorative / large-text only on light (2.26:1) */
+  --primitive-ink-400: #6e7b78; /* graphics/UI only on light (3.92:1) */
+  --primitive-ink-500: #5c6b68; /* AA body text on light (4.97:1) */
   --primitive-ink-600: #3d4a47;
-  --primitive-ink-700: #2c3a38;
+  --primitive-ink-700: #2c3a38; /* intentional alias of teal-900 (anchor ink) */
+  --primitive-ink-800: #222e2c;
   --primitive-ink-900: #1d2726;
-
-  /* Functional ramps — kept calm, never alarming */
-  --primitive-success-100: #e8f3ea;
-  --primitive-success-500: #6fa98c;
-  --primitive-success-700: #43765a;
-  --primitive-alert-100: #f8e9da;
-  --primitive-alert-500: #d99a6c;
-  --primitive-alert-700: #a06a3e;
-  --primitive-danger-100: #f5e4de;
-  --primitive-danger-500: #b0644f;
-  --primitive-danger-700: #7e4536;
-
   --primitive-base-white: #fffcf6;
   --primitive-base-black: #1d2726;
 
-  /* ---- Layer 2: semantic (light — default) ---- */
-  --color-background: var(--primitive-cream-300);
+  /* Night ramp — dark-theme surfaces + secondary text. Warm charcoal-teal,
+     never pure black. 900 #202B29 is the anchor canvas. */
+  --primitive-night-200: #b9c4c0; /* dark secondary text (8.14:1 on night-900) */
+  --primitive-night-300: #8b9794; /* dark tertiary/border-strong (4.83:1 / 4.15:1) */
+  --primitive-night-700: #33413f;
+  --primitive-night-750: #3a4a47; /* dark raised surface */
+  --primitive-night-800: #2a3634;
+  --primitive-night-900: #202b29;
+  --primitive-night-950: #161e1d; /* dark sunken wells */
+
+  /* Success — quiet sage green (never neon). 500 #6FA98C is the anchor. */
+  --primitive-success-50: #f0f7f1;
+  --primitive-success-100: #e8f3ea;
+  --primitive-success-200: #c9e2d1;
+  --primitive-success-300: #a9cfb6;
+  --primitive-success-400: #8fc3a5; /* dark text/bg accent */
+  --primitive-success-500: #6fa98c; /* graphics / large-text only on light (2.42:1) */
+  --primitive-success-600: #55836a;
+  --primitive-success-700: #43765a; /* AA text on light (4.70:1 on canvas) */
+  --primitive-success-800: #335844;
+  --primitive-success-850: #2c4438; /* deepest well, reserved */
+  --primitive-success-900: #22392c;
+
+  /* Alert — warm amber from the peach family, never harsh red/yellow.
+     500 #D99A6C is the anchor (alias of peach-600). */
+  --primitive-alert-50: #fbf3ea;
+  --primitive-alert-100: #f8e9da;
+  --primitive-alert-200: #f3d8bc;
+  --primitive-alert-300: #eac193;
+  --primitive-alert-400: #e0aa7e; /* dark text accent (7.10:1 on night) */
+  --primitive-alert-500: #d99a6c; /* graphics / large-text only (2.13:1) */
+  --primitive-alert-600: #c0804f;
+  --primitive-alert-700: #a06a3e;
+  --primitive-alert-800: #7d5230; /* AA text on light (5.98:1 on canvas) */
+  --primitive-alert-900: #4f3420;
+
+  /* Danger — muted terracotta for true errors only. 500 #B0644F is the anchor. */
+  --primitive-danger-50: #f9efeb;
+  --primitive-danger-100: #f5e4de;
+  --primitive-danger-200: #e6c6b9;
+  --primitive-danger-300: #d8a28e;
+  --primitive-danger-400: #cf8a73; /* dark text accent */
+  --primitive-danger-500: #b0644f; /* UI boundary on light (3.91:1); large-text only */
+  --primitive-danger-600: #96543f;
+  --primitive-danger-700: #7e4536; /* AA text on light (6.69:1 on canvas) */
+  --primitive-danger-800: #5f3527;
+  --primitive-danger-900: #3d231a;
+  --primitive-danger-950: #3b2620; /* dark soft well (distinct from peach-850) */
+
+  /* Info — dusty slate-teal: calm, harmonious with sage, no saturated blue. */
+  --primitive-info-50: #eef4f4;
+  --primitive-info-100: #dce9e9;
+  --primitive-info-200: #b8d3d3;
+  --primitive-info-300: #8cb4b5; /* dark text accent (5.50:1 on info-950) */
+  --primitive-info-400: #659294;
+  --primitive-info-500: #4e7779;
+  --primitive-info-600: #3d5f61; /* UI boundary + strong accents (6.21:1 on canvas) */
+  --primitive-info-700: #334e50; /* AA text on light (7.96:1 on canvas) */
+  --primitive-info-800: #2b4142;
+  --primitive-info-900: #1f3031;
+  --primitive-info-950: #233837; /* dark soft well */
+
+  /* ---- Layer 2: semantic — LIGHT (default, "day walk") ----
+   * Every value references a primitive above. Contrast figures are measured
+   * pairs quoted in FOUNDATIONS/Colors; "AA" = ≥4.5:1 normal text. */
+
+  /* Backgrounds */
+  --color-background: var(--primitive-cream-300); /* legacy alias of bg-canvas */
+  --color-bg-canvas: var(--primitive-cream-300);
   --color-surface: var(--primitive-cream-100);
+  --color-bg-surface: var(--primitive-cream-100);
+  --color-bg-surface-raised: var(--primitive-cream-50);
   --color-surface-alt: var(--primitive-cream-500);
+  --color-bg-surface-sunken: var(--primitive-cream-500);
   --color-muted: var(--primitive-cream-500);
-
-  --color-foreground: var(--primitive-ink-700);
-  --color-muted-foreground: var(--primitive-ink-500);
-  --color-foreground-faint: var(--primitive-ink-300);
-
-  --color-border: var(--primitive-cream-600);
-
-  --color-primary: var(--primitive-teal-500);
-  --color-primary-hover: var(--primitive-teal-600);
-  --color-primary-light: var(--primitive-teal-500);
-  --color-primary-soft: var(--primitive-teal-100);
-  --color-primary-foreground: #ffffff;
-
+  --color-bg-primary: var(--primitive-teal-500); /* decorative brand only (3.11:1 w/ white) */
+  --color-bg-secondary: var(--primitive-peach-400);
+  --color-bg-disabled: var(--primitive-cream-500);
   --color-secondary: var(--primitive-peach-400);
   --color-secondary-dark: var(--primitive-peach-500);
   --color-secondary-soft: var(--primitive-peach-100);
-  --color-secondary-foreground: var(--primitive-peach-900);
-
+  --color-secondary-foreground: var(--primitive-peach-900); /* 6.96:1 on secondary */
   --color-cream: var(--primitive-cream-400);
   --color-cream-foreground: var(--primitive-peach-900);
 
-  --color-verified: var(--primitive-teal-600);
-  --color-success: var(--primitive-success-500);
+  /* Foreground / text */
+  --color-foreground: var(--primitive-ink-700); /* 10.56:1 on canvas */
+  --color-text-primary: var(--primitive-ink-700);
+  --color-muted-foreground: var(--primitive-ink-500); /* 4.97:1 on canvas */
+  --color-text-secondary: var(--primitive-ink-500);
+  --color-foreground-faint: var(--primitive-ink-300); /* decorative/large only */
+  --color-text-tertiary: var(--primitive-ink-500); /* intentional alias of secondary on light; distinct on dark */
+  --color-text-inverse: var(--primitive-cream-100);
+  --color-text-disabled: var(--primitive-ink-300); /* exempt; paired w/ cursor + opacity */
+  --color-text-link: var(--primitive-teal-700); /* 5.41:1 — always underlined */
+  --color-text-success: var(--primitive-success-700); /* 4.70:1 */
+  --color-text-warning: var(--primitive-alert-800); /* 5.98:1 */
+  --color-text-danger: var(--primitive-danger-700); /* 6.69:1 */
+  --color-text-info: var(--primitive-info-700); /* 7.96:1 */
+
+  /* Lines — hairlines + essential control boundaries.
+   * Decorative dividers use border-default/subtle; inputs and controls that
+   * must stay legible use border-strong / border-danger / border-success
+   * (all ≥3:1). Focus never relies on shadow alone — see the global
+   * :focus-visible double-ring below. */
+  --color-border: var(--primitive-cream-600); /* decorative hairlines only */
+  --color-border-default: var(--primitive-cream-600);
+  --color-border-subtle: var(--primitive-cream-500);
+  --color-border-strong: var(--primitive-ink-500); /* inputs (5.46:1 on surface) */
+  --color-border-focus: var(--primitive-teal-500); /* focus ring (3.03:1 boundary, ≥3 ✓) */
+  --color-border-disabled: var(--primitive-cream-600);
+  --color-border-danger: var(--primitive-danger-500); /* error boundary (~4:1) */
+  --color-border-success: var(--primitive-success-600); /* success boundary (~4:1) */
+
+  /* Border widths — hairline dividers stay 1px; featured selections may use
+   * strong (2px). Never invent a third width inline; pick from this scale. */
+  --border-width-none: 0;
+  --border-width-hairline: 1px;
+  --border-width-default: 1px;
+  --border-width-medium: 1.5px;
+  --border-width-strong: 2px;
+
+  /* Brand actions + trust */
+  --color-primary: var(--primitive-teal-500); /* anchor; decorative/verified/graphics */
+  --color-primary-hover: var(--primitive-teal-600);
+  --color-primary-light: var(--primitive-teal-500);
+  --color-primary-soft: var(--primitive-teal-100);
+  --color-primary-soft-foreground: var(--primitive-teal-700); /* 5.13:1 on soft */
+  --color-primary-foreground: #ffffff; /* 3.11:1 — large-text/graphics only, NOT buttons */
+  --color-verified: var(--primitive-teal-600); /* icons/graphics (3.81:1) */
+  --color-verified-strong: var(--primitive-teal-700); /* verified LABEL text (5.41:1) */
+
+  /* Interactive actions — text-bearing, all AA */
+  --color-action-primary: var(--primitive-teal-700); /* white 6.09:1 */
+  --color-action-primary-hover: var(--primitive-teal-800); /* white 8.05:1 */
+  --color-action-primary-pressed: var(--primitive-teal-900); /* white 11.87:1 */
+  --color-action-primary-foreground: #ffffff;
+  --color-action-primary-disabled-bg: var(--primitive-cream-500);
+  --color-action-primary-disabled-text: var(--primitive-ink-300); /* exempt */
+  --color-action-secondary: var(--primitive-peach-400); /* peach-900 6.96:1 */
+  --color-action-secondary-hover: var(--primitive-peach-500); /* peach-900 5.81:1 */
+  --color-action-secondary-pressed: var(--primitive-peach-600); /* peach-900 5.17:1 */
+  --color-action-secondary-foreground: var(--primitive-peach-900);
+  --color-action-ghost-hover: var(--primitive-teal-100); /* ink-700 10.42:1 */
+  --color-action-ghost-pressed: var(--primitive-teal-200); /* ink-700 8.33:1 */
+
+  /* Functional — calm, never alarming */
+  --color-success: var(--primitive-success-500); /* graphics/large only (2.42:1) */
+  --color-success-strong: var(--primitive-success-700); /* icons/small graphics */
   --color-success-soft: var(--primitive-success-100);
-  --color-success-foreground: #ffffff;
-  --color-alert: var(--primitive-alert-500);
+  --color-success-foreground: #ffffff; /* large-text/graphics only (2.72:1) */
+  --color-alert: var(--primitive-alert-500); /* graphics/large only (2.13:1) */
+  --color-alert-strong: var(--primitive-alert-800);
   --color-alert-soft: var(--primitive-alert-100);
-  --color-alert-foreground: var(--primitive-peach-900);
+  --color-alert-foreground: var(--primitive-peach-900); /* 10.39:1 on alert-soft */
   --color-danger: var(--primitive-danger-500);
-  --color-danger-foreground: #ffffff;
+  --color-danger-strong: var(--primitive-danger-700);
+  --color-danger-foreground: #ffffff; /* large-text/graphics only (4.39:1) */
+  --color-info: var(--primitive-info-600);
+  --color-info-strong: var(--primitive-info-700);
+  --color-info-soft: var(--primitive-info-100);
+
+  /* Feedback pairs — bg + text + border ship together, never split */
+  --color-feedback-success-bg: var(--primitive-success-50);
+  --color-feedback-success-text: var(--primitive-success-900); /* 10.91:1 on 100 */
+  --color-feedback-success-border: var(--primitive-success-600); /* 3.98:1 boundary */
+  --color-feedback-warning-bg: var(--primitive-alert-50);
+  --color-feedback-warning-text: var(--primitive-alert-900); /* 10.36:1 on 100 */
+  --color-feedback-warning-border: var(--primitive-alert-700); /* ~4.3:1 boundary */
+  --color-feedback-danger-bg: var(--primitive-danger-50);
+  --color-feedback-danger-text: var(--primitive-danger-900); /* 12.78:1 on 100 */
+  --color-feedback-danger-border: var(--primitive-danger-600); /* 5.11:1 boundary */
+  --color-feedback-info-bg: var(--primitive-info-50);
+  --color-feedback-info-text: var(--primitive-info-900); /* 11.06:1 on 100 */
+  --color-feedback-info-border: var(--primitive-info-600); /* 6.28:1 boundary */
 
   --color-scrim: rgba(44, 58, 56, 0.38);
 
   /* Focus ring — visible leader-teal ring, non-negotiable for a11y */
-  --color-border-focus: var(--primitive-teal-500);
 
   /* ---- Spacing (4-based) ---- */
   --space-0: 0px;
@@ -141,16 +304,51 @@
   --space-48: 48px;
   --space-64: 64px;
 
-  /* ---- Radii — soft UI, nothing sharp ---- */
+  /* ---- Radii — soft, approachable, never sharp by default ----
+   * Primitive scale. Existing sm/md/lg values (12/16/20) are preserved
+   * exactly so current surfaces don't shift; new steps fill the gaps.
+   * radius-none exists for the rare sharp edge the brand allows (e.g.
+   * flush sheet handles, progress fills) — default to a radius, never 0.
+   * Components bind to the semantic aliases below, never raw steps. */
+  --radius-none: 0px;
+  --radius-xs: 4px;
   --radius-sm: 12px;
   --radius-md: 16px;
   --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
   --radius-full: 9999px;
 
-  /* ---- Shadows — soft, warm, low-contrast only ---- */
-  --shadow-card: 0 2px 8px rgba(44, 58, 56, 0.06), 0 8px 24px rgba(44, 58, 56, 0.05);
-  --shadow-lifted: 0 8px 40px rgba(44, 58, 56, 0.12);
-  --shadow-brand: 0 8px 20px rgba(91, 158, 148, 0.22);
+  /* Semantic radius — each references a primitive above. */
+  --radius-button: var(--radius-md);
+  --radius-input: var(--radius-md);
+  --radius-card: var(--radius-lg);
+  --radius-dialog: var(--radius-xl);
+  --radius-sheet: var(--radius-xl);
+  --radius-badge: var(--radius-sm);
+  --radius-chip: var(--radius-full);
+  --radius-avatar: var(--radius-full);
+
+  /* ---- Elevation + shadows — warm, calm, restrained ----
+   * Five levels only. Level 0 is always "border + surface contrast, no
+   * shadow". Cards rest at 0 and rise on hover; only floating surfaces
+   * (dropdowns, sheets, dialogs, FABs) carry a resting shadow. Brand glow
+   * is reserved for the primary action / selected filter — never decoration.
+   * Semantic shadows reference elevation levels, never raw values. */
+  --elevation-0: none;
+  --elevation-1: 0 1px 3px rgba(44, 58, 56, 0.06);
+  --elevation-2: 0 2px 8px rgba(44, 58, 56, 0.06), 0 8px 24px rgba(44, 58, 56, 0.05);
+  --elevation-3: 0 8px 40px rgba(44, 58, 56, 0.12);
+  --elevation-4: 0 16px 56px rgba(44, 58, 56, 0.18);
+  --shadow-none: var(--elevation-0);
+  --shadow-card: var(--elevation-2);
+  --shadow-dropdown: var(--elevation-3);
+  --shadow-popover: var(--elevation-3);
+  --shadow-dialog: var(--elevation-4);
+  --shadow-sheet: var(--elevation-4);
+  --shadow-floating: var(--elevation-3);
+  --shadow-lifted: var(--elevation-3); /* legacy alias of elevation-3 */
+  --shadow-brand: 0 8px 20px rgba(91, 158, 148, 0.22); /* primary/selected glow only */
 
   /* ---- Motion — patient, accompanying; never bounce/spring ---- */
   --duration-micro: 150ms;
@@ -159,8 +357,20 @@
   --duration-sheet: 340ms;
   --ease-gentle: cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  /* ---- Typography scale (Pinar/Vazirmatn RD: Regular/Medium/SemiBold/Bold) ---- */
-  --text-display: 30px;
+  /* ---- Typography scale (Estedad: Regular/Medium/SemiBold/Bold) ----
+   * Anchors preserved: display 30 · h1 24 · h2 20 · h3 17 · body 16 ·
+   * caption 13 · label 12. New tiers extend the progression (never arbitrary):
+   * display-lg/md (+fluid), h4 (body-size distinguished by weight), h5/h6,
+   * body-lg/sm, label-lg/sm (11px metadata-only, never essential), overline.
+   * All leading unitless (zoom-safe). Tracking is 0 for Persian — never
+   * letter-space Persian (brand law); latin tracking is for Latin islands only. */
+  --text-display-lg: 40px;
+  --leading-display-lg: 1.2;
+  --text-display-lg-fluid: clamp(2rem, 1.15rem + 2.1vw, 2.5rem); /* 32→40, mobile-first */
+  --text-display-md: 34px;
+  --leading-display-md: 1.25;
+  --text-display-md-fluid: clamp(1.875rem, 1.45rem + 1.05vw, 2.125rem); /* 30→34 */
+  --text-display: 30px; /* = Display Small */
   --leading-display: 1.25;
   --text-h1: 24px;
   --leading-h1: 1.3;
@@ -168,73 +378,178 @@
   --leading-h2: 1.35;
   --text-h3: 17px;
   --leading-h3: 1.4;
+  --text-h4: 16px; /* body size + SemiBold = calm section head, not a shout */
+  --leading-h4: 1.5;
+  --text-h5: 14px;
+  --leading-h5: 1.6;
+  --text-h6: 13px; /* caption size + SemiBold; weight, not size, carries it */
+  --leading-h6: 1.6;
+  --text-body-lg: 18px; /* landing intros, mentor bio ledes */
+  --leading-body-lg: 1.75;
   --text-body: 16px;
   --leading-body: 1.7;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.7;
   --text-caption: 13px;
   --leading-caption: 1.6;
+  --text-label-lg: 14px;
+  --leading-label-lg: 1.6;
   --text-label: 12px;
   --leading-label: 1.5;
+  --text-label-sm: 11px; /* metadata / counts only — never essential text */
+  --leading-label-sm: 1.5;
+  --text-overline: 12px; /* SemiBold + muted, tracking 0 (no Persian caps) */
+  --leading-overline: 1.5;
 
-  /* ---- Surface axis (Solid default; Glass opt-in per area) ---- */
-  --surface-bg: var(--color-surface);
-  --surface-bg-overlay: var(--color-surface);
-  --surface-border: var(--color-border);
+  /* ---- Font weights — ONLY shipped Estedad files (400/500/600/700).
+   * Never 800/900 (browser would faux-bolden: smeared Persian curves). */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ---- Letter-spacing — Persian stays 0, always. */
+  --tracking-normal: 0;
+  --tracking-latin: 0.01em; /* Latin islands / codes only, never Persian */
+
+/* Latin island utility — standalone Latin blocks (phone numbers, handles,
+ * reserve codes) inside RTL flow. direction + isolate so punctuation and
+ * parentheses never jump sides; Tahoma Latin stays legible at small sizes.
+ * Inline English TERMS inside a Persian sentence keep Estedad + dir="ltr". */
+.font-latin {
+  font-family: Tahoma, "Segoe UI", sans-serif;
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
-/* ---- Layer 2: semantic (dark) — "night walk together". Only the semantic layer flips ----
- * Warm charcoal-teal night (#202b29, never pure black) · cream text (#f4efe4,
- * never pure white) · teal lightened (#7db8ae) to stay AA on dark · peach kept
- * for warmth · shadows go black-based · scrim deepens · motion/type unchanged.
- */
+  /* ---- Surface axis (Solid default; Glass opt-in per area) ---- */
+  --surface-bg: var(--color-bg-surface);
+  --surface-bg-overlay: var(--color-bg-surface);
+  --surface-border: var(--color-border-default);
+}
+
+/* ---- Layer 2: semantic (dark) — "night walk together". ----
+ * Same token names, different primitives. Never pure black, never inverted:
+ * warm charcoal-teal night + cream text, teal lifted (same hue) for AA,
+ * peach kept for warmth. Motion/type/radii unchanged. */
 .dark {
-  --color-background: #202b29;
-  --color-surface: #2a3634;
-  --color-surface-alt: #33413f;
-  --color-muted: #33413f;
-
-  --color-foreground: #f4efe4;
-  --color-muted-foreground: #b9c4c0;
-  --color-foreground-faint: #8b9794;
-
-  --color-border: #3d4a47;
-
-  --color-primary: #7db8ae;
-  --color-primary-hover: #93c7be;
-  --color-primary-light: #7db8ae;
-  --color-primary-soft: #2f4a46;
-  --color-primary-foreground: #1d2726;
+  --color-background: var(--primitive-night-900);
+  --color-bg-canvas: var(--primitive-night-900);
+  --color-surface: var(--primitive-night-800);
+  --color-bg-surface: var(--primitive-night-800);
+  --color-bg-surface-raised: var(--primitive-night-750);
+  --color-surface-alt: var(--primitive-night-700);
+  --color-bg-surface-sunken: var(--primitive-night-950);
+  --color-muted: var(--primitive-night-700);
+  --color-bg-primary: var(--primitive-teal-night-400); /* decorative on dark */
+  --color-bg-secondary: var(--primitive-peach-400); /* kept warm (6.96:1 w/ peach-900) */
+  --color-bg-disabled: var(--primitive-night-700);
 
   --color-secondary: #e8b99a;
   --color-secondary-dark: #dba783;
-  --color-secondary-soft: #4a3a2c;
-  --color-secondary-foreground: #fbeadd;
+  --color-secondary-soft: var(--primitive-peach-850);
+  --color-secondary-foreground: #fbeadd; /* 9.27:1 on peach-850 */
 
-  --color-cream: #4a3a2c;
+  --color-cream: var(--primitive-peach-850);
   --color-cream-foreground: #fbeadd;
 
-  --color-verified: #7db8ae;
-  --color-success: #8fc3a5;
-  --color-success-soft: #2c4438;
-  --color-success-foreground: #16241d;
-  --color-alert: #e0aa7e;
-  --color-alert-soft: #4a3a2c;
-  --color-alert-foreground: #fbeadd;
-  --color-danger: #cf8a73;
-  --color-danger-foreground: #1d2726;
+  --color-foreground: var(--primitive-cream-150); /* 12.73:1 on canvas */
+  --color-text-primary: var(--primitive-cream-150);
+  --color-muted-foreground: var(--primitive-night-200); /* 8.14:1 */
+  --color-text-secondary: var(--primitive-night-200);
+  --color-foreground-faint: var(--primitive-night-300); /* 4.83:1 — AA even here */
+  --color-text-tertiary: var(--primitive-night-300);
+  --color-text-inverse: var(--primitive-ink-900);
+  --color-text-disabled: var(--primitive-night-300); /* exempt; paired w/ cursor + opacity */
+  --color-text-link: var(--primitive-teal-night-400); /* 6.49:1 — always underlined */
+  --color-text-success: var(--primitive-success-400); /* 7.31:1 */
+  --color-text-warning: var(--primitive-alert-400); /* 7.10:1 */
+  --color-text-danger: var(--primitive-danger-400); /* 5.24:1 */
+  --color-text-info: var(--primitive-info-300); /* ~6:1 */
+
+  --color-border: var(--primitive-ink-600); /* decorative hairlines */
+  --color-border-default: var(--primitive-ink-600);
+  --color-border-subtle: var(--primitive-night-800);
+  --color-border-strong: var(--primitive-night-300); /* inputs (4.15:1 on surface) */
+  --color-border-focus: var(--primitive-teal-night-400);
+  --color-border-disabled: var(--primitive-ink-600);
+  --color-border-danger: var(--primitive-danger-400);
+  --color-border-success: var(--primitive-success-400);
+
+  --color-primary: var(--primitive-teal-night-400);
+  --color-primary-hover: var(--primitive-teal-night-300);
+  --color-primary-light: var(--primitive-teal-night-400);
+  --color-primary-soft: var(--primitive-teal-well);
+  --color-primary-soft-foreground: var(--primitive-teal-200); /* 4.79:1 on well */
+  --color-primary-foreground: var(--primitive-ink-900); /* 6.81:1 */
+
+  --color-verified: var(--primitive-teal-night-400);
+  --color-verified-strong: var(--primitive-teal-night-300); /* 7.75:1 on canvas */
+
+  --color-action-primary: var(--primitive-teal-night-400); /* ink-900 6.81:1 */
+  --color-action-primary-hover: var(--primitive-teal-night-300); /* ~7.7:1 */
+  --color-action-primary-pressed: var(--primitive-teal-300); /* ink-900 8.07:1 */
+  --color-action-primary-foreground: var(--primitive-ink-900);
+  --color-action-primary-disabled-bg: var(--primitive-night-700);
+  --color-action-primary-disabled-text: var(--primitive-night-300); /* exempt */
+  --color-action-secondary: var(--primitive-peach-400);
+  --color-action-secondary-hover: var(--primitive-peach-500);
+  --color-action-secondary-pressed: var(--primitive-peach-600);
+  --color-action-secondary-foreground: var(--primitive-peach-900);
+  --color-action-ghost-hover: var(--primitive-teal-well);
+  --color-action-ghost-pressed: var(--primitive-night-700);
+
+  --color-success: var(--primitive-success-400);
+  --color-success-strong: var(--primitive-success-300);
+  --color-success-soft: var(--primitive-success-800);
+  --color-success-foreground: var(--primitive-ink-900); /* 8.06:1 on success-400 */
+  --color-alert: var(--primitive-alert-400);
+  --color-alert-strong: var(--primitive-alert-300);
+  --color-alert-soft: var(--primitive-peach-850);
+  --color-alert-foreground: #fbeadd; /* 9.27:1 */
+  --color-danger: var(--primitive-danger-400);
+  --color-danger-strong: var(--primitive-danger-300);
+  --color-danger-foreground: var(--primitive-ink-900); /* 5.50:1 on danger-400 */
+  --color-info: var(--primitive-info-300);
+  --color-info-strong: var(--primitive-info-200);
+  --color-info-soft: var(--primitive-info-950);
+
+  --color-feedback-success-bg: var(--primitive-success-800);
+  --color-feedback-success-text: var(--primitive-success-200); /* 5.83:1 */
+  --color-feedback-success-border: var(--primitive-success-400); /* 4.01:1 boundary */
+  --color-feedback-warning-bg: var(--primitive-peach-850);
+  --color-feedback-warning-text: var(--primitive-peach-100); /* 9.27:1 */
+  --color-feedback-warning-border: var(--primitive-alert-400); /* 5.29:1 boundary */
+  --color-feedback-danger-bg: var(--primitive-danger-950);
+  --color-feedback-danger-text: var(--primitive-danger-400); /* 5.08:1 */
+  --color-feedback-danger-border: var(--primitive-danger-400);
+  --color-feedback-info-bg: var(--primitive-info-950);
+  --color-feedback-info-text: var(--primitive-info-300); /* 5.50:1 */
+  --color-feedback-info-border: var(--primitive-info-400);
 
   --color-scrim: rgba(15, 22, 21, 0.6);
-  --color-border-focus: #7db8ae;
 
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.2);
-  --shadow-lifted: 0 8px 40px rgba(0, 0, 0, 0.4);
-  --shadow-brand: 0 8px 20px rgba(91, 158, 148, 0.3);
+  --elevation-0: none;
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --elevation-2: 0 2px 8px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.2);
+  --elevation-3: 0 8px 40px rgba(0, 0, 0, 0.4);
+  --elevation-4: 0 16px 56px rgba(0, 0, 0, 0.5);
+  --shadow-none: var(--elevation-0);
+  --shadow-card: var(--elevation-2);
+  --shadow-dropdown: var(--elevation-3);
+  --shadow-popover: var(--elevation-3);
+  --shadow-dialog: var(--elevation-4);
+  --shadow-sheet: var(--elevation-4);
+  --shadow-floating: var(--elevation-3);
+  --shadow-lifted: var(--elevation-3); /* legacy alias of elevation-3 */
+  --shadow-brand: 0 8px 20px rgba(91, 158, 148, 0.3); /* primary/selected glow only */
 }
 
 /* Glass opt-in — frosted warmth, mirrors Sakani's Surface axis */
 [data-surface="glass"] {
-  --surface-bg: color-mix(in srgb, var(--color-surface) 72%, transparent);
-  --surface-bg-overlay: color-mix(in srgb, var(--color-surface) 84%, transparent);
-  --surface-border: color-mix(in srgb, var(--color-border) 70%, transparent);
+  --surface-bg: color-mix(in srgb, var(--color-bg-surface) 72%, transparent);
+  --surface-bg-overlay: color-mix(in srgb, var(--color-bg-surface) 84%, transparent);
+  --surface-border: color-mix(in srgb, var(--color-border-default) 70%, transparent);
 }
 
 html,
@@ -253,7 +568,7 @@ body {
 :where(button, a, [tabindex], input, select, textarea):focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 2px var(--color-surface),
+    0 0 0 2px var(--color-bg-surface),
     0 0 0 4px var(--color-border-focus);
 }
 
