@@ -9,12 +9,23 @@ import "./preview.css";
  * token layer flips (primitives/radii/motion/type never change). Components
  * bind to semantic tokens, so they re-skin with zero code changes.
  */
+/**
+ * App parity: mirrors src/app/layout.tsx (<html lang="fa" dir="rtl">) +
+ * src/app/globals.css (font-sans body, token-driven canvas/text colors).
+ * Runs on every story/docs render so theme flips or HMR never leave the
+ * iframe in an LTR or unstyled state.
+ */
 function RtlWrapper({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    document.documentElement.lang = "fa";
-    document.documentElement.dir = "rtl";
+    const root = document.documentElement;
+    root.lang = "fa";
+    root.dir = "rtl";
   }, []);
-  return <div className="font-sans">{children}</div>;
+  return (
+    <div dir="rtl" lang="fa" className="font-sans text-foreground antialiased">
+      {children}
+    </div>
+  );
 }
 
 function ThemeWrapper({
@@ -72,11 +83,11 @@ const preview: Preview = {
         order: [
           "Introduction",
           "FOUNDATIONS",
-          ["Colors", "Surfaces", "Typography", "Spacing", "Radius", "Borders", "Shadows", "Motion", "Icons"],
+          ["Colors", "Surfaces", "Typography", "Spacing", "Motion", "Icons"],
           "COMPONENTS",
           ["Avatar", "Badge", "Button", "Card", "Chip", "Tag", "ThemeToggle"],
           "FORMS",
-          ["Checkbox", "Input", "Textarea"],
+          ["Input", "Textarea"],
           "FEEDBACK",
           ["Alert", "EmptyState", "ProgressBar", "Spinner & Skeleton", "Toast"],
           "OVERLAYS",

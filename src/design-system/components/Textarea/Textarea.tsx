@@ -1,8 +1,8 @@
 /**
  * Textarea — same contract as Input (label + error-as-prop, native focus).
  *
- * Status: pending-decision — product ships raw textareas in three places
- * with two different visual specs; align on one canonical style before adopting.
+ * Status: canonical — adopted in mentor-portal profile form, request-mentor
+ * card and session-cancel sheet; vertical-only resize keeps layouts intact.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";
@@ -11,6 +11,10 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   label?: string;
   error?: string;
   hint?: string;
+  /** Visible text rows. Primitive number only — redeclared explicitly (rather
+   * than relying on the inherited union) so Storybook infers a numeric
+   * control instead of an object control. */
+  rows?: number;
 }
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -31,10 +35,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
           className={cn(
-            "w-full rounded-input border bg-surface px-4 py-3 text-body text-foreground",
+            "w-full resize-y rounded-input border bg-surface px-4 py-3 text-body text-foreground",
             "placeholder:text-muted-foreground transition-colors duration-standard ease-gentle",
-            "focus:outline-none focus:ring-2 focus:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-            error ? "border-danger" : "border-border-strong hover:border-primary-light focus:border-primary focus-visible:border-primary",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            error ? "border-border-danger" : "border-border-strong hover:border-border-focus focus-visible:border-border-focus",
             "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-muted disabled:text-disabled",
             className,
           )}

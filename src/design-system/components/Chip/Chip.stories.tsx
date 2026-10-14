@@ -14,12 +14,12 @@ const meta = {
     docs: {
       description: {
         component:
-          "قرص انتخابی برای فیلترها و تب‌ها؛ همان چیزی که در صفحه‌ی کشف گروه‌های رشته را نشان می‌دهد. وقتی انتخاب شود، رنگ primary آن را از بقیه جدا می‌کند. ردیف فیلترها هم افقی است و اگر جا کم بیاید اسکرول می‌خورد.",
+          "چیپ‌ها (Chips) المان‌های تعاملی کوچکی هستند که برای ساخت فیلترها و تب‌ها در صفحات کاوش (Discover) استفاده می‌شوند. با انتخاب یک چیپ، رنگ action-primary آن را از سایر گزینه‌ها متمایز می‌کند. ردیف فیلترها به صورت افقی چیده شده و در صورت سرریز محتوا، قابلیت اسکرول افقی دارد.",
       },
     },
   },
   argTypes: {
-    selected: { control: "boolean", description: "انتخاب‌شده یا نه (aria-pressed)" },
+    selected: { control: "boolean", description: "وضعیت انتخاب (aria-pressed)" },
     children: { control: "text", description: "متن چیپ" },
     disabled: { control: "boolean", description: "غیرفعال" },
   },
@@ -40,8 +40,8 @@ export const Disabled: Story = {
 };
 
 /**
- * همه‌ی حالت‌ها کنار هم. انتخاب‌شده با رنگ primary پرشده مشخصه و
- * aria-pressed=true می‌ذاره. غیرفعال کم‌رنگ و بدون تعامله.
+ * همه‌ی حالت‌ها در کنار هم. گزینه‌ی انتخاب‌شده با رنگ action-primary پرشده مشخص است و
+ * مقدار aria-pressed را true تنظیم می‌کند. حالت غیرفعال کم‌رنگ و بدون تعامل است.
  */
 export const InteractionStates: Story = {
   render: () => (
@@ -53,8 +53,8 @@ export const InteractionStates: Story = {
   ),
 };
 
-/** مثال تعاملی: ردیف فیلتر تک‌انتخابی — با کلیک یا Enter/Space عوض می‌شه. */
-function InteractiveFilterRowDemo() {
+/** ردیف فیلتر تک‌انتخابی — با کلیک یا کلیدهای Enter/Space گزینه‌ی فعال تغییر می‌کند. */
+function FilterRowDemo() {
   const options = ["همه", "تجربی", "ریاضی", "انسانی", "هنر"];
   const [active, setActive] = React.useState("همه");
   return (
@@ -68,21 +68,9 @@ function InteractiveFilterRowDemo() {
   );
 }
 
-export const InteractiveFilterRow: Story = {
-  render: () => <InteractiveFilterRowDemo />,
-};
-
-/** Discovery filter row — one selected, horizontally scrollable. */
+/** ردیف فیلتر صفحه‌ی کاوش — یک گزینه انتخاب شده و در صورت سرریز محتوا، اسکرول افقی دارد. */
 export const FilterRow: Story = {
-  render: () => (
-    <div className="no-scrollbar flex max-w-80 gap-2 overflow-x-auto p-1">
-      <Chip selected>همه</Chip>
-      <Chip>تجربی</Chip>
-      <Chip>ریاضی</Chip>
-      <Chip>انسانی</Chip>
-      <Chip>هنر</Chip>
-    </div>
-  ),
+  render: () => <FilterRowDemo />,
 };
 
 export const DarkMode: Story = {

@@ -20,9 +20,9 @@ import { cn } from "@/lib/cn";
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   description?: string;
-  /** Footer actions: one button, or a Secondary + Primary pair. */
+  /** دکمه‌های فوتر: یک دکمه، یا ترکیب دکمه ثانویه + اصلی */
   actions?: React.ReactNode;
-  /** Standalone action opposite `actions` — providing it splits the footer. */
+  /** دکمه مستقل در نقطه مقابل actions — اضافه کردن آن باعث تقسیم فضای فوتر می‌شود */
   leadingAction?: React.ReactNode;
   /** Enables hover elevation. */
   interactive?: boolean;

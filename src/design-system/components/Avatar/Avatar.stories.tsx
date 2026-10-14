@@ -13,13 +13,13 @@ const meta = {
     docs: {
       description: {
         component:
-          "عکس یک آدم؛ دانش‌آموز، هم‌مسیر یا هر کاربر دیگری که در هم‌مسیر می‌بینی. بیشتر وقت‌ها که عکسی نیست، حرف اول اسم روی یک پس‌زمینه‌ی ملایم نشان داده می‌شود — همان چیزی که هم‌مسیر تازه‌وارد، پیش از آپلود عکس، می‌بیند. برای sm جای لیست‌های فشرده، md حالت معمول و lg کارت معرفی هم‌مسیر را در نظر بگیر.",
+          "آواتار نمایانگر تصویر کاربران در پلتفرم است. در صورت عدم وجود تصویر، حرف اول نام کاربر به عنوان Fallback روی یک پس‌زمینه ملایم نمایش داده می‌شود.",
       },
     },
   },
   argTypes: {
-    name: { control: "text", description: "اسم — هم برای حرف اولِ fallback، هم alt و aria-label" },
-    src: { control: "text", description: "آدرس عکس؛ خالی بگذاری، fallback نشان داده می‌شود" },
+    name: { control: "text", description: "نام — هم برای حرف اول Fallback، هم alt و aria-label" },
+    src: { control: "text", description: "آدرس تصویر؛ در صورت خالی بودن، Fallback نمایش داده می‌شود" },
     size: {
       control: "select",
       options: ["sm", "md", "lg", "xl"],

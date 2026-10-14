@@ -16,7 +16,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "بنر کوتاه‌مدت موفقیت یا خطا که بالای صفحه ظاهر می‌شود و بعد خودش محو می‌شود؛ مثل پیامی که پس از لغو جلسه می‌بینی. برای نشان دادنش کافی است showToast را صدا بزنی.",
+          "تُست (Toast) یک اعلان گذرا و غیرمخرب (Non-blocking) است که برای ارائه بازخوردِ عملیاتِ کاربر (مانند ذخیره موفقیت‌آمیز یا خطای شبکه) استفاده می‌شود. این کامپوننت به صورت خودکار پس از یک تاخیر زمانی مشخص (Auto-dismiss) از بین می‌رود و نیازی به تعامل مستقیم کاربر برای بستن ندارد.",
       },
     },
   },
@@ -25,7 +25,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Mounts the real Toast and fires it through the same showToast path the product uses. */
+/** معماری یکپارچه (Integrated DX) — این محیط تعاملی، توزیع‌کننده (ToastProvider) واقعی سیستم را در استوری‌بوک Mount کرده است. توسعه‌دهندگان می‌توانند با کلیک روی دکمه‌های زیر، فراخوانی متد `showToast` را دقیقاً با همان مسیر و منطقی که در محصول نهایی (Production) استفاده می‌شود، تست و ارزیابی کنند. */
 export const Interactive: Story = {
   render: () => (
     <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -33,7 +33,7 @@ export const Interactive: Story = {
       <Button variant="primary" size="md" onClick={() => showToast("جلسه لغو شد.", "success")}>
         نمایش پیام موفقیت
       </Button>
-      <Button variant="outline" size="md" onClick={() => showToast("خطایی رخ داد.", "error")}>
+      <Button variant="secondary" size="md" onClick={() => showToast("خطایی رخ داد.", "error")}>
         نمایش پیام خطا
       </Button>
     </div>

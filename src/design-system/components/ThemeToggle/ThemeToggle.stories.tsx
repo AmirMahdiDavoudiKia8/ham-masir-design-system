@@ -14,7 +14,7 @@ const meta: Meta<typeof ThemeToggle> = {
     docs: {
       description: {
         component:
-          "سوییچ روز/شب. در واقع یک button است و با aria-pressed وضعیت فعال را اعلام می‌کند؛ آیکن خورشید و ماه هم با تم عوض می‌شود، برای همین وضعیت فقط با رنگ منتقل نمی‌شود. با کلیک، Enter یا Space عوض می‌شود و با Tab فوکوسِ قابل‌دیدن روی آن می‌آید.",
+          "دکمه تغییر تم (Theme Toggle) یک سوییچ تعاملی است که وضعیت فعلی تم سیستم (روشن/تاریک) را مدیریت می‌کند. برای رعایت استانداردهای دسترسی‌پذیری (WCAG)، این کامپوننت وضعیت خود را از طریق صفت `aria-pressed` به صفحه‌خوان‌ها اعلام کرده و تغییرات بصری را با تغییر آیکون‌ها (خورشید/ماه) همراه می‌سازد تا وابستگی صرف به رنگ از بین برود.",
       },
     },
   },
@@ -34,9 +34,9 @@ export const Dark: Story = {
 };
 
 /**
- * مثال تعاملی: با کلیک (یا Enter/Space روی دکمه‌ی فوکوس‌شده) تم عوض می‌شه،
- * aria-pressed و aria-label هم هم‌زمان به‌روز می‌شن. این استوری فقط وضعیت
- * داخلی دکمه رو نشون می‌ده و تم کل صفحه رو عوض نمی‌کنه.
+ * مثال تعاملی: با کلیک (یا کلیدهای Enter/Space روی دکمه‌ی فوکوس‌شده) تم تغییر می‌کند و
+ * aria-pressed و aria-label هم‌زمان به‌روز می‌شوند. این استوری فقط وضعیت
+ * داخلی دکمه را نشان می‌دهد و تم کل صفحه را تغییر نمی‌دهد.
  */
 function InteractiveDemo() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
@@ -59,11 +59,9 @@ export const Disabled: Story = {
 };
 
 /**
- * Night walk — the same companionship, after dark. Warm charcoal-teal night,
- * cream text, lightened teal, peach kept warm. Flip the Mood toolbar above
- * between Light and Dark to feel the whole card accompany you.
+ * پیش‌نمایش ترکیبی (Composition) — در این نما، عملکرد یکپارچه‌ی دکمه تغییر تم بر روی یک کارت پیچیده نشان داده شده است. هدف این استوری اثبات این موضوع است که با تغییر وضعیت سوییچ، توکن‌های معنایی (Semantic Tokens) چگونه رنگ پس‌زمینه، تایپوگرافی و المان‌های تعاملی را به صورت آبشاری با تم تاریک تطبیق می‌دهند.
  */
-export const NightWalkPreview: Story = {
+export const DarkModeCompositionPreview: Story = {
   render: () => (
     <div className="flex w-[360px] flex-col gap-4 rounded-lg border border-border bg-background p-5">
       <div className="flex items-center justify-between">

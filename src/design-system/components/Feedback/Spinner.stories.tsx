@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "نشانه‌های بارگذاریِ بی‌تنش. حلقه‌ی چرخان را برای انتظارهای کوتاه نگه دار، نه برای هر بارگذاری؛ برای جای متن و کارت، اسکلت محو بهتر جواب می‌دهد و صفحه را نمی‌پراند.",
+          "نشانگرهای بارگذاری (Loading Indicators) برای ارائه بازخورد بصری در زمان واکشی داده‌ها یا پردازش‌های سیستمی استفاده می‌شوند. این سیستم شامل دو الگوی اصلی است:\n**۱. چرخان (Spinner):** مختص عملیات‌های کوتاه، موضعی یا مسدودکننده (مانند ارسال فرم).\n**۲. اسکلت‌بندی (Skeleton):** مختص بارگذاری محتوای سنگین (Content-heavy). اسکلت‌ها با رزرو کردن فضای UI پیش از لود کامل محتوا، علاوه بر کاهشِ روانیِ زمان انتظار (Perceived Performance)، از پرش‌های ناگهانی چیدمان صفحه (Cumulative Layout Shift) به طور کامل جلوگیری می‌کنند.",
       },
     },
   },
@@ -26,6 +26,14 @@ export const SpinnerDefault: Story = {
 };
 
 export const SkeletonLines: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "خطوط اسکلت — واحدهای سازنده‌ی (Composable) متن در حال بارگذاری. با ترکیب چند خط با عرض‌های متفاوت، اسکلت یک پاراگراف کامل ساخته می‌شود.",
+      },
+    },
+  },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, width: 280 }}>
       <Skeleton className="h-4 w-3/4" />
@@ -36,6 +44,14 @@ export const SkeletonLines: Story = {
 };
 
 export const SkeletonCard: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "کارت اسکلت — ترکیب (Composition) چند واحد اسکلت (آواتار دایره‌ای + خطوط متن) برای رزرو فضای یک کارت کامل پیش از لود کامل محتوا.",
+      },
+    },
+  },
   render: () => (
     <div style={{ display: "flex", gap: 12, alignItems: "center", width: 320 }}>
       <Skeleton className="h-16 w-16 rounded-full" />

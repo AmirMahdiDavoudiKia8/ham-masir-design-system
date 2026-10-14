@@ -1,5 +1,6 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 import { radii, radiusSemantic, borderWidths, elevations } from "@/lib/tokens";
+import { shadows } from "./spacing";
 import { Button } from "../components/Button";
 import { Badge } from "../components/Badge";
 import { Chip } from "../components/Chip";
@@ -79,6 +80,31 @@ export const Row = ({ radius = 16, shadow = "none", border = "1px solid var(--co
 
 <P>برای حفظ یکپارچگی، هر کامپوننت باید از شعاع متناسب با نقش خودش استفاده کند، نه یک مقدار دلخواه. <C>rounded-button</C> برای دکمه‌ها، <C>rounded-input</C> برای ورودی‌ها و تکست‌اریاها، <C>rounded-card</C> برای کارت‌ها و آلرت‌ها و <C>rounded-dialog</C> / <C>rounded-sheet</C> برای دیالوگ‌ها و شیت‌ها در نظر گرفته شده‌اند. <C>rounded-badge</C> برای بج‌ها و <C>rounded-chip</C> / <C>rounded-avatar</C> برای چیپ‌ها و آواتارهای کاملاً گرد استفاده می‌شوند.</P>
 
+<P>نگاشت کامل نام‌های معنایی به Primitiveها — این جدول مرجع واحد است:</P>
+
+<div dir="rtl" style={{ border: "1px solid var(--color-border)", borderRadius: 16, overflow: "hidden", marginTop: 12 }}>
+  <table dir="rtl" style={{ width: "100%", borderCollapse: "collapse" }}>
+    <thead>
+      <tr>
+        <th style={thStyle}>نام معنایی</th>
+        <th style={thStyle}>ارجاع به Primitive</th>
+        <th style={thStyle}>کلاس Tailwind</th>
+        <th style={thStyle}>کاربرد</th>
+      </tr>
+    </thead>
+    <tbody>
+      {radiusSemantic.map((s) => (
+        <tr key={s.token}>
+          <td style={tdStyle}><C>--radius-{s.token}</C></td>
+          <td style={tdStyle}><C>{s.ref}</C></td>
+          <td style={tdStyle}><C>{s.tailwind}</C></td>
+          <td style={tdStyle}>{s.usage}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
 <H2>خط دور (Borders)</H2>
 
 <P>ضخامت خطوط مرزی از یک مقیاس مشخص پیروی می‌کند: <C>1px</C> برای جداکننده‌ها و مرزهای معمول کارت‌ها، <C>1.5px</C> برای تأکیدهای محدود و <C>2px</C> فقط برای موارد خاص، مثل نمایش یک کارت منتخب منتور. رنگ خطوط هم باید بر اساس کاربردشان انتخاب شود: <C>border-border</C> برای مرزهای پیش‌فرض، <C>border-border-subtle</C> برای جداکننده‌های ظریف، <C>border-border-strong</C> برای ورودی‌ها و کنترل‌هایی که به کنتراست بیشتری نیاز دارند، <C>border-border-focus</C> برای وضعیت فوکوس، <C>border-border-disabled</C> برای عناصر غیرفعال، <C>border-border-danger</C> برای خطا و <C>border-border-success</C> برای موفقیت.</P>
@@ -91,7 +117,7 @@ export const Row = ({ radius = 16, shadow = "none", border = "1px solid var(--co
     </div>
   ))}
   <div dir="rtl" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
-    {[["border-border", "پیش‌فرض"], ["border-border-subtle", "کم‌رنگ"], ["border-border-strong", "قوی (ورودی)"], ["border-border-danger", "خطا"], ["border-border-success", "موفقیت"]].map(([cls, label]) => (
+    {[["border-border", "پیش‌فرض"], ["border-border-subtle", "کم‌رنگ"], ["border-border-strong", "قوی (ورودی)"], ["border-border-focus", "فوکوس"], ["border-border-disabled", "غیرفعال"], ["border-border-danger", "خطا"], ["border-border-success", "موفقیت"]].map(([cls, label]) => (
       <span key={cls} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--color-muted-foreground)", background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: 12, padding: "8px 12px" }}>
         <span aria-hidden style={{ width: 16, height: 16, borderRadius: 6 }} className={`${cls} border-2`} /> {label} <C>{cls}</C>
       </span>
@@ -108,7 +134,7 @@ export const Row = ({ radius = 16, shadow = "none", border = "1px solid var(--co
     <Row
       key={e.level}
       radius={16}
-      shadow={e.level === 0 ? "none" : e.level === 1 ? "0 1px 3px rgba(44,58,56,0.12)" : e.level === 2 ? "var(--shadow-card)" : e.level === 3 ? "var(--shadow-floating)" : "var(--shadow-dialog)"}
+      shadow={e.level === 0 ? "none" : e.level === 1 ? "var(--elevation-1)" : e.level === 2 ? "var(--shadow-card)" : e.level === 3 ? "var(--shadow-floating)" : "var(--shadow-dialog)"}
     >
       <span><C>{e.cssVar}</C> — <C>{e.tailwind}</C> — {e.usage}</span>
     </Row>
@@ -117,6 +143,24 @@ export const Row = ({ radius = 16, shadow = "none", border = "1px solid var(--co
     نگاشت معنایی: <C>shadow-card</C> (کارت شناور)، <C>shadow-dropdown / shadow-popover / shadow-floating</C> (شناورها)، <C>shadow-dialog / shadow-sheet</C> (دیالوگ و شیت)، <C>shadow-brand</C> (فقط اکشن اصلی و انتخاب‌شده). <C>shadow-lifted</C> نام قدیمی سطح ۳ است و برای سازگاری مانده.
   </div>
 </div>
+
+<P>شبکه‌ی بصری هر ۹ سایه‌ی معنایی — نام، کلاس و جلوه‌ی واقعی روی سطح:</P>
+
+<div dir="ltr" style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 12 }}>
+  {Object.entries(shadows).map(([name, cls]) => (
+    <div key={name} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+      <span
+        aria-hidden
+        style={{ width: 120, height: 72, background: "var(--color-surface)", borderRadius: 12 }}
+        className={cls}
+      />
+      <code style={{ fontSize: 12 }}>{name}</code>
+      <code style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{cls}</code>
+    </div>
+  ))}
+</div>
+
+<P>تخصیص هر سایه: <C>none</C> برای سطح‌های عادی گرید، <C>card</C> برای کارت‌ها و هاور روی Mentor Tile، <C>brand</C> فقط برای Glow اکشن اصلی و حالت‌های Primary/Selected، <C>lifted</C> برای عناصر شناور (Bottom Sheet، Toast، Side Menu، Support Button و Suggestion Dropdown)، <C>floating</C> برای هاور Theme Toggle و <C>dropdown</C> برای هاور Strip Card. <C>popover</C>، <C>dialog</C> و <C>sheet</C> تعریف شده‌اند اما فعلاً استفاده نمی‌شوند.</P>
 
 <H2>مثال روی کامپوننت‌های واقعی</H2>
 

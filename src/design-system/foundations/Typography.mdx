@@ -164,7 +164,6 @@ export const componentRows = [
   { name: "Badge", tokens: "text-label medium (semantic variants)" },
   { name: "Chip", tokens: "text-caption semibold" },
   { name: "Input / Textarea label · field · hint · error", tokens: "text-caption / text-body / text-caption / text-caption danger-strong" },
-  { name: "Checkbox", tokens: "text-body foreground" },
   { name: "Avatar fallback initial", tokens: "text-label → text-h1 by size, bold" },
   { name: "MentorCard name / subtitle / rank", tokens: "text-caption–text-body bold / muted / action-primary" },
   { name: "Alert title / body", tokens: "text-caption semibold / text-body" },
@@ -218,6 +217,7 @@ export const componentRows = [
       <div
         dir="rtl"
         style={{
+          textAlign: "right",
           fontSize: t.size,
           fontWeight: weightFor[t.tier],
           lineHeight: t.leading,

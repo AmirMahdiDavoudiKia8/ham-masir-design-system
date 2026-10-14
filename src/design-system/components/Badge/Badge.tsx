@@ -1,10 +1,21 @@
 /**
- * Badge — SEMANTIC variants: the name describes what it MEANS
+ * Badge — STATUS indicator: the name describes what it MEANS
  * (pending / confirmed / cancelled — real booking states), not what it
  * looks like. If the color for "pending" changes, callers don't change.
  *
- * Status: retire-candidate — booking-status pills ship as Tag; keeping both
- * preserves a duplication.
+ * Role contract (vs Tag): Badge = booking/lifecycle STATUS, bound strictly to
+ * the feedback triples (bg + text + border ship together) — warning for
+ * pending, success for confirmed, danger for cancelled. Tag = neutral
+ * CATEGORIZATION (field/city/availability, single borderless peach tint).
+ * The visible feedback border is what sets Badge apart from Tag at a glance.
+ * Badge is fully rounded with smaller label-sm text. Both are <span>:
+ * non-interactive, no hover, no focus. For selection use Chip; for actions
+ * use Button.
+ *
+ * Binds only to semantic tokens (feedback-*). Dark mode flips automatically
+ * via the semantic layer — no `dark:` overrides. No hardcoded hex.
+ *
+ * Status: canonical — the status pill; Tag stays the categorization pill.
  */
 import * as React from "react";
 import { cn } from "@/lib/cn";
@@ -15,16 +26,16 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  pending: "bg-alert-soft text-alert-foreground",
-  confirmed: "bg-primary-soft text-primary-soft-foreground", /* teal-700 5.13:1 light · teal-200 4.79:1 on lifted dark well */
-  cancelled: "bg-muted text-muted-foreground",
+  pending: "border-feedback-warning-border bg-feedback-warning-bg text-feedback-warning-text",
+  confirmed: "border-feedback-success-border bg-feedback-success-bg text-feedback-success-text",
+  cancelled: "border-feedback-danger-border bg-feedback-danger-bg text-feedback-danger-text",
 };
 
 export function Badge({ variant, className, ...props }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-badge border border-transparent px-2.5 py-1 text-label font-medium",
+        "inline-flex select-none items-center whitespace-nowrap rounded-badge border px-3 py-1 text-label-sm font-medium",
         variantClasses[variant],
         className,
       )}

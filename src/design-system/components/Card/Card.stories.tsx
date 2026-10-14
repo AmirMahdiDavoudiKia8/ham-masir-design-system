@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "ظرف پایه‌ای که محتوا را در خود جمع می‌کند؛ تقریباً همه‌ی بخش‌های هم‌مسیر روی همین بنا شده‌اند. Base یک ظرف ساده و ساکن است که به کلیک واکنش نشان نمی‌دهد. اگر قرار است کل کارت قابل کلیک باشد — مثل کارت یک هم‌مسیر — Interactive را روشن کن؛ موقع هاور یک سایه‌ی ملایم می‌گیرد.",
+          "ظرف پایه‌ای که محتوا را در خود جمع می‌کند؛ تقریباً همه‌ی بخش‌های هم‌مسیر بر همین اساس ساخته شده‌اند. Base ظرفی ساده و ساکن است که به کلیک واکنشی نشان نمی‌دهد. اگر قرار است کل کارت قابل کلیک باشد — مانند کارت یک هم‌مسیر — گزینه‌ی Interactive را فعال کنید؛ هنگام هاور، سایه‌ی ملایمی اعمال می‌شود.",
       },
     },
   },
@@ -23,12 +23,12 @@ const meta = {
   argTypes: {
     title: { control: "text", description: "تیتر کارت" },
     description: { control: "text", description: "توضیح کوتاه زیر تیتر" },
-    interactive: { control: "boolean", description: "حالت هاور ملایم، یعنی همان :hover" },
+    interactive: { control: "boolean", description: "حالت هاور ملایم (:hover)" },
   },
   args: {
     title: "عنوان کارت",
     description: "توضیح پشتیبان کارت — کوتاه و آرام.",
-    children: "محتوای بدنه اینجاست. از کارت برای گروه‌بندی اطلاعات مرتبط استفاده کن.",
+    children: "محتوای بدنه اینجاست. از کارت برای گروه‌بندی اطلاعات مرتبط استفاده کنید.",
   },
 } satisfies Meta<typeof Card>;
 
@@ -44,17 +44,16 @@ export const Interactive: Story = {
 };
 
 /**
- * کارت کلیک‌پذیر: کل کارت tap target ـه و با Enter/Space هم کار می‌کنه
- * (role=button + tabIndex). هاور سایه می‌گیره، فوکوس کیبورد (Tab) حلقه‌ی
- * focus-visible داره. برای کارت کلیک‌پذیر حتماً aria-label معنادار بده.
+ * کارت کلیک‌پذیر. در این حالت، کل کانتینر به عنوان یک Tap Target یکپارچه عمل کرده و از طریق کلیدهای Enter و Space نیز قابل تعامل است (role=button + tabIndex). در حالت هاور سایه اعمال می‌شود و فوکوس کیبورد (Tab) دارای حلقه‌ی focus-visible است. استفاده از aria-label معنادار الزامی است.
+ * قانون دسترس‌پذیری: هرگز دکمه یا اکشن تعاملی (actions) داخل کارت کلیک‌پذیر قرار ندهید — تودرتویی عنصر تعاملی، حباب رویداد و سردرگمی Screen Reader ایجاد می‌کند.
  */
 export const Clickable: Story = {
   args: {
     interactive: true,
     onClick: fn(),
     title: "کارت کلیک‌پذیر",
-    description: "با موس کلیک کن یا با Tab بیا روش و Enter بزن.",
-    children: "کل این کارت یک دکمه‌ست — نیازی به دکمه‌ی جدا نیست.",
+    description: "با ماوس کلیک کنید یا با کلید Tab به آن رسیده و Enter را بفشارید.",
+    children: "کل این کارت یک دکمه است — نیازی به دکمه‌ی جداگانه نیست.",
   },
 };
 
@@ -69,7 +68,7 @@ export const InteractionStates: Story = {
         interactive
         onClick={fn()}
         title="تعاملی (interactive + clickable)"
-        description="هاور سایه می‌گیره؛ با Tab فوکوس visible داره."
+        description="هاور سایه می‌گیرد؛ با Tab فوکوس visible دارد."
       >
         محتوای بدنه اینجاست.
       </Card>

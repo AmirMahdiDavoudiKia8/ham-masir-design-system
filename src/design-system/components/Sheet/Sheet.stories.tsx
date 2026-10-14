@@ -15,13 +15,13 @@ const meta = {
     docs: {
       description: {
         component:
-          "پنل پایین‌رونده برای تأییدها و کارهای مهم؛ مثل گرفتن تأیید برای لغو جلسه. پشتش یک اسکریم تیره است و با دکمه‌ی بستن، کشیدن رو به پایین یا زدن Escape بسته می‌شود.",
+          "پنل کشویی (Bottom Sheet) یک لایه‌ی همپوشان (Overlay) ارگونومیک است که عموماً از پایین صفحه باز شده و برای تاییدهای سریع یا نمایش محتوای فرعی استفاده می‌شود. این کامپوننت کاملاً Mobile-friendly بوده و استانداردهای دسترسی‌پذیری را با پشتیبانی از بسته شدن از طریق کلید Escape، کلیک روی پس‌زمینه (Backdrop) و جسچر کشیدن به پایین (Swipe-to-dismiss) رعایت می‌کند.",
       },
     },
   },
   argTypes: {
-    open: { control: "boolean", description: "باز بودن پنل" },
-    ariaLabel: { control: "text", description: "برچسبی که صفحه‌خوان‌ها می‌خوانند" },
+    open: { control: "boolean", description: "وضعیت نمایش پنل (Controlled State)" },
+    ariaLabel: { control: "text", description: "برچسب متنیِ الزامی برای صفحه‌خوان‌ها (Screen Readers) جهت درک کانتکست پنل." },
   },
   args: {
     open: false,
@@ -29,7 +29,7 @@ const meta = {
     ariaLabel: "لغو جلسه",
     children: (
       <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 8 }}>
-        <h2 className="text-h3 font-bold text-foreground">مطمئنی می‌خوای این جلسه رو لغو کنی؟</h2>
+        <h2 className="text-h3 font-bold text-foreground">آیا از لغو این جلسه اطمینان دارید؟</h2>
       </div>
     ),
   },
@@ -50,11 +50,11 @@ function InteractiveDemo() {
   return (
     <div>
       <Button variant="primary" size="md" onClick={() => setOpen(true)}>
-        باز کردن شیت
+        نمایش پنل کشویی
       </Button>
       <Sheet open={open} onClose={() => setOpen(false)} ariaLabel="نمونه">
         <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 8 }}>
-          <h2 className="text-h3 font-bold text-foreground">مطمئنی می‌خوای این جلسه رو لغو کنی؟</h2>
+          <h2 className="text-h3 font-bold text-foreground">آیا از لغو این جلسه اطمینان دارید؟</h2>
           <Button size="lg" fullWidth onClick={() => setOpen(false)}>
             لغو جلسه
           </Button>

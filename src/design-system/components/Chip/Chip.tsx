@@ -1,6 +1,13 @@
 /**
- * Chip — selectable pill used for tabs, filters, and tags.
- * aria-pressed carries the state; the native button carries the interaction.
+ * Chip — SELECTION pill used for tabs and filters. Always a <button> with
+ * aria-pressed; the native button carries the interaction.
+ *
+ * Role contract (vs Button/Tag/Badge): Chip is the ONLY toggle. Outline by
+ * default (quiet, unchosen), filled action-primary when selected (unmissable
+ * active state + brand glow, the only other glow beside Button primary).
+ * Never use for plain labels (Tag) or statuses (Badge); never navigate (Button).
+ *
+ * Binds only to semantic tokens. No hardcoded hex.
  *
  * Status: canonical — shipped in discovery, planner and portal filters.
  */
@@ -17,11 +24,12 @@ export function Chip({ selected = false, className, children, ...props }: ChipPr
       type="button"
       aria-pressed={selected}
       className={cn(
-        "inline-flex h-11 min-w-[44px] cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-caption font-semibold transition-all duration-standard ease-gentle active:scale-[0.97]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "inline-flex h-12 min-w-12 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-chip border px-4 text-caption font-semibold transition-colors duration-standard ease-gentle",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         selected
-          ? "border-primary bg-primary text-primary-foreground shadow-brand"
-          : "border-border bg-surface text-foreground hover:border-primary-light hover:bg-primary-soft",
+          ? "border-transparent bg-action-primary text-action-primary-foreground shadow-brand hover:bg-action-primary-hover active:bg-action-primary-pressed"
+          : "border-border-strong bg-surface text-foreground hover:border-border-focus hover:bg-action-ghost-hover active:bg-action-ghost-pressed",
+        "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-muted disabled:text-disabled disabled:hover:border-border-disabled disabled:hover:bg-muted",
         className,
       )}
       {...props}

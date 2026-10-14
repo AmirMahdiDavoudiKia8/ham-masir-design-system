@@ -14,15 +14,7 @@ export function Spinner({ label = "در حال بارگذاری", className }: {
 export function Skeleton({ className }: { className?: string }) {
   return <div aria-hidden className={cn("animate-pulse rounded-sm bg-muted", className)} />;
 }
-/** ProgressBar — thin rounded progress track used at the top of multi-step flows.
- * Status: canonical — shipped in discovery, onboarding and planner flows. */
-export function ProgressBar({ value }: { value: number }) {
-  return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
-      <div
-        className="h-full rounded-full bg-gradient-to-l from-primary to-secondary transition-[width] duration-standard ease-gentle"
-        style={{ width: `${value}%` }}
-      />
-    </div>
-  );
-}
+/** ProgressBar lives in ./ProgressBar (dedicated file: clamped value, required
+ * aria-label, guaranteed track geometry). Re-exported here so existing
+ * `./Feedback` imports keep working. */
+export { ProgressBar, type ProgressBarProps } from "./ProgressBar";

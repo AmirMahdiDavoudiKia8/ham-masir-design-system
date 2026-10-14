@@ -1,6 +1,11 @@
 /**
- * Tag — small read-only label pill for display metadata.
- * Unlike Chip, never selectable/interactive.
+ * Tag — CATEGORIZATION-only flat label for display metadata (e.g. field,
+ * city, availability). Always a <span>: non-interactive by construction —
+ * no hover, no focus, no cursor, no button semantics. For selectable filters
+ * use Chip; for booking states use Badge; for actions use Button.
+ *
+ * Flat + subtle: soft tinted background, AA foreground, pill shape.
+ * Binds only to semantic tokens. No hardcoded hex.
  *
  * Status: canonical — shipped for booking status and availability labels.
  */
@@ -13,7 +18,7 @@ export function Tag({ className, ...props }: TagProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full bg-secondary-soft px-2.5 py-1 text-label font-semibold text-secondary-dark",
+        "inline-flex select-none items-center whitespace-nowrap rounded-full bg-secondary-soft px-3 py-1 text-label font-semibold text-secondary-foreground",
         className,
       )}
       {...props}

@@ -1,10 +1,113 @@
 /**
- * HamMasir brand typeface inside the Storybook preview iframe.
- * Estedad is declared via @font-face in globals.css (self-hosted);
- * this makes it the default everywhere stories and docs render,
- * the same way `font-sans` does in the Next.js app.
+ * HamMasir brand typeface + RTL baseline inside the Storybook preview iframe.
+ * Mirrors src/app/globals.css + src/app/layout.tsx:
+ *  - Estedad is declared via @font-face in globals.css (self-hosted);
+ *    --font-estedad / --font-sans are the single alias (never hard-code here).
+ *  - <html lang="fa" dir="rtl"> is set by preview.tsx (RtlWrapper),
+ *    matching layout.tsx. The rules below only enforce the font + docs-panel
+ *    parity; direction itself comes from the dir attribute.
  * Monospace code blocks keep their own stack (more specific selectors win).
  */
+
+/* Story canvas */
 body {
-  font-family: "Estedad", Tahoma, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Docs panel (addon-docs renders outside per-story wrappers) */
+.sbdocs,
+.sbdocs *,
+.docs-story,
+.docs-story * {
+  font-family: var(--font-sans);
+}
+
+.sbdocs {
+  direction: rtl;
+  text-align: right;
+}
+
+/*
+ * Docs headings: raw-markdown headings (#, ##, …) render through addon-docs'
+ * default stylesheet (left-aligned, wide margins) — not through our MDX
+ * wrappers. Force them back to RTL with logical heading↔paragraph grouping.
+ * LTR islands ([dir="ltr"] demos, code blocks) are explicitly excluded.
+ */
+.sbdocs :is(h1, h2, h3, h4, h5, h6):not([dir="ltr"]):not([dir="ltr"] *),
+.sbdocs .sbdocs-title:not([dir="ltr"]):not([dir="ltr"] *) {
+  text-align: right;
+  font-family: var(--font-sans);
+}
+
+/* Section titles: every foundation page opens with an H1 — pin all of them
+ * to the brand Display role (30px Bold) so size/boldness never drift between
+ * pages or addon-docs versions. */
+.sbdocs h1:not([dir="ltr"]):not([dir="ltr"] *) {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  font-weight: 700;
+}
+
+/* Group headings with the paragraph below: breathing room ABOVE (section
+ * separation, on the 4-based scale), tight BELOW so title+lede read as one. */
+.sbdocs .sbdocs :is(h1, .sbdocs-title) {
+  margin: 8px 0 !important;
+}
+.sbdocs .sbdocs h2 {
+  margin: 32px 0 8px !important;
+}
+.sbdocs .sbdocs :is(h3, h4, h5, h6) {
+  margin: 40px 0 8px !important;
+}
+
+/* Paragraphs: small top margin everywhere, tighter still right under a
+ * heading, so headings never look disconnected from their lede. */
+.sbdocs p:not([dir="ltr"]):not([dir="ltr"] *) {
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.sbdocs :is(h1, h2, h3, h4, h5, h6) + p {
+  margin-top: 4px;
+}
+
+/* Lists/tables following a heading belong to it too — keep them close. */
+.sbdocs :is(h1, h2, h3, h4, h5, h6) + :is(ul, ol, table, div) {
+  margin-top: 8px;
+}
+
+/* ArgsTable range controls mirror the page. Storybook paints the slider fill
+ * with a JS-computed PHYSICAL gradient (`linear-gradient(to right, …)` in
+ * its own source), which `direction` can never mirror — so the input keeps
+ * its native LTR value mapping while `scaleX(-1)` mirrors the whole painted
+ * control: min lands on the right, dragging toward the fill direction
+ * increases the value, thumb and fill always agree, and slider and bar move
+ * together. (The Canvas-tab Controls panel is Storybook chrome outside the
+ * iframe and stays LTR.) */
+.sbdocs .sbdocs input[type="range"] {
+  direction: ltr !important;
+  transform: scaleX(-1);
+}
+
+/* LTR islands + code keep their own direction/alignment — never RTL-forced.
+ * Inline code is bidi-isolated so punctuation never jumps sides inside RTL. */
+.sbdocs :is(pre, [dir="ltr"]) {
+  direction: ltr;
+  text-align: left;
+}
+.sbdocs code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.sbdocs pre {
+  text-align: left;
+}
+
+/* Canvas: RTL stories align headings right, unless inside an explicit LTR
+ * island (Latin/code demos). Bare headings already follow dir=rtl; this only
+ * overrules stray left-alignment leaking in from default styles. */
+[dir="rtl"] :is(h1, h2, h3, h4, h5, h6):not([dir="ltr"]):not([dir="ltr"] *):not(pre *):not(code) {
+  text-align: right;
 }

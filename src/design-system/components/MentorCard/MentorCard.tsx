@@ -17,8 +17,9 @@
  * Rank text arrives pre-formatted (the site passes formatRankForCard);
  * the system stays formatting-agnostic.
  *
- * Status: parts are canonical (MentorTile + recipe ship via the feature
- * wrapper); this shell itself is unrendered — retire-candidate.
+ * Status: beta (WIP) — ships without a *.stories.tsx, so it is unverified
+ * in Storybook. Parts are otherwise canonical (MentorTile + recipe ship via
+ * the feature wrapper); this shell itself is unrendered (retire-candidate).
  */
 "use client";
 import * as React from "react";

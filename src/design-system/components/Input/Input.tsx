@@ -12,9 +12,9 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   label?: string;
   error?: string;
   hint?: string;
-  /** Icon at the inline start (e.g. search magnifier). Decorative — hidden from AT. */
+  /** آیکون ابتدای فیلد (مانند ذره‌بین). این آیکون جنبه تزئینی داشته و از صفحه‌خوان‌ها (AT) پنهان می‌شود. */
   startIcon?: React.ReactNode;
-  /** Icon at the inline end. Decorative — hidden from AT. */
+  /** آیکون انتهای فیلد. این آیکون جنبه تزئینی داشته و از صفحه‌خوان‌ها (AT) پنهان می‌شود. */
   endIcon?: React.ReactNode;
 }
 

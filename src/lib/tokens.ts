@@ -124,39 +124,41 @@ export interface SurfaceRadius {
 }
 
 export const radii: SurfaceRadius[] = [
-  { token: "none", cssVar: "--radius-none", px: 0, tailwind: "rounded-none", usage: "Sharp edge only when required (flush handles, fills)." },
-  { token: "xs", cssVar: "--radius-xs", px: 4, tailwind: "rounded-xs", usage: "Small decorative elements, checkbox box." },
-  { token: "sm", cssVar: "--radius-sm", px: 12, tailwind: "rounded-sm", usage: "Compact controls, badges." },
-  { token: "md", cssVar: "--radius-md", px: 16, tailwind: "rounded-md", usage: "Buttons, inputs — the standard control radius." },
-  { token: "lg", cssVar: "--radius-lg", px: 20, tailwind: "rounded-lg", usage: "Cards and panels." },
-  { token: "xl", cssVar: "--radius-xl", px: 24, tailwind: "rounded-xl", usage: "Dialogs, sheets — prominent containers." },
-  { token: "2xl", cssVar: "--radius-2xl", px: 32, tailwind: "rounded-2xl", usage: "Large expressive surfaces." },
-  { token: "full", cssVar: "--radius-full", px: 9999, tailwind: "rounded-full", usage: "Pills, chips, avatars, circular elements." },
+  { token: "none", cssVar: "--radius-none", px: 0, tailwind: "rounded-none", usage: "فقط وقتی لبه‌ی تیز لازم است (دستگیره‌های چسبیده، نوارهای پرکننده)." },
+  { token: "xs", cssVar: "--radius-xs", px: 4, tailwind: "rounded-xs", usage: "عناصر تزئینی کوچک، کادر چک‌باکس." },
+  { token: "sm", cssVar: "--radius-sm", px: 12, tailwind: "rounded-sm", usage: "کنترل‌های جمع‌وجور، بج‌ها." },
+  { token: "md", cssVar: "--radius-md", px: 16, tailwind: "rounded-md", usage: "دکمه‌ها و ورودی‌ها — شعاع استاندارد کنترل‌ها." },
+  { token: "lg", cssVar: "--radius-lg", px: 20, tailwind: "rounded-lg", usage: "کارت‌ها و پنل‌ها." },
+  { token: "xl", cssVar: "--radius-xl", px: 24, tailwind: "rounded-xl", usage: "دیالوگ‌ها و شیت‌ها — ظرف‌های برجسته." },
+  { token: "2xl", cssVar: "--radius-2xl", px: 32, tailwind: "rounded-2xl", usage: "سطح‌های بزرگ و بیانی." },
+  { token: "full", cssVar: "--radius-full", px: 9999, tailwind: "rounded-full", usage: "قرص‌ها، چیپ‌ها، آواتارها و عناصر دایره‌ای." },
 ];
 
 export const radiusSemantic = [
-  { token: "button", cssVar: "--radius-button", ref: "md", tailwind: "rounded-button", usage: "All buttons." },
-  { token: "input", cssVar: "--radius-input", ref: "md", tailwind: "rounded-input", usage: "Inputs, textareas, selects." },
-  { token: "card", cssVar: "--radius-card", ref: "lg", tailwind: "rounded-card", usage: "Cards, alerts, panels." },
-  { token: "dialog", cssVar: "--radius-dialog", ref: "xl", tailwind: "rounded-dialog", usage: "Dialogs and prominent overlays." },
-  { token: "sheet", cssVar: "--radius-sheet", ref: "xl", tailwind: "rounded-sheet", usage: "Bottom sheets (top corners)." },
-  { token: "badge", cssVar: "--radius-badge", ref: "sm", tailwind: "rounded-badge", usage: "Badges." },
-  { token: "chip", cssVar: "--radius-chip", ref: "full", tailwind: "rounded-chip", usage: "Chips, pills." },
-  { token: "avatar", cssVar: "--radius-avatar", ref: "full", tailwind: "rounded-avatar", usage: "Avatars." },
+  { token: "button", cssVar: "--radius-button", ref: "md", tailwind: "rounded-button", usage: "همه‌ی دکمه‌ها." },
+  { token: "input", cssVar: "--radius-input", ref: "md", tailwind: "rounded-input", usage: "ورودی‌ها، تکست‌اریاها و سلکت‌ها." },
+  { token: "card", cssVar: "--radius-card", ref: "lg", tailwind: "rounded-card", usage: "کارت‌ها، الرت‌ها و پنل‌ها." },
+  { token: "dialog", cssVar: "--radius-dialog", ref: "xl", tailwind: "rounded-dialog", usage: "دیالوگ‌ها و اورلی‌های برجسته." },
+  { token: "sheet", cssVar: "--radius-sheet", ref: "xl", tailwind: "rounded-sheet", usage: "شیت‌های پایینی (گوشه‌های بالایی)." },
+  { token: "badge", cssVar: "--radius-badge", ref: "full", tailwind: "rounded-badge", usage: "بج‌ها." },
+  { token: "chip", cssVar: "--radius-chip", ref: "full", tailwind: "rounded-chip", usage: "چیپ‌ها و قرص‌ها." },
+  { token: "avatar", cssVar: "--radius-avatar", ref: "full", tailwind: "rounded-avatar", usage: "آواتارها." },
 ];
 
 export const borderWidths = [
+  { token: "none", cssVar: "--border-width-none", px: 0, tailwind: "border-0", usage: "No border — flush edges, borderless states." },
+  { token: "default", cssVar: "--border-width-default", px: 1, tailwind: "border", usage: "Standard 1px outline — default control and card boundaries." },
   { token: "hairline", cssVar: "--border-width-hairline", px: 1, tailwind: "border", usage: "Hairlines, dividers, card boundaries." },
   { token: "medium", cssVar: "--border-width-medium", px: 1.5, tailwind: "border-medium", usage: "Emphasized control outlines (rare)." },
   { token: "strong", cssVar: "--border-width-strong", px: 2, tailwind: "border-strong", usage: "Featured selections only (e.g. MentorCard strip)." },
 ];
 
 export const elevations = [
-  { level: 0, cssVar: "--elevation-0", tailwind: "shadow-none", usage: "Default. Border + surface contrast carry hierarchy." },
-  { level: 1, cssVar: "--elevation-1", tailwind: "shadow-card*", usage: "Subtle separation (hover lift on flat cards)." },
-  { level: 2, cssVar: "--elevation-2", tailwind: "shadow-card", usage: "Standard card elevation (resting floating tiles)." },
-  { level: 3, cssVar: "--elevation-3", tailwind: "shadow-floating / shadow-dropdown / shadow-popover", usage: "Floating surfaces: dropdowns, popovers, FABs." },
-  { level: 4, cssVar: "--elevation-4", tailwind: "shadow-dialog / shadow-sheet", usage: "Dialogs, sheets, prominent overlays." },
+  { level: 0, cssVar: "--elevation-0", tailwind: "shadow-none", usage: "پیش‌فرض. سلسله‌مراتب با خط مرزی و تضاد سطح حمل می‌شود." },
+  { level: 1, cssVar: "--elevation-1", tailwind: "shadow-card*", usage: "جدایی ملایم (بالاآمدن هنگام هاور روی کارت‌های تخت)." },
+  { level: 2, cssVar: "--elevation-2", tailwind: "shadow-card", usage: "ارتفاع استاندارد کارت (تایل‌های شناور در حالت سکون)." },
+  { level: 3, cssVar: "--elevation-3", tailwind: "shadow-floating / shadow-dropdown / shadow-popover", usage: "سطح‌های شناور: دراپ‌دان‌ها، پاپ‌اورها و دکمه‌های شناور." },
+  { level: 4, cssVar: "--elevation-4", tailwind: "shadow-dialog / shadow-sheet", usage: "دیالوگ‌ها، شیت‌ها و اورلی‌های برجسته." },
 ];
 
 /* ------------------------------------------------------------------ */

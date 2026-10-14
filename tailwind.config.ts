@@ -1,9 +1,12 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Tailwind reads all design tokens from CSS variables defined in
- * `src/styles/tokens.css`. To rebrand the app, edit that file only —
- * never hard-code colors/radii/durations/easing in components.
+ * Binding layer only: every value below reads a CSS variable defined in the
+ * canonical `src/design-system/tokens/tokens.css` (primitives → semantic
+ * `:root` + `.dark`). To rebrand the app, edit that file (and its
+ * `tokens.json` mirror) — never hard-code colors/radii/durations/easing in
+ * components, and never add values to the deprecated `src/styles/tokens.css`
+ * shim (it only re-exports the canonical file).
  */
 const config: Config = {
   darkMode: "class",

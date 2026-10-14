@@ -7,6 +7,12 @@ import { Alert } from "../components/Alert";
 
 <div dir="rtl" style={{ textAlign: "right" }}>
 
+# Colors
+
+</div>
+
+<div dir="rtl" style={{ textAlign: "right" }}>
+
 پایه‌ی رنگی هم‌مسیر باید حس‌وحالی گرم، آرام و انسانی داشته باشد. رنگ‌های اصلی از لوگو و مفهوم «خطِ همراه» گرفته شده‌اند:
 sage teal `#5B9E94`، warm peach `#E8B99A`، warm cream `#F6F1E9`، deep teal-charcoal `#2C3A38`، warm amber `#D99A6C` و muted terracotta `#B0644F`.
 
@@ -93,6 +99,68 @@ export function TokenTable({ rows }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+export const contrastRows = [
+  { combo: (<>White روی <code>action-primary</code> (<code>teal-700</code>)</>), ratio: "6.09:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>ink-900</code> روی <code>action-secondary</code> (<code>peach-400</code>)</>), ratio: "6.96:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>ink-700</code> روی Canvas</>), ratio: "10.56:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>ink-500</code> به‌عنوان متن ثانویه روی Canvas</>), ratio: "4.97:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>teal-700</code> به‌عنوان Link روی Canvas، همراه با underline</>), ratio: "5.41:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>teal-700</code> برای Verified-strong روی Surface</>), ratio: "5.94:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>danger-700</code> برای متن خطا روی Canvas</>), ratio: "6.69:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<>Cream Text روی Night Canvas</>), ratio: "12.73:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>night-200</code> برای متن ثانویه روی Night Canvas</>), ratio: "8.14:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<><code>ink-900</code> روی <code>teal-night-400</code> برای Dark Action</>), ratio: "6.81:1", result: "✅ AA", desc: "برای متن معمولی" },
+  { combo: (<>White روی <code>sage-500</code> به‌عنوان رنگ اصلی برند</>), ratio: "3.11:1", result: "⚠️ محدود", desc: "فقط متن بزرگ و عناصر گرافیکی" },
+  { combo: (<><code>teal-500</code> برای Label روی <code>primary-soft</code></>), ratio: "2.62:1", result: "❌", desc: (<>هرگز استفاده نشود — به‌جای آن از <code>action-primary</code> با نسبت <code dir="ltr">5.13:1</code> استفاده شود</>) },
+  { combo: (<><code>ink-300</code> برای Placeholder کم‌رنگ روی Canvas</>), ratio: "2.26:1", result: "❌", desc: (<>هرگز استفاده نشود — Placeholderها از <code>muted</code> با نسبت <code dir="ltr">4.97:1</code> استفاده کنند</>) },
+  { combo: (<>White روی <code>success-500</code></>), ratio: "2.72:1", result: "❌", desc: (<>هرگز استفاده نشود — متن Success باید از <code>success-700</code> با نسبت <code dir="ltr">4.70:1</code> استفاده کند</>) },
+];
+
+export function ContrastTable() {
+  const th = {
+    textAlign: "right",
+    fontSize: 13,
+    fontWeight: 700,
+    color: "var(--color-foreground)",
+    padding: "10px 12px",
+    borderBottom: "1px solid var(--color-border)",
+    whiteSpace: "nowrap",
+  };
+  const td = {
+    textAlign: "right",
+    fontSize: 13,
+    color: "var(--color-muted-foreground)",
+    padding: "10px 12px",
+    borderBottom: "1px solid var(--color-border)",
+    verticalAlign: "top",
+    lineHeight: 1.9,
+  };
+  return (
+    <div dir="rtl" style={{ border: "1px solid var(--color-border)", borderRadius: 16, overflowX: "auto", marginTop: 12, background: "var(--color-surface)" }}>
+      <table dir="rtl" style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th style={th}>ترکیب</th>
+            <th style={th}>نسبت کنتراست</th>
+            <th style={th}>نتیجه</th>
+            <th style={th}>توضیحات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {contrastRows.map((r) => (
+            <tr key={r.ratio}>
+              <td style={td}>{r.combo}</td>
+              <td style={td}><code dir="ltr">{r.ratio}</code></td>
+              <td style={{ ...td, whiteSpace: "nowrap" }}>{r.result}</td>
+              <td style={td}>{r.desc}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -296,22 +364,7 @@ export function TokenTable({ rows }) {
 - متن بزرگ: حداقل **3:1**
 - مرزها و Boundaryهای ضروری: حداقل **3:1**
 
-| ترکیب | نسبت کنتراست | نتیجه |
-|---|---:|---|
-| White روی `action-primary` (`teal-700`) | 6.09:1 | ✅ AA برای متن معمولی |
-| `ink-900` روی `action-secondary` (`peach-400`) | 6.96:1 | ✅ AA برای متن معمولی |
-| `ink-700` روی Canvas | 10.56:1 | ✅ AA برای متن معمولی |
-| `ink-500` به‌عنوان متن ثانویه روی Canvas | 4.97:1 | ✅ AA برای متن معمولی |
-| `teal-700` به‌عنوان Link روی Canvas + underline | 5.41:1 | ✅ AA برای متن معمولی |
-| `teal-700` برای Verified-strong روی Surface | 5.94:1 | ✅ AA برای متن معمولی |
-| `danger-700` برای متن خطا روی Canvas | 6.69:1 | ✅ AA برای متن معمولی |
-| Cream Text روی Night Canvas | 12.73:1 | ✅ AA برای متن معمولی |
-| `night-200` برای متن ثانویه روی Night Canvas | 8.14:1 | ✅ AA برای متن معمولی |
-| `ink-900` روی `teal-night-400` برای Dark Action | 6.81:1 | ✅ AA برای متن معمولی |
-| White روی `sage-500` به‌عنوان رنگ اصلی برند | 3.11:1 | ⚠️ فقط متن بزرگ / عناصر گرافیکی |
-| `teal-500` برای Label روی `primary-soft` | 2.62:1 | ❌ هرگز استفاده نشود — به‌جای آن از `action-primary` با نسبت 5.13:1 استفاده شود |
-| `ink-300` برای Placeholder کم‌رنگ روی Canvas | 2.26:1 | ❌ هرگز استفاده نشود — Placeholderها از `muted` با نسبت 4.97:1 استفاده کنند |
-| White روی `success-500` | 2.72:1 | ❌ هرگز استفاده نشود — متن Success باید از `success-700` با نسبت 4.70:1 استفاده کند |
+<ContrastTable />
 
 ### نمونه‌های نادرست — Don't
 

@@ -167,6 +167,24 @@ export function XIcon(props: IconProps) {
   );
 }
 
+export function InfoIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx={12} cy={12} r={8.25} />
+      <path d="M12 11v5M12 7.8h.01" />
+    </svg>
+  );
+}
+
+export function WarningIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 4 3.8 20h16.4L12 4Z" />
+      <path d="M12 10v4M12 17h.01" />
+    </svg>
+  );
+}
+
 export function MenuIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
