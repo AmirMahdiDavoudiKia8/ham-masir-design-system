@@ -1,73 +1,79 @@
-# Ham-Masir Design System
+# سیستم دیزاین هم‌مسیر (Ham-Masir Design System)
 
-A token-driven, reusable UI foundation for Ham-Masir — built like [Sakani Design System](https://github.com/samzydd/Sakani-design-system) (structure adapted with attribution, MIT), branded entirely Ham-Masir.
+زیرساخت UI توکن‌محور هم‌مسیر — بر اساس ساختار Sakani Design System (با ذکر منبع، MIT) و کاملاً بومی‌سازی‌شده با برند هم‌مسیر.
 
-> Status words below are load-bearing: **canonical** = shipped in product and
-> safe to use; **proposal** = reserve, not adopted; **beta (WIP)** = incomplete
-> (no stories); **pending-decision** = superseded in product, awaiting merge or
-> adopt verdict. Presence of a file never implies production-readiness.
+> واژه‌های وضعیت در این سند بار معنایی دارند: **canonical** یعنی در محصول استفاده شده و قابل اتکاست؛ **proposal** یعنی رزرو و هنوز به کار نرفته؛ **beta** یعنی ناقص (بدون استوری)؛ **pending-decision** یعنی در محصول نمونه‌ی موازی دارد و رأی نهایی باز است. صرف وجود فایل، به‌معنای آماده‌ی تولید بودن نیست.
 
-## What's in here
+## ساختار مخزن
 
-- **Design tokens** — 3 layers in `tokens/tokens.css` (+ `tokens.json`):
-  1. Primitives (teal / peach / cream / ink ramps), 2. Semantic (light + `.dark`),
-  3. Components bind ONLY to semantic tokens. Single import at app root.
-- **Foundations** (`foundations/`) — Colors, Surfaces (also covers radius,
-  borders, elevation), Typography, Spacing, Motion, Icons. Each area: `*.ts`
-  module + `*.mdx` docs. Barrel: `foundations/index.ts`.
-- **15 component folders** (`components/*/`) — each: `Component.tsx` +
-  `index.ts` (+ `*.stories.tsx` except MentorCard), variant/size/state axes,
-  JSDoc with `Status`, RTL, focus rings, Persian numerals.
-- **Icons** (`icons.tsx`) — single-stroke family (1.75px, 24 viewBox).
-  New icons go here, never as one-off inline SVGs.
-- **Blocks** (`blocks/`) — composition examples (MentorCard), not components.
-- **Barrel** (`index.ts`) — one public entry point.
-- **Storybook** (`.storybook/`, `*.stories.tsx`) — one story file per
-  component with controls, autodocs and dark-mode stories.
-  Run `npm run storybook` → http://localhost:6006.
-- **AI rules** (`ai-instructions.md`, repo root) — token source, scopes,
-  quality gate for agents.
+- **توکن‌های دیزاین** — سه لایه در `tokens/tokens.css` (به‌علاوه‌ی `tokens.json`):
+  ۱. Primitiveها (طیف‌های teal / peach / cream / ink)، ۲. Semantic (روشن + `.dark`)،
+  ۳. کامپوننت‌ها فقط به توکن‌های معنایی وصل‌اند. ایمپورت واحد در ریشه‌ی اپ.
+- **فاندیشن‌ها** (`foundations/`) — ‏Colors، Surfaces (شامل شعاع، خط دور و ارتفاع)، Typography، Spacing، Motion و Icons. هر حوزه: ماژول `*.ts` به‌علاوه‌ی داک `*.mdx`.
+- **۱۵ پوشه‌ی کامپوننت** (`components/*/`) — هر کدام: `Component.tsx` به‌علاوه‌ی `index.ts` و `*.stories.tsx` برای همه‌ی کامپوننت‌ها (خانواده‌ی Feedback با سه فایل تک‌ماژولی: Spinner، Skeleton و ProgressBar که از `index.ts` همان پوشه re-export می‌شوند)؛ محورهای variant/size/state، JSDoc با `Status`، راست‌به‌چپ، رینگ فوکوس و ارقام فارسی.
+- **آیکون‌ها** (`icons.tsx`) — خانواده‌ی تک‌استروک (۱.۷۵px، ویوباکس ۲۴). آیکون جدید همین‌جا تعریف می‌شود، نه به‌صورت SVG پراکنده.
+- **بلوک‌ها** (`blocks/`) — نمونه‌های ترکیبی (MentorCard)، نه کامپوننت مستقل.
+- **برل** (`index.ts`) — تنها نقطه‌ی ورود عمومی.
+- **استوری‌بوک** (`.storybook/` و `*.stories.tsx`) — برای هر کامپوننت یک فایل استوری با کنترل‌ها، autodocs و استوری حالت تاریک.
+- **راهنمای ایجنت‌ها** (`ai-instructions.md` در ریشه‌ی ریپو) — مرجع توکن‌ها، scope تغییرات و گیت کیفیت.
 
-## Component inventory (by Status)
+## موجودی کامپوننت‌ها (بر اساس Status)
 
-| Component | Status | Notes |
+| کامپوننت | وضعیت | توضیح |
 |---|---|---|
-| Button, Input, Textarea, Badge, Card, Chip, EmptyState, ThemeToggle, Tag, Sheet, Toast, ProgressBar | canonical | Shipped in product flows; Textarea adopted (mentor-portal, request-mentor, session-cancel) |
-| Avatar | pending-decision | Product uses feature-level `MentorAvatar` instead; adopt-or-merge verdict open |
-| MentorCard | beta (WIP) | No stories; shell unrendered — only MentorTile + `mentorCardClasses` recipe are canonical |
-| Alert, Spinner, Skeleton | proposal | Docs demos only; zero product imports |
+| Button، Input، Textarea، Badge، Card، Chip، EmptyState، ThemeToggle، Tag، Sheet، Toast، ProgressBar | canonical | در فلوی محصول استفاده شده‌اند؛ Textarea در فرم پروفایل منتور، کارت درخواست و شیت لغو جلسه پذیرفته شده است |
+| Avatar | pending-decision | محصول از `MentorAvatar` سطح فیچر استفاده می‌کند؛ رأی ادغام یا پذیرش باز است |
+| MentorCard | beta | استوری دارد؛ شل reference-only است — بخش‌های MentorTile و `mentorCardClasses` canonical و در محصول استفاده شده‌اند |
+| Alert، Spinner، Skeleton | proposal | فقط دموی داک؛ هیچ ایمپورتی در محصول ندارند |
 
-Removed (zero product usage, no stories): Checkbox, Divider, VerifiedBadge.
-Merged into `Surfaces.mdx` (files deleted): Radius, Borders, Shadows docs.
+حذف‌شده‌ها (بدون استفاده در محصول، بدون استوری): Checkbox، Divider و VerifiedBadge.
+در `Surfaces.mdx` ادغام و فایلشان حذف شد: داک‌های Radius، Borders و Shadows.
 
-## Token sources — roles
+## نقش مرجع‌های توکن
 
-| File | Role |
+| فایل | نقش |
 |---|---|
-| `src/design-system/tokens/tokens.css` | **CANONICAL.** All values; `:root` + `.dark`. Edit here. |
-| `src/design-system/tokens/tokens.json` | Typed mirror for tooling/docs. Mirror CSS changes here. |
-| `src/lib/tokens.ts` | Typed mirror for docs + code (names/hex/usage). Never import hexes into components. |
-| `tailwind.config.ts` | Binding only: maps classes to `var(--…)`. Never hard-code values. |
-| `src/styles/tokens.css` | **DEPRECATED shim** (re-exports canonical). Never add values. |
+| `src/design-system/tokens/tokens.css` | **مرجع اصلی.** همه‌ی مقادیر؛ `:root` و `.dark`. تغییر اینجاست. |
+| `src/design-system/tokens/tokens.json` | آینه‌ی تایپ‌شده برای ابزار و داک. تغییر CSS اینجا هم آینه شود. |
+| `src/lib/tokens.ts` | آینه‌ی تایپ‌شده برای داک و کد (نام، hex و کاربرد). hex هرگز وارد کامپوننت نشود. |
+| `tailwind.config.ts` | فقط لایه‌ی اتصال: کلاس‌ها به `var(--…)` می‌رسند. مقدار هاردکد ممنوع. |
+| `src/styles/tokens.css` | **شیم منسوخ** (فقط re-export مرجع اصلی). افزودن مقدار ممنوع. |
 
-## Principles (from the brand)
+## اصول (از برند)
 
-- One primary action per screen; secondary is outline.
-- Semantic naming: `pending / confirmed / cancelled`, not colors.
-- Composite over duplicate: MentorCard = Card + Avatar + content rules.
-- Whole card is the tap target; bio stays off the card.
-- Calm by default: soft shadows, gentle motion, no bounce.
-- Feedback ships as bg + text + border + icon, never color alone.
+- در هر صفحه یک اکشن اصلی؛ ثانویه outline است.
+- نام‌گذاری معنایی: `pending / confirmed / cancelled`، نه رنگ.
+- ترکیب به‌جای تکرار: MentorCard مساوی Card به‌علاوه‌ی Avatar و قواعد محتواست.
+- کل کارت ناحیه‌ی لمس است؛ بیو روی کارت نمی‌آید.
+- آرام به‌صورت پیش‌فرض: سایه‌های نرم، موشن ملایم، بدون bounce.
+- فیدبک همیشه bg به‌علاوه‌ی متن به‌علاوه‌ی border به‌علاوه‌ی آیکون است، هرگز فقط رنگ نیست.
 
-## Run & validate (repo scripts only)
+## نصب و اجرا (نصب تمیز)
 
 ```bash
-npm run storybook        # design-system review → http://localhost:6006
-npm run build-storybook  # static build into storybook-static/
-npm run lint             # eslint
-npx tsc --noEmit -p tsconfig.json   # typecheck (no excerpt: full project)
+npm install
+npm run storybook         # محیط بازبینی → http://localhost:6006
+npm run build-storybook   # بیلد استاتیک در storybook-static/
+npm run lint              # eslint (کل ریپو؛ خروجی بیلد را هم می‌بیند، بخش محدودیت‌ها)
+npx tsc --noEmit -p tsconfig.json   # تایپ‌چک کامل پروژه
 ```
 
-Quality gate per change: RTL parity, keyboard `:focus-visible`, AA contrast
-in light + dark (Mood toolbar). No pure black/white, neon, harsh red,
-or aggressive gradients.
+## گزارش ممیزی کیفیت و وضعیت تحویل (QA & Release Report)
+
+موارد زیر در آخرین اعتبارسنجی بررسی و سبز شدند (`tsc` تمیز، `eslint` محدوده‌ی سورس تمیز، بیلد استوری‌بوک و بیلد پروداکشن موفق):
+
+- **دسترسی کیبورد و focus-visible:** رینگ فوکوس استاندارد (`ring-border-focus` با offset) در همه‌ی عناصر تعاملی؛ `aria-pressed` در چیپ‌ها و تاگل تم؛ Enter/Space در کارت کلیک‌پذیر و چیپ‌ها؛ بستن با Escape در شیت.
+- **صفحه‌خوان:** نقش‌های زنده در Toast (`status`/`alert`)، نقش‌های `status` و `alert` در Alert و پیام خطاها، `aria-label` اجباری در ProgressBar (با لیبل واقعی در هر سه فلوی محصول) و نام‌گذاری همه‌ی عناصر بی‌متن؛ موارد تزئینی `aria-hidden` دارند.
+- **راست‌به‌چپ:** جهت سراسری از `html`، ویژگی‌های منطقی، جداسازی جزیره‌های لاتین و ایزولاسیون bidi در کدها؛ نوار پیشرفت ناحیه‌ی صریح `ltr` است تا با اسلایدر جدول کنترل هم‌جهت بماند.
+- **دارک‌مد با کنتراست نرم:** بدون حتی یک `dark:` در کامپوننت‌ها — همه‌چیز از لایه‌ی semantic می‌چرخد و جفت‌های متنی AA اندازه‌گیری‌شده‌اند.
+- **معماری IoC در EmptyState:** اکشن از بیرون تزریق می‌شود (`action: ReactNode`) و کامپوننت به دکمه‌ی خاصی وابسته نیست.
+- **اسکلت‌های Composable:** خطوط و کارت اسکلت واحدهای ترکیب‌پذیرند و فضای UI را پیش از لود رزرو می‌کنند (جلوگیری از پرش چیدمان).
+
+### محدودیت‌ها و بدهی‌های دیزاین (Known Limitations)
+
+- آیکون وضعیت Alert اکنون **داخل خود کامپوننت** ساخته می‌شود (پوشش WCAG 1.4.1) — تأیید چشمی نهایی آن با چشم باقی است.
+- `aria-label` در ProgressBar آگاهانه بر عهده‌ی توسعه‌دهنده است (required) — بدون آن کامپایل می‌شود؟ نه؛ تایپ‌سیفتی آن را اجباری کرده، ولی معنادار بودنش با نویسنده است.
+- Tag آگاهانه غیرتعاملی است (by design) — برای انتخاب از Chip و برای وضعیت از Badge استفاده شود.
+- هیچ تست خودکار (unit/component) در ریپو وجود ندارد؛ تست واقعی با صفحه‌خوان (NVDA/TalkBack) هم هنوز انجام نشده است.
+- `npm run lint` روی کل ریپو به خروجی بیلد (`.next/` و `storybook-static/`) گیر می‌کند؛ تا اصلاح کانفیگ، لینت محدوده‌ی سورس معیار است.
+- این چک‌اوت طبق سیاست ریپو فقط سیستم دیزاین را version می‌کند (`src/features` ignore است)؛ پذیرش‌های محصول (مثل ۵ تکست‌اریا) در کامیت جدا می‌نشینند.

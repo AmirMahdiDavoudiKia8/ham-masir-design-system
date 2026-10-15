@@ -37,9 +37,12 @@ export function Toast() {
   return (
     <div className="pointer-events-none fixed inset-x-0 top-3 z-[70] flex justify-center px-4">
       <div
+        role={isSuccess ? "status" : "alert"}
         className={cn(
-          "pointer-events-auto flex items-center gap-2 rounded-full px-4 py-2.5 text-caption font-bold shadow-lifted animate-rise-in",
-          isSuccess ? "bg-success text-success-foreground" : "bg-danger text-danger-foreground",
+          "pointer-events-auto flex items-center gap-2 rounded-full border px-4 py-2.5 text-caption font-bold shadow-lifted animate-rise-in",
+          isSuccess
+            ? "border-feedback-success-border bg-feedback-success-bg text-feedback-success-text"
+            : "border-feedback-danger-border bg-feedback-danger-bg text-feedback-danger-text",
         )}
       >
         {isSuccess ? <CheckIcon className="h-4 w-4 shrink-0" /> : <XIcon className="h-4 w-4 shrink-0" />}

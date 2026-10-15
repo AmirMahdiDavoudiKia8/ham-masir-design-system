@@ -90,7 +90,7 @@ export function Sheet({ open, onClose, children, ariaLabel }: SheetProps) {
         aria-modal="true"
         aria-label={ariaLabel}
         className={cn(
-          "relative flex max-h-[88vh] w-full max-w-md flex-col rounded-t-lg bg-surface shadow-lifted transition-transform duration-sheet ease-gentle",
+          "relative flex max-h-[88vh] w-full max-w-md flex-col rounded-t-sheet bg-surface shadow-lifted transition-transform duration-sheet ease-gentle",
           open ? "translate-y-0" : "translate-y-full",
         )}
         style={dragY ? { transform: `translateY(${dragY}px)`, transition: "none" } : undefined}
@@ -109,7 +109,7 @@ export function Sheet({ open, onClose, children, ariaLabel }: SheetProps) {
           type="button"
           onClick={onClose}
           aria-label="بستن"
-          className="absolute left-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors duration-standard ease-gentle hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light"
+          className="absolute left-3 top-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors duration-standard ease-gentle hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <XIcon className="h-5 w-5" />
         </button>

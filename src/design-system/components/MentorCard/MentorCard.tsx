@@ -17,9 +17,8 @@
  * Rank text arrives pre-formatted (the site passes formatRankForCard);
  * the system stays formatting-agnostic.
  *
- * Status: beta (WIP) — ships without a *.stories.tsx, so it is unverified
- * in Storybook. Parts are otherwise canonical (MentorTile + recipe ship via
- * the feature wrapper); this shell itself is unrendered (retire-candidate).
+ * Status: beta — the shell itself is unrendered in product (grid/strip ship
+ * via MentorTile + recipe in the feature wrappers); stories cover it here.
  */
 "use client";
 import * as React from "react";
@@ -47,17 +46,16 @@ export function mentorCardClasses(
 ): string {
   const { clickable = true } = opts;
   return cn(
-    "flex flex-col items-center text-center transition-[box-shadow,transform,background-color,border-color] duration-standard ease-gentle",
-    clickable &&
-      "cursor-pointer touch-manipulation active:scale-[0.99]",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "flex flex-col items-center text-center transition-[box-shadow,background-color,border-color] duration-standard ease-gentle",
+    clickable && "cursor-pointer touch-manipulation",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     layout === "grid" &&
       "w-full gap-2 rounded-card border border-border bg-surface p-4 shadow-none",
     clickable &&
       layout === "grid" &&
       "hover:-translate-y-0.5 hover:border-border-strong hover:shadow-card",
     layout === "strip" &&
-      "w-52 shrink-0 snap-start gap-2.5 rounded-card border-strong border-primary-light/25 bg-surface p-5 shadow-card",
+      "w-52 shrink-0 snap-start gap-2.5 rounded-card border-strong border-border-focus/25 bg-surface p-5 shadow-card",
     clickable &&
       layout === "strip" &&
       "hover:-translate-y-0.5 hover:shadow-dropdown",
@@ -79,7 +77,7 @@ export function MentorTile({
       <Avatar name={displayName} src={photoUrl} size={layout === "strip" ? "xl" : "lg"} />
       <h3
         className={cn(
-          "w-full truncate font-bold",
+          "w-full truncate text-center font-bold",
           layout === "strip" ? "text-body" : "text-caption",
           named ? "text-foreground" : "text-muted-foreground",
         )}
@@ -89,7 +87,7 @@ export function MentorTile({
       {subtitle && (
         <p
           className={cn(
-            "w-full truncate text-muted-foreground",
+            "w-full truncate text-center text-muted-foreground",
             layout === "strip" ? "text-caption font-semibold" : "text-label",
           )}
         >
@@ -99,7 +97,7 @@ export function MentorTile({
       {rank && (
         <p
           className={cn(
-            "w-full truncate text-action-primary",
+            "w-full truncate text-center text-action-primary",
             layout === "strip" ? "text-caption font-bold" : "text-label font-semibold",
           )}
         >

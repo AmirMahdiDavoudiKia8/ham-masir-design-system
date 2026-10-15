@@ -9,16 +9,17 @@
  *   an isolated Storybook canvas (the old invisible-render bug). A `min-w-48`
  *   floor keeps it visible when a centered canvas shrink-wraps the story to
  *   zero width; inside full-width product layouts it is a no-op.
- * - Track is a logical `flex` row, so the fill always grows from the
- *   inline-start edge — right in RTL pages, left in LTR islands — with no
- *   physical margins to fight the page direction (review feedback: fill
- *   direction must harmonize with the page).
+ * - Track is a fixed-direction `ltr` region, so the fill always grows
+ *   left-to-right — in the sample and in the Controls-table slider alike
+ *   (explicit review decision: progress reads LTR even on RTL pages).
+ *   No physical margins anywhere near it.
  * - `aria-valuenow` is rounded to an integer so screen readers announce a
  *   clean number while the visual width keeps full precision.
  * - Fill is solid semantic `bg-primary` on a `bg-muted` track (never a
  *   two-hue gradient — brand law). Width animates via token motion
  *   (`duration-standard` + `ease-gentle`), never hardcoded durations.
- * - RTL-safe: fill grows from the inline-start edge; no physical margins.
+ * - RTL-safe: the bar is an isolated `ltr` region, so page direction never
+ *   affects it; no physical margins.
  *
  * Binds only to semantic tokens — `.dark` flips automatically, no `dark:`
  * overrides. Text pair N/A (no text); track/fill contrast is graphical.
@@ -46,6 +47,7 @@ export function ProgressBar({ value, ariaLabel, className }: ProgressBarProps) {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label={ariaLabel}
+      dir="ltr"
       className={cn("flex h-1.5 w-full min-w-48 overflow-hidden rounded-full bg-muted", className)}
     >
       <div

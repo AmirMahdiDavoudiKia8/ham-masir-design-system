@@ -63,7 +63,7 @@ export const Disabled: Story = {
  */
 export const DarkModeCompositionPreview: Story = {
   render: () => (
-    <div className="flex w-[360px] flex-col gap-4 rounded-lg border border-border bg-background p-5">
+    <div className="flex w-[360px] flex-col gap-4 rounded-card border border-border bg-background p-5">
       <div className="flex items-center justify-between">
         <span className="text-h3 font-bold text-foreground">شب، کنار هم</span>
         <ThemeToggle theme="dark" />

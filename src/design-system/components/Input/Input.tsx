@@ -41,11 +41,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={!!error}
             aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
             className={cn(
-              "h-12 w-full rounded-md border border-border bg-surface px-3.5 text-sm text-foreground",
+              "h-12 w-full rounded-input border border-border-strong bg-surface px-4 text-body-sm text-foreground",
               "placeholder:text-muted-foreground transition-colors duration-standard ease-gentle",
-              "focus:border-primary-light focus:outline-none focus:ring-2 focus:ring-primary-light/30",
-              error ? "border-danger" : "hover:border-primary-light",
-              "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              error ? "border-border-danger" : "hover:border-border-focus focus-visible:border-border-focus",
+              "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-muted disabled:text-disabled",
               startIcon ? "ps-12" : "",
               endIcon ? "pe-12" : "",
               className,

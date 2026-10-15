@@ -51,12 +51,12 @@ export function Card({
       onClick={onClick}
       onKeyDown={handleKeyDown}
       className={cn(
-        "rounded-lg border border-border bg-surface p-4 shadow-card",
+        "rounded-card border border-border bg-surface p-4 shadow-card",
         structured && "flex flex-col gap-4",
         interactive &&
-          "cursor-pointer touch-manipulation transition-[box-shadow,transform,background-color,border-color] duration-standard ease-gentle hover:border-border-strong hover:shadow-card active:scale-[0.99]",
+          "cursor-pointer touch-manipulation transition-[box-shadow,background-color,border-color] duration-standard ease-gentle hover:border-border-strong hover:shadow-card",
         clickable &&
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
       {...props}

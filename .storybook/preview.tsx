@@ -55,8 +55,8 @@ const preview: Preview = {
         title: "Mood",
         icon: "moon",
         items: [
-          { value: "light", title: "Light — day walk", icon: "sun" },
-          { value: "dark", title: "Dark — night walk", icon: "moon" },
+          { value: "light", title: "Light", icon: "sun" },
+          { value: "dark", title: "Dark", icon: "moon" },
         ],
         dynamicTitle: true,
       },

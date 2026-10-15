@@ -39,9 +39,9 @@ export function ThemeToggle({ theme: themeProp, onToggle, className, ...props }:
       className={cn(
         "inline-flex min-h-[48px] min-w-[48px] cursor-pointer touch-manipulation items-center justify-center rounded-full",
         "border border-border bg-surface text-foreground shadow-card",
-        "transition-[box-shadow,transform,background-color,border-color] duration-standard ease-gentle hover:shadow-floating active:scale-[0.98]",
-        "disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "transition-[box-shadow,background-color,border-color] duration-standard ease-gentle hover:shadow-floating",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
       {...props}

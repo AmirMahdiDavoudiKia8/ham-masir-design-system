@@ -69,7 +69,7 @@ export const Row = ({ radius = 16, shadow = "none", border = "1px solid var(--co
   {radii.map((r) => (
     <div key={r.token} dir="rtl" style={{ display: "flex", gap: 24, alignItems: "center", padding: "10px 12px", borderBottom: "1px solid var(--color-border)" }}>
       <span style={{ flex: 1 }}><C>--radius-{r.token}</C></span>
-      <span dir="ltr" style={{ flex: 1, fontSize: 13, color: "var(--color-muted-foreground)" }}>{r.px}px</span>
+      <span dir="ltr" style={{ flex: 1, textAlign: "right", fontSize: 13, color: "var(--color-muted-foreground)" }}>{r.px}px</span>
       <span style={{ flex: 2, display: "flex", alignItems: "center", gap: 10 }}>
         <span aria-hidden style={{ width: 40, height: 28, borderRadius: r.px === 9999 ? 9999 : r.px, background: "var(--color-primary-soft)", border: "1px solid var(--color-border)" }} />
         <span style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>{r.usage}</span>

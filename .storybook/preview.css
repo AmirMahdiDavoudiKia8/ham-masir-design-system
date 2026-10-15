@@ -78,18 +78,9 @@ body {
   margin-top: 8px;
 }
 
-/* ArgsTable range controls mirror the page. Storybook paints the slider fill
- * with a JS-computed PHYSICAL gradient (`linear-gradient(to right, …)` in
- * its own source), which `direction` can never mirror — so the input keeps
- * its native LTR value mapping while `scaleX(-1)` mirrors the whole painted
- * control: min lands on the right, dragging toward the fill direction
- * increases the value, thumb and fill always agree, and slider and bar move
- * together. (The Canvas-tab Controls panel is Storybook chrome outside the
- * iframe and stays LTR.) */
-.sbdocs .sbdocs input[type="range"] {
-  direction: ltr !important;
-  transform: scaleX(-1);
-}
+/* Range inputs keep their native LTR mapping everywhere (docs and Canvas):
+ * the ProgressBar itself is an explicit `ltr` region, so slider and bar
+ * always agree left-to-right. */
 
 /* LTR islands + code keep their own direction/alignment — never RTL-forced.
  * Inline code is bidi-isolated so punctuation never jumps sides inside RTL. */
@@ -110,4 +101,12 @@ body {
  * overrules stray left-alignment leaking in from default styles. */
 [dir="rtl"] :is(h1, h2, h3, h4, h5, h6):not([dir="ltr"]):not([dir="ltr"] *):not(pre *):not(code) {
   text-align: right;
+}
+
+/* MentorCard demo scope ONLY: inside this wrapper the live tile renders its
+ * own product styles — docs h3/p rules (right alignment + margins) stop here
+ * so name/subtitle/rank stay exactly as centered as in production. */
+.sbdocs .mentorcard-docs-scope :is(h3, p) {
+  text-align: center;
+  margin: 0;
 }
