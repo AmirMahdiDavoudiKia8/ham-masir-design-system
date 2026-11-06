@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>هم‌اتاقی — صفحه‌های محصول</title>
+<style>
+  :root{
+    --canvas:#F8FAFC; --card:#FFFFFF; --ink:#0F172A; --muted:#475569; --line:#E2E8F0;
+    --blue:#1D4ED8; --amber:#D97706;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--canvas);color:var(--ink);font-family:Tahoma,system-ui,sans-serif;line-height:1.9}
+  header{padding:40px 28px 12px;max-width:1280px;margin:auto}
+  h1{font-size:28px;margin:0 0 6px;font-weight:800}
+  .sub{color:var(--muted);margin:0;font-size:14px}
+  main{max-width:1280px;margin:auto;padding:24px 28px 56px}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start}
+  figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 20px 45px rgba(15,23,42,.08)}
+  figcaption{padding:16px 18px 14px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  figcaption b{font-size:16px}
+  figcaption span{font-size:11px;color:var(--muted)}
+  img{display:block;width:100%;height:auto;background:#fff}
+  .note{margin-top:24px;background:#EFF6FF;border:1px solid #DBEAFE;color:#1E3A8A;border-radius:16px;padding:14px 18px;font-size:13px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}header,main{padding-inline:16px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>صفحه‌های محصول</h1>
+  <p class="sub">مسیر ورود به هم‌اتاقی — فقط صفحه‌ها، بدون نمایش توکن‌ها و دیزاین‌سیستم.</p>
+</header>
+<main>
+  <div class="grid">
+    <figure>
+      <figcaption><b>شروع کنید</b><span>ثبت‌نام / ورود</span></figcaption>
+      <img src="screenshots/after/pages/auth.png" alt="صفحه شروع و ثبت‌نام">
+    </figure>
+    <figure>
+      <figcaption><b>اعتبارسنجی شماره</b><span>کد تأیید</span></figcaption>
+      <img src="screenshots/after/pages/otp.png" alt="صفحه اعتبارسنجی شماره و کد تأیید">
+    </figure>
+    <figure>
+      <figcaption><b>تنظیم رمز خصوصی</b><span>رمز عبور</span></figcaption>
+      <img src="screenshots/after/pages/password.png" alt="صفحه تنظیم رمز خصوصی">
+    </figure>
+  </div>
+  <p class="note">این سه صفحه در نسخه‌ی فعلی به‌صورت ماکاپ طراحی شده‌اند و هنوز route مستقل ندارند. اگر بخواهید، آن‌ها را به مسیرهای واقعی <code>/auth</code>، <code>/otp</code> و <code>/password</code> تبدیل می‌کنم.</p>
+</main>
+</body>
+</html>
