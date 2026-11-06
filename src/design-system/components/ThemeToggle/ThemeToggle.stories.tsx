@@ -25,13 +25,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Light: Story = {
-  args: { theme: "light" },
+  render: () => <ControlledToggle initial="light" />,
 };
 
 export const Dark: Story = {
-  args: { theme: "dark" },
-  globals: { theme: "dark" },
+  render: () => <ControlledToggle initial="dark" />,
 };
+
+/** Fully controlled toggle: displayed icon and state always move together.
+ * Page mood stays owned by the toolbar decorator — demos never touch it. */
+function ControlledToggle({ initial }: { initial: "light" | "dark" }) {
+  const [theme, setTheme] = React.useState<"light" | "dark">(initial);
+  return (
+    <ThemeToggle theme={theme} onToggle={() => setTheme((t) => (t === "dark" ? "light" : "dark"))} />
+  );
+}
 
 /**
  * مثال تعاملی: با کلیک (یا کلیدهای Enter/Space روی دکمه‌ی فوکوس‌شده) تم تغییر می‌کند و
@@ -62,6 +70,13 @@ export const Disabled: Story = {
  * پیش‌نمایش ترکیبی (Composition) — در این نما، عملکرد یکپارچه‌ی دکمه تغییر تم بر روی یک کارت پیچیده نشان داده شده است. هدف این استوری اثبات این موضوع است که با تغییر وضعیت سوییچ، توکن‌های معنایی (Semantic Tokens) چگونه رنگ پس‌زمینه، تایپوگرافی و المان‌های تعاملی را به صورت آبشاری با تم تاریک تطبیق می‌دهند.
  */
 export const DarkModeCompositionPreview: Story = {
+  decorators: [
+    (Story) => (
+      <div className="dark" style={{ padding: 24, background: "var(--color-background)", borderRadius: 20 }}>
+        <Story />
+      </div>
+    ),
+  ],
   render: () => (
     <div className="flex w-[360px] flex-col gap-4 rounded-card border border-border bg-background p-5">
       <div className="flex items-center justify-between">

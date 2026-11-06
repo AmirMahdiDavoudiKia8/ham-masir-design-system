@@ -28,7 +28,11 @@ function resolveInitial(): Theme {
     : "light";
 }
 
-export function useTheme() {
+export function useTheme(options?: { syncDocument?: boolean }) {
+  // When false, the hook becomes state-only: no <html> class flips, no
+  // localStorage writes. Storybook uses this — there the preview decorator
+  // owns the document theme and hook-driven sync would fight the toolbar.
+  const syncDocument = options?.syncDocument ?? true;
   const [theme, setThemeState] = React.useState<Theme>("light");
   const [mounted, setMounted] = React.useState(false);
 
@@ -38,7 +42,7 @@ export function useTheme() {
   }, []);
 
   React.useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !syncDocument) return;
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
     root.style.colorScheme = theme;
@@ -47,7 +51,7 @@ export function useTheme() {
     } catch {
       /* ignore write failures */
     }
-  }, [theme, mounted]);
+  }, [theme, mounted, syncDocument]);
 
   const setTheme = React.useCallback((next: Theme) => setThemeState(next), []);
   const toggle = React.useCallback(

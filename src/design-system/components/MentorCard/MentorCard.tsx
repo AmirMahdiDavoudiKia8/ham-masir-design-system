@@ -55,7 +55,7 @@ export function mentorCardClasses(
       layout === "grid" &&
       "hover:-translate-y-0.5 hover:border-border-strong hover:shadow-card",
     layout === "strip" &&
-      "w-52 shrink-0 snap-start gap-2.5 rounded-card border-strong border-border-focus/25 bg-surface p-5 shadow-card",
+      "w-52 shrink-0 snap-start gap-2 rounded-card border-strong border-border-focus/25 bg-surface p-5 shadow-card",
     clickable &&
       layout === "strip" &&
       "hover:-translate-y-0.5 hover:shadow-dropdown",
@@ -81,6 +81,7 @@ export function MentorTile({
           layout === "strip" ? "text-body" : "text-caption",
           named ? "text-foreground" : "text-muted-foreground",
         )}
+        style={{ textAlign: "center" }}
       >
         {displayName}
       </h3>

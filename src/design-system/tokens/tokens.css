@@ -274,16 +274,16 @@
   --color-info-soft: var(--primitive-info-100);
 
   /* Feedback pairs — bg + text + border ship together, never split */
-  --color-feedback-success-bg: var(--primitive-success-50);
+  --color-feedback-success-bg: var(--primitive-success-200);
   --color-feedback-success-text: var(--primitive-success-900); /* 10.91:1 on 100 */
   --color-feedback-success-border: var(--primitive-success-600); /* 3.98:1 boundary */
-  --color-feedback-warning-bg: var(--primitive-alert-50);
+  --color-feedback-warning-bg: var(--primitive-alert-200);
   --color-feedback-warning-text: var(--primitive-alert-900); /* 10.36:1 on 100 */
   --color-feedback-warning-border: var(--primitive-alert-700); /* ~4.3:1 boundary */
-  --color-feedback-danger-bg: var(--primitive-danger-50);
+  --color-feedback-danger-bg: var(--primitive-danger-200);
   --color-feedback-danger-text: var(--primitive-danger-900); /* 12.78:1 on 100 */
   --color-feedback-danger-border: var(--primitive-danger-600); /* 5.11:1 boundary */
-  --color-feedback-info-bg: var(--primitive-info-50);
+  --color-feedback-info-bg: var(--primitive-info-200);
   --color-feedback-info-text: var(--primitive-info-900); /* 11.06:1 on 100 */
   --color-feedback-info-border: var(--primitive-info-600); /* 6.28:1 boundary */
 

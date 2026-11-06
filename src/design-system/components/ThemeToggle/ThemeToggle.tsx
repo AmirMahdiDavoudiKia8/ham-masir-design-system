@@ -23,7 +23,11 @@ export interface ThemeToggleProps
 }
 
 export function ThemeToggle({ theme: themeProp, onToggle, className, ...props }: ThemeToggleProps) {
-  const { theme: hookTheme, toggle: hookToggle, mounted } = useTheme();
+  // Controlled (theme and/or onToggle given) → the owner drives state AND the
+  // document; the hook stays state-only so it can never fight that owner.
+  // Uncontrolled (site header) → hook owns everything, as before.
+  const controlled = themeProp !== undefined || onToggle !== undefined;
+  const { theme: hookTheme, toggle: hookToggle, mounted } = useTheme({ syncDocument: !controlled });
   const theme = themeProp ?? hookTheme;
   const handleToggle = onToggle ?? hookToggle;
   const isDark = theme === "dark";
